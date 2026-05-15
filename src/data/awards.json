@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Best Poster Award",
+    "organization": "Eurographics Workshop on Visual Computing for Biology and Medicine",
+    "year": "2025",
+    "description": "Awarded for the VCBM poster on topology-guided volume fusion for multi-energy spectral CT.",
+    "publicationId": "spectral-ct-vcbm-poster-2025"
+  },
+  {
+    "title": "Honorable Mention",
+    "organization": "IEEE Workshop on Topological Data Analysis and Visualization",
+    "year": "2025",
+    "description": "Recognition for topology-aware volume fusion for spectral computed tomography.",
+    "publicationId": "volume-fusion-2025"
+  },
+  {
+    "title": "Gold Medalist",
+    "organization": "IIIT Hyderabad",
+    "year": "2017",
+    "description": "M.Tech. in Computer Science and Engineering.",
+    "publicationId": ""
+  },
+  {
+    "title": "Dean's List",
+    "organization": "IIIT Hyderabad",
+    "year": "2015–2017",
+    "description": "Dean's List in all semesters during M.Tech.",
+    "publicationId": ""
+  }
+]

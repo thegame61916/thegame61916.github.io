@@ -1,0 +1,460 @@
+[
+  {
+    "id": "csp-moments-2025",
+    "type": "Journal Article",
+    "title": "Continuous Scatterplot and Image Moments for Time-Varying Bivariate Field Analysis of Electronic Structure Evolution",
+    "authors": [
+      "mohit-sharma",
+      "talha-bin-masood",
+      "nanna-holmgaard-list",
+      "ingrid-hotz",
+      "vijay-natarajan"
+    ],
+    "authorText": "Mohit Sharma, Talha Bin Masood, Nanna Holmgaard List, Ingrid Hotz, and Vijay Natarajan",
+    "venue": "IEEE Transactions on Visualization and Computer Graphics",
+    "year": 2025,
+    "doi": "https://doi.org/10.1109/TVCG.2025.3543619",
+    "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/Paper_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
+    "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/Supp_Material_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
+    "thumbnail": "/assets/publications/csp-moments-2025.svg",
+    "tags": [
+      "continuous scatterplots",
+      "time-varying data",
+      "bivariate fields",
+      "electronic structure",
+      "scientific visualization",
+      "topological data analysis",
+      "feature descriptors",
+      "image moments",
+      "visual analytics",
+      "molecular data",
+      "photoexcitation"
+    ],
+    "abstract": "This work presents a structured approach for feature-directed visual exploration of time-varying bivariate fields using continuous scatterplots and image moment descriptors, with applications to electronic structure evolution after photoexcitation.",
+    "bibtex": "@article{sharma2025cspmoments, title={Continuous Scatterplot and Image Moments for Time-Varying Bivariate Field Analysis of Electronic Structure Evolution}, author={Sharma, Mohit and Masood, Talha Bin and List, Nanna Holmgaard and Hotz, Ingrid and Natarajan, Vijay}, journal={IEEE Transactions on Visualization and Computer Graphics}, year={2025}}",
+    "projects": [
+      "electronic-structure-visualization",
+      "time-varying-topology"
+    ],
+    "featured": true,
+    "localPdf": "",
+    "supplements": [
+      {
+        "label": "Supplementary PDF",
+        "type": "pdf",
+        "url": "https://vgl.csa.iisc.ac.in/pdf/pub/Supp_Material_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
+        "path": "",
+        "preview": true,
+        "id": "supplement-1"
+      }
+    ],
+    "videos": [],
+    "links": [],
+    "themes": [],
+    "previewExampleNote": "Preview is now selectable from a dropdown. This example opens the supplementary PDF by default; change defaultPreview to paper, supplement-1, video-1, or any custom id.",
+    "defaultPreview": "supplement-1",
+    "awards": [],
+    "filterKeywords": [
+      "continuous scatterplots",
+      "time-varying data",
+      "electronic structure",
+      "image moments"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "csp-operators-2024",
+    "type": "Journal Article",
+    "title": "Continuous Scatterplot Operators for Bivariate Analysis and Study of Electronic Transitions",
+    "authors": [
+      "mohit-sharma",
+      "talha-bin-masood",
+      "signe-thygesen",
+      "mathieu-linares",
+      "ingrid-hotz",
+      "vijay-natarajan"
+    ],
+    "authorText": "Mohit Sharma, Talha Bin Masood, Signe S. Thygesen, Mathieu Linares, Ingrid Hotz, and Vijay Natarajan",
+    "venue": "IEEE Transactions on Visualization and Computer Graphics",
+    "year": 2024,
+    "doi": "https://doi.org/10.1109/TVCG.2023.3237768",
+    "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/CSPOperators_Mohit.pdf",
+    "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/supplementary_CSPOperators_Mohit.pdf",
+    "thumbnail": "/assets/publications/csp-operators-2024.svg",
+    "tags": [
+      "continuous scatterplots",
+      "bivariate analysis",
+      "electronic transitions",
+      "chemistry",
+      "scientific visualization",
+      "topological data analysis",
+      "electron density",
+      "donor acceptor analysis",
+      "molecular visualization",
+      "visual analytics"
+    ],
+    "abstract": "This paper introduces continuous scatterplot operators for the analysis of bivariate fields and demonstrates their use in studying electronic transitions, donor-acceptor behavior, and molecular electronic structure.",
+    "bibtex": "@article{sharma2024cspoperators, title={Continuous Scatterplot Operators for Bivariate Analysis and Study of Electronic Transitions}, author={Sharma, Mohit and Masood, Talha Bin and Thygesen, Signe S. and Linares, Mathieu and Hotz, Ingrid and Natarajan, Vijay}, journal={IEEE Transactions on Visualization and Computer Graphics}, year={2024}}",
+    "projects": [
+      "electronic-structure-visualization"
+    ],
+    "featured": true,
+    "localPdf": "",
+    "supplements": [
+      {
+        "label": "Supplementary PDF",
+        "type": "pdf",
+        "url": "https://vgl.csa.iisc.ac.in/pdf/pub/supplementary_CSPOperators_Mohit.pdf",
+        "path": "",
+        "preview": false
+      }
+    ],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "filterKeywords": [
+      "continuous scatterplots",
+      "electronic transitions",
+      "chemistry",
+      "electron density"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "jacobi-simplification-2024",
+    "type": "Journal Article",
+    "title": "Jacobi Set Simplification for Tracking Topological Features in Time-Varying Scalar Fields",
+    "authors": [
+      "dhruv-meduri",
+      "mohit-sharma",
+      "vijay-natarajan"
+    ],
+    "authorText": "Dhruv Meduri, Mohit Sharma, and Vijay Natarajan",
+    "venue": "The Visual Computer",
+    "year": 2024,
+    "doi": "https://doi.org/10.1007/s00371-024-03484-2",
+    "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/Jacobi_Set_Simplification_for_Tracking_TOPO_FeaturesinTVSF.pdf",
+    "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/JS_Simplification_Supplementary.pdf",
+    "thumbnail": "/assets/publications/jacobi-simplification-2024.svg",
+    "tags": [
+      "Jacobi sets",
+      "time-varying scalar fields",
+      "feature tracking",
+      "topology simplification",
+      "scientific visualization",
+      "computational topology",
+      "visual analytics",
+      "temporal topology",
+      "feature correspondence"
+    ],
+    "abstract": "This work simplifies Jacobi sets for time-varying scalar fields to reduce visual clutter and improve the analysis of topological feature tracks.",
+    "bibtex": "@article{meduri2024jacobi, title={Jacobi Set Simplification for Tracking Topological Features in Time-Varying Scalar Fields}, author={Meduri, Dhruv and Sharma, Mohit and Natarajan, Vijay}, journal={The Visual Computer}, year={2024}}",
+    "projects": [
+      "time-varying-topology"
+    ],
+    "featured": true,
+    "localPdf": "",
+    "supplements": [
+      {
+        "label": "Supplementary PDF",
+        "type": "pdf",
+        "url": "https://vgl.csa.iisc.ac.in/pdf/pub/JS_Simplification_Supplementary.pdf",
+        "path": "",
+        "preview": false
+      }
+    ],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "filterKeywords": [
+      "Jacobi sets",
+      "feature tracking",
+      "time-varying data",
+      "topology simplification"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "volume-fusion-2025",
+    "type": "Workshop Paper",
+    "title": "Topology-Aware Volume Fusion for Spectral Computed Tomography via Histograms and Extremum Graph",
+    "authors": [
+      "mohit-sharma",
+      "emma-nilsson",
+      "martin-falk",
+      "talha-bin-masood",
+      "lee-jollans",
+      "anders-persson",
+      "tino-ebbers",
+      "ingrid-hotz"
+    ],
+    "authorText": "Mohit Sharma, Emma Nilsson, Martin Falk, Talha Bin Masood, Lee Jollans, Anders Persson, Tino Ebbers, and Ingrid Hotz",
+    "venue": "TopoInVis",
+    "year": 2025,
+    "doi": "https://doi.org/10.1109/TopoInVis68599.2025.00010",
+    "pdf": "https://arxiv.org/pdf/2508.14719",
+    "thumbnail": "/assets/publications/volume-fusion-2025.svg",
+    "tags": [
+      "spectral CT",
+      "extremum graph",
+      "medical imaging",
+      "volume fusion",
+      "scientific visualization",
+      "topology-aware visualization",
+      "histograms",
+      "anatomical structures",
+      "multi-energy CT",
+      "visual analytics"
+    ],
+    "award": "Honorable Mention",
+    "abstract": "This paper proposes a topology-aware method for fusing spectral computed tomography data into a representative volume using histograms and extremum graphs while preserving salient anatomical structures.",
+    "bibtex": "@inproceedings{sharma2025volumefusion, title={Topology-Aware Volume Fusion for Spectral Computed Tomography via Histograms and Extremum Graph}, author={Sharma, Mohit and Nilsson, Emma and Falk, Martin and Masood, Talha Bin and Jollans, Lee and Persson, Anders and Ebbers, Tino and Hotz, Ingrid}, booktitle={TopoInVis}, year={2025}}",
+    "projects": [
+      "spectral-ct-volume-fusion"
+    ],
+    "featured": true,
+    "localPdf": "",
+    "supplements": [],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "awards": [
+      {
+        "id": "honorable-mention-certificate",
+        "label": "Honorable Mention Certificate",
+        "type": "pdf",
+        "path": "/assets/certificates/topoinvis-2025-honorable-mention.pdf",
+        "url": "",
+        "preview": true
+      }
+    ],
+    "filterKeywords": [
+      "spectral CT",
+      "medical imaging",
+      "volume fusion",
+      "extremum graph"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "spectral-ct-vcbm-poster-2025",
+    "type": "Poster / Extended Abstract",
+    "title": "Topology-Guided Volume Fusion for Multi-Energy Spectral Computed Tomography",
+    "authors": [
+      "mohit-sharma",
+      "emma-nilsson",
+      "martin-falk",
+      "talha-bin-masood",
+      "lee-jollans",
+      "anders-persson",
+      "tino-ebbers",
+      "ingrid-hotz"
+    ],
+    "authorText": "Mohit Sharma, Emma Nilsson, Martin Falk, Talha Bin Masood, Lee Jollans, Anders Persson, Tino Ebbers, and Ingrid Hotz",
+    "venue": "Eurographics Workshop on Visual Computing for Biology and Medicine (VCBM) Poster",
+    "year": 2025,
+    "doi": "",
+    "pdf": "https://conferences.eg.org/vcbm2025/wp-content/uploads/sites/26/2025/09/Topology-Guided-Volume-Fusion-for-Multi-Energy-Spectral-Computed-Tomography.pdf",
+    "thumbnail": "/assets/publications/spectral-ct-vcbm-poster-2025.svg",
+    "tags": [
+      "spectral CT",
+      "multi-energy CT",
+      "medical imaging",
+      "volume fusion",
+      "topology-guided visualization",
+      "extremum graph",
+      "histograms",
+      "scientific visualization",
+      "VCBM",
+      "poster"
+    ],
+    "award": "Best Poster Award",
+    "abstract": "This poster presents topology-guided volume fusion for multi-energy spectral computed tomography, using topological and histogram-based information to preserve important anatomical structures while producing a representative fused volume.",
+    "bibtex": "@misc{sharma2025vcbmposter, title={Topology-Guided Volume Fusion for Multi-Energy Spectral Computed Tomography}, author={Sharma, Mohit and Nilsson, Emma and Falk, Martin and Masood, Talha Bin and Jollans, Lee and Persson, Anders and Ebbers, Tino and Hotz, Ingrid}, howpublished={VCBM Poster}, year={2025}}",
+    "projects": [
+      "spectral-ct-volume-fusion"
+    ],
+    "featured": false,
+    "localPdf": "",
+    "supplements": [],
+    "videos": [],
+    "links": [
+      {
+        "label": "Poster PDF",
+        "url": "https://conferences.eg.org/vcbm2025/wp-content/uploads/sites/26/2025/09/Topology-Guided-Volume-Fusion-for-Multi-Energy-Spectral-Computed-Tomography.pdf"
+      }
+    ],
+    "previewLayout": "single",
+    "themes": [],
+    "defaultPreview": "paper",
+    "awards": [
+      {
+        "id": "best-poster-certificate",
+        "label": "Best Poster Award",
+        "type": "pdf",
+        "path": "/assets/certificates/vcbm-2025-best-poster.pdf",
+        "url": "",
+        "preview": true
+      }
+    ],
+    "filterKeywords": [
+      "spectral CT",
+      "medical imaging",
+      "volume fusion",
+      "poster"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "fiber-surface-2022",
+    "type": "Workshop Paper",
+    "title": "Jacobi Set Driven Search for Flexible Fiber Surface Extraction",
+    "authors": [
+      "mohit-sharma",
+      "vijay-natarajan"
+    ],
+    "authorText": "Mohit Sharma and Vijay Natarajan",
+    "venue": "TopoInVis",
+    "year": 2022,
+    "doi": "https://doi.org/10.1109/TopoInVis57755.2022.00012",
+    "thumbnail": "/assets/publications/fiber-surface-2022.svg",
+    "tags": [
+      "fiber surfaces",
+      "Jacobi sets",
+      "bivariate data",
+      "topological search",
+      "scientific visualization",
+      "multivariate topology",
+      "computational topology",
+      "fiber analysis",
+      "Reeb space",
+      "visual query"
+    ],
+    "abstract": "A Jacobi-set-driven approach for flexible fiber surface extraction in bivariate fields.",
+    "bibtex": "@inproceedings{sharma2022fiber, title={Jacobi Set Driven Search for Flexible Fiber Surface Extraction}, author={Sharma, Mohit and Natarajan, Vijay}, booktitle={TopoInVis}, year={2022}}",
+    "projects": [
+      "reeb-space-fiber-analysis"
+    ],
+    "supplements": [],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "filterKeywords": [
+      "fiber surfaces",
+      "Jacobi sets",
+      "bivariate data",
+      "fiber analysis"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "segmentation-peeling-2021",
+    "type": "Conference Paper",
+    "title": "Segmentation Driven Peeling for Visual Analysis of Electronic Transitions",
+    "authors": [
+      "mohit-sharma",
+      "talha-bin-masood",
+      "signe-thygesen",
+      "mathieu-linares",
+      "ingrid-hotz",
+      "vijay-natarajan"
+    ],
+    "authorText": "Mohit Sharma, Talha Bin Masood, Signe S. Thygesen, Mathieu Linares, Ingrid Hotz, and Vijay Natarajan",
+    "venue": "IEEE VIS",
+    "year": 2021,
+    "doi": "https://doi.org/10.1109/VIS49827.2021.9623300",
+    "pdf": "https://www.diva-portal.se/smash/get/diva2%3A1626723/FULLTEXT02.pdf",
+    "thumbnail": "/assets/publications/segmentation-peeling-2021.svg",
+    "tags": [
+      "electronic transitions",
+      "visual analysis",
+      "segmentation",
+      "chemistry",
+      "scientific visualization",
+      "electron density",
+      "molecular visualization",
+      "visual analytics",
+      "bivariate fields"
+    ],
+    "abstract": "This work presents a segmentation-driven peeling method for visual analysis of electronic transitions using bivariate fields derived from electron density data.",
+    "bibtex": "@inproceedings{sharma2021peeling, title={Segmentation Driven Peeling for Visual Analysis of Electronic Transitions}, author={Sharma, Mohit and Masood, Talha Bin and Thygesen, Signe S. and Linares, Mathieu and Hotz, Ingrid and Natarajan, Vijay}, booktitle={IEEE VIS}, year={2021}}",
+    "projects": [
+      "electronic-structure-visualization"
+    ],
+    "localPdf": "",
+    "supplements": [],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "filterKeywords": [
+      "electronic transitions",
+      "chemistry",
+      "segmentation",
+      "molecular visualization"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  },
+  {
+    "id": "contour-tree-augmentation-2018",
+    "type": "Conference Paper",
+    "title": "On-Demand Augmentation of Contour Trees",
+    "authors": [
+      "mohit-sharma",
+      "vijay-natarajan"
+    ],
+    "authorText": "Mohit Sharma and Vijay Natarajan",
+    "venue": "ICVGIP",
+    "year": 2018,
+    "doi": "https://doi.org/10.1145/3293353.3293384",
+    "thumbnail": "/assets/publications/contour-tree-augmentation-2018.svg",
+    "tags": [
+      "contour trees",
+      "topology",
+      "augmentation",
+      "scalar fields",
+      "scientific visualization",
+      "computational topology",
+      "topological structures",
+      "level sets",
+      "scalar field visualization"
+    ],
+    "abstract": "An on-demand approach for augmenting contour trees to support flexible topological analysis of scalar fields.",
+    "bibtex": "@inproceedings{sharma2018contour, title={On-Demand Augmentation of Contour Trees}, author={Sharma, Mohit and Natarajan, Vijay}, booktitle={ICVGIP}, year={2018}}",
+    "projects": [
+      "time-varying-topology"
+    ],
+    "supplements": [],
+    "videos": [],
+    "links": [],
+    "previewLayout": "single",
+    "themes": [],
+    "filterKeywords": [
+      "contour trees",
+      "scalar fields",
+      "computational topology",
+      "level sets"
+    ],
+    "hiddenKeywords": [],
+    "hiddenAutoKeywords": [],
+    "hiddenFilterKeywords": []
+  }
+]

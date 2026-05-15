@@ -1,0 +1,35 @@
+{
+  "name": "Mohit Sharma",
+  "title": "Postdoctoral Researcher",
+  "affiliation": "Linköping University, Sweden",
+  "tagline": "Scientific visualization and topology-based analysis of multivariate scientific data.",
+  "photo": "/assets/profile/profile-placeholder.svg",
+  "location": "Linköping University, Sweden",
+  "emails": [
+    "ms61916@gmail.com",
+    "mohit.sharma@liu.se"
+  ],
+  "phone": "+91-9953244489",
+  "links": {
+    "ORCID": "https://orcid.org/0000-0002-9153-7465",
+    "Google Scholar": "https://scholar.google.com/citations?user=fRBm4swAAAAJ&hl=en",
+    "LiU Profile": "https://liu.se/en/employee/mohsh14",
+    "GitHub": "",
+    "LinkedIn": "https://www.linkedin.com/in/tls619/",
+    "YouTube": "https://www.youtube.com/@TheLoneSoul619"
+  },
+  "cv": "/assets/cv/Mohit_Sharma_CV.pdf",
+  "bioShort": "I develop scalable and interactive methods for visual analysis of multivariate scientific data, with emphasis on Reeb spaces, Jacobi sets, contour trees, extremum graphs, continuous scatterplots, and topology-driven visual analytics.",
+  "bioLong": "Mohit Sharma is a postdoctoral researcher at Linköping University, Sweden. He completed his Ph.D. at the Indian Institute of Science, Bangalore, advised by Prof. Vijay Natarajan, with a thesis on topological structures and operators for bivariate data visualization. His research lies at the intersection of scientific visualization, computational topology, and real-world scientific applications in chemistry, medical imaging, climate science, and simulation data. Before his doctoral studies, he worked in industry at MediaTek, Amazon, Adobe, and Directi.",
+  "researchInterests": [
+    "Scientific Visualization",
+    "Topological Data Analysis",
+    "Multivariate Topology",
+    "Reeb Spaces",
+    "Jacobi Sets",
+    "Continuous Scatterplots",
+    "Visual Analytics",
+    "Scientific Data Analysis",
+    "Topology and AI/ML Interpretability"
+  ]
+}

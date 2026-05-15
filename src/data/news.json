@@ -1,0 +1,45 @@
+[
+  {
+    "date": "2025-09-01",
+    "title": "Best Poster Award at VCBM 2025",
+    "description": "Topology-Guided Volume Fusion for Multi-Energy Spectral Computed Tomography received the Best Poster Award.",
+    "links": [
+      {
+        "label": "Poster PDF",
+        "url": "https://conferences.eg.org/vcbm2025/wp-content/uploads/sites/26/2025/09/Topology-Guided-Volume-Fusion-for-Multi-Energy-Spectral-Computed-Tomography.pdf"
+      }
+    ],
+    "route": "publication:spectral-ct-vcbm-poster-2025"
+  },
+  {
+    "date": "2025-08-20",
+    "title": "TopoInVis paper on topology-aware spectral CT volume fusion",
+    "description": "The spectral CT volume fusion work was published at TopoInVis 2025 and received an honorable mention.",
+    "links": [
+      {
+        "label": "DOI",
+        "url": "https://doi.org/10.1109/TopoInVis68599.2025.00010"
+      }
+    ],
+    "route": "publication:volume-fusion-2025"
+  },
+  {
+    "date": "2025-02-24",
+    "title": "TVCG paper on time-varying bivariate field analysis",
+    "description": "Continuous Scatterplot and Image Moments for Time-Varying Bivariate Field Analysis of Electronic Structure Evolution appeared in IEEE TVCG.",
+    "links": [
+      {
+        "label": "DOI",
+        "url": "https://doi.org/10.1109/TVCG.2025.3543619"
+      }
+    ],
+    "route": "publication:csp-moments-2025"
+  },
+  {
+    "date": "2024-03-21",
+    "title": "Ph.D. defense at IISc Bangalore",
+    "description": "Defended Ph.D. thesis titled Topological Structures and Operators for Bivariate Data Visualization.",
+    "links": [],
+    "route": ""
+  }
+]

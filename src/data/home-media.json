@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "title": "",
+  "subtitle": "",
+  "items": [
+    {
+      "id": "recent-talk-placeholder",
+      "type": "image",
+      "title": "Recent Talk Highlight",
+      "caption": "Add a recent talk photo, poster image, or visualization highlight here.",
+      "image": "/assets/gallery/research-placeholder.svg",
+      "alt": "Placeholder media highlight",
+      "link": "#talks",
+      "linkText": "View talks"
+    }
+  ],
+  "defaultItemId": "recent-talk-placeholder"
+}

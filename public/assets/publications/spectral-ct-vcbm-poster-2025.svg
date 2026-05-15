@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Topology-guided spectral CT poster teaser">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#e7f7f8"/>
+      <stop offset="1" stop-color="#f8fbff"/>
+    </linearGradient>
+    <linearGradient id="ct" x1="0" x2="1">
+      <stop offset="0" stop-color="#1f7a8c"/>
+      <stop offset="0.5" stop-color="#2a9d8f"/>
+      <stop offset="1" stop-color="#f4a261"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="80" y="80" width="1120" height="560" rx="34" fill="#fff" stroke="#cfe5e8" stroke-width="4"/>
+  <g opacity="0.95">
+    <ellipse cx="390" cy="360" rx="190" ry="245" fill="#eff6f7" stroke="#9ecbd2" stroke-width="6"/>
+    <path d="M320 160 C250 250 250 480 355 565 C330 455 337 250 320 160Z" fill="#cde8ea"/>
+    <path d="M465 160 C525 250 532 478 425 565 C455 445 452 260 465 160Z" fill="#cde8ea"/>
+    <ellipse cx="390" cy="360" rx="55" ry="175" fill="#ffe8c9" stroke="#e9a653" stroke-width="4"/>
+  </g>
+  <g transform="translate(650 165)">
+    <rect x="0" y="0" width="430" height="90" rx="16" fill="#f5fbfc" stroke="#cfe5e8"/>
+    <rect x="0" y="120" width="430" height="90" rx="16" fill="#f5fbfc" stroke="#cfe5e8"/>
+    <rect x="0" y="240" width="430" height="90" rx="16" fill="#f5fbfc" stroke="#cfe5e8"/>
+    <path d="M42 45 C92 20 138 70 184 44 S278 67 328 38 S395 54 410 44" fill="none" stroke="#1f7a8c" stroke-width="9" stroke-linecap="round"/>
+    <path d="M42 165 C120 130 153 185 215 150 S335 155 410 130" fill="none" stroke="#2a9d8f" stroke-width="9" stroke-linecap="round"/>
+    <path d="M42 285 C92 300 115 250 175 278 S294 315 410 260" fill="none" stroke="#f4a261" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <rect x="80" y="80" width="1120" height="86" rx="34" fill="#12343b"/>
+  <text x="120" y="135" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Topology-Guided Volume Fusion</text>
+  <text x="120" y="604" fill="#1f2933" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="600">Multi-Energy Spectral CT · VCBM Poster 2025</text>
+  <rect x="910" y="570" width="250" height="48" rx="24" fill="#ffd166"/>
+  <text x="945" y="602" fill="#332200" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700">Best Poster Award</text>
+</svg>

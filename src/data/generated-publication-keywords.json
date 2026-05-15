@@ -1,0 +1,17 @@
+{
+  "csp-moments-2025": [],
+  "csp-operators-2024": [],
+  "jacobi-simplification-2024": [],
+  "volume-fusion-2025": [],
+  "fiber-surface-2022": [],
+  "segmentation-peeling-2021": [],
+  "contour-tree-augmentation-2018": [],
+  "spectral-ct-vcbm-poster-2025": [
+    "spectral CT",
+    "multi-energy CT",
+    "medical imaging",
+    "volume fusion",
+    "topology-guided visualization",
+    "poster"
+  ]
+}

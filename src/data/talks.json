@@ -1,0 +1,20 @@
+[
+  {
+    "id": "reeb-space-chemistry-talk",
+    "title": "Reeb Space: A Topological Tool for Chemistry Data Analysis",
+    "venue": "Research seminar / invited talk",
+    "date": "",
+    "description": "Introductory talk on Reeb spaces and their use in visual analysis of electron density fields and molecular bonding behavior.",
+    "slides": "",
+    "video": "",
+    "images": [],
+    "publications": [
+      "csp-operators-2024",
+      "csp-moments-2025"
+    ],
+    "projects": [
+      "electronic-structure-visualization"
+    ],
+    "media": []
+  }
+]

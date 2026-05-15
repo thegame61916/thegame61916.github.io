@@ -1,0 +1,31 @@
+{
+  "name": "mohit-academic-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "npm run validate:content && npm run scan:media && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "refresh:scholar": "node scripts/refresh-publications.js",
+    "scan:media": "node scripts/scan-media.js",
+    "extract:keywords": "node scripts/extract-pdf-keywords.js",
+    "validate:content": "node scripts/validate-content.js",
+    "prepare:content": "npm run scan:media && npm run extract:keywords && npm run validate:content",
+    "setup": "npm install && npm run prepare:content",
+    "build:with-keywords": "npm run scan:media && npm run extract:keywords && npm run validate:content && vite build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "6.0.1",
+    "bootstrap": "5.3.8",
+    "fuse.js": "7.3.0",
+    "lucide-react": "1.14.0",
+    "react": "19.2.6",
+    "react-bootstrap": "2.10.10",
+    "react-dom": "19.2.6",
+    "vite": "8.0.12"
+  },
+  "devDependencies": {
+    "pdf-parse": "2.4.5"
+  }
+}

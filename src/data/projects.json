@@ -1,0 +1,101 @@
+[
+  {
+    "id": "reeb-space-fiber-analysis",
+    "title": "Interactive Fiber Analysis of Bivariate Fields",
+    "status": "Ongoing",
+    "image": "/assets/projects/reeb-space.svg",
+    "short": "Efficient algorithms and interfaces for bringing Reeb-space based bivariate analysis into practical use.",
+    "description": "This project develops scalable computational frameworks for Reeb spaces, Jacobi sets, and related multivariate topological structures with emphasis on interactive exploration of bivariate scientific fields.",
+    "publications": [
+      "fiber-surface-2022"
+    ],
+    "collaborators": [
+      "mohit-sharma",
+      "vijay-natarajan",
+      "ingrid-hotz"
+    ],
+    "students": [],
+    "links": {
+      "code": "",
+      "data": ""
+    }
+  },
+  {
+    "id": "electronic-structure-visualization",
+    "title": "Topology-Driven Visualization of Electronic Structure Evolution",
+    "status": "Completed / Continuing",
+    "image": "/assets/projects/electronic-structure.svg",
+    "short": "Visual analysis of donor-acceptor behavior, electronic transitions, and molecular electronic structure evolution.",
+    "description": "This line of work uses bivariate fields, continuous scatterplots, image moments, and topological analysis to study molecular electronic transitions and light-induced electronic structure changes.",
+    "publications": [
+      "csp-moments-2025",
+      "csp-operators-2024",
+      "segmentation-peeling-2021"
+    ],
+    "collaborators": [
+      "mohit-sharma",
+      "talha-bin-masood",
+      "signe-thygesen",
+      "mathieu-linares",
+      "nanna-holmgaard-list",
+      "ingrid-hotz",
+      "vijay-natarajan"
+    ],
+    "students": [],
+    "links": {
+      "code": "",
+      "data": ""
+    }
+  },
+  {
+    "id": "spectral-ct-volume-fusion",
+    "title": "Topology-Aware Volume Fusion for Spectral CT",
+    "status": "Ongoing",
+    "image": "/assets/projects/spectral-ct.svg",
+    "short": "Feature-preserving fusion of multi-energy spectral CT volumes using histograms and extremum graphs.",
+    "description": "This project explores topology-aware fusion strategies that preserve salient anatomical structures while reducing dimensionality and improving compatibility with standard CT visualization workflows.",
+    "publications": [
+      "volume-fusion-2025",
+      "spectral-ct-vcbm-poster-2025"
+    ],
+    "collaborators": [
+      "mohit-sharma",
+      "emma-nilsson",
+      "martin-falk",
+      "talha-bin-masood",
+      "lee-jollans",
+      "anders-persson",
+      "tino-ebbers",
+      "ingrid-hotz"
+    ],
+    "students": [],
+    "links": {
+      "code": "",
+      "data": ""
+    }
+  },
+  {
+    "id": "time-varying-topology",
+    "title": "Feature Tracking in Time-Varying Data",
+    "status": "Ongoing",
+    "image": "/assets/projects/time-varying.svg",
+    "short": "Topology-based simplification and tracking of features in time-varying scalar and bivariate fields.",
+    "description": "This research studies Jacobi sets and related structures for extracting, simplifying, and tracking topological features over time in scientific datasets.",
+    "publications": [
+      "jacobi-simplification-2024",
+      "contour-tree-augmentation-2018"
+    ],
+    "collaborators": [
+      "mohit-sharma",
+      "dhruv-meduri",
+      "vijay-natarajan"
+    ],
+    "students": [
+      "dic-sankey-masters"
+    ],
+    "links": {
+      "code": "",
+      "data": ""
+    }
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "gallery": [],
+  "galleryFolders": [
+    {
+      "id": "gallery-conferences",
+      "title": "Conferences",
+      "folder": "conferences",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-fitness",
+      "title": "Fitness",
+      "folder": "fitness",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-poetry",
+      "title": "Poetry",
+      "folder": "poetry",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-research",
+      "title": "Research",
+      "folder": "research",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-talks",
+      "title": "Talks",
+      "folder": "talks",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-theater",
+      "title": "Theater",
+      "folder": "theater",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    }
+  ],
+  "hobbies": [],
+  "hobbyFolders": [
+    {
+      "id": "hobby-fitness",
+      "title": "Fitness",
+      "folder": "fitness",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "hobby-poetry",
+      "title": "Poetry",
+      "folder": "poetry",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "hobby-theater",
+      "title": "Theater",
+      "folder": "theater",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    }
+  ]
+}
