@@ -422,8 +422,9 @@ function PublicationPage({ id, setRoute }) {
   const videos = videoItems(p);
   const certs = publicationAwardItems(p);
   const previewItems = buildPreviewItems(p, preview, supplements, videos, certs);
-  const defaultPreviewId = p.defaultPreview || p.defaultPreviewId || previewItems[0]?.id || '';
+  const defaultPreviewId = defaultPublicationPreviewId(previewItems, p);
   const [selectedPreviewId, setSelectedPreviewId] = useState(defaultPreviewId);
+  React.useEffect(() => setSelectedPreviewId(defaultPreviewId), [defaultPreviewId]);
   const selectedPreview = previewItems.find(item => item.id === selectedPreviewId) || previewItems[0];
 
   return <Section title={p.title} eyebrow={`${p.venue} · ${p.year}`}>
@@ -454,9 +455,24 @@ function PublicationPage({ id, setRoute }) {
     </Tabs>
   </Section>;
 }
+function defaultPublicationPreviewId(items, pub) {
+  if (items.some(item => item.id === 'paper')) return 'paper';
+  const configured = pub.defaultPreview || pub.defaultPreviewId;
+  if (configured && items.some(item => item.id === configured)) return configured;
+  return items[0]?.id || '';
+}
+function primaryPreviewLabel(pub) {
+  if (pub.previewLabel) return String(pub.previewLabel).replace(/\s+pdf$/i, '').trim();
+  const type = `${pub.type || ''} ${pub.venue || ''}`.toLowerCase();
+  if (type.includes('poster')) {
+    if (type.includes('extended abstract')) return 'Extended Abstract';
+    return 'Poster';
+  }
+  return 'Paper';
+}
 function buildPreviewItems(pub, pdf, supplements = [], videos = [], certificates = []) {
   const items = [];
-  if (pdf) items.push({ id: 'paper', label: pub.previewLabel || 'Paper PDF', type: 'pdf', src: pdf });
+  if (pdf) items.push({ id: 'paper', label: primaryPreviewLabel(pub), type: 'pdf', src: pdf });
   supplements.forEach((s, i) => {
     const src = s.path || s.url;
     if (src && s.preview !== false) items.push({ id: s.id || `supplement-${i + 1}`, label: s.label || `Supplement ${i + 1}`, type: s.type || 'pdf', src });
