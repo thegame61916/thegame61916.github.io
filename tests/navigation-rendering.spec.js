@@ -55,6 +55,16 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
+  test('award badges render one normalized label per awarded publication', async ({ page }) => {
+    await navigateHash(page, 'publications');
+    const badgeTexts = await page.locator('.pub-card .award-badge').evaluateAll(nodes => nodes.map(node => node.textContent.trim()));
+
+    expect(badgeTexts).toContain('Honorable Mention');
+    expect(badgeTexts).toContain('Best Poster');
+    expect(badgeTexts).not.toContain('Honorable Mention Certificate');
+    expect(badgeTexts).not.toContain('Best Poster Award');
+  });
+
   test('project detail page renders related publications and collaborators', async ({ page }) => {
     await navigateHash(page, `project:${firstProject.id}`);
     await expect(page.getByRole('heading', { name: firstProject.title })).toBeVisible();

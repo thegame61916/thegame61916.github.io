@@ -121,10 +121,19 @@ function publicationAwardItems(pub) {
   }
   return [...items, ...(pub.awards || [])];
 }
+function displayAwardLabel(item) {
+  const label = String(item?.label || item?.title || '').trim();
+  const normalized = label.toLowerCase();
+  if (!label) return '';
+  if (/honou?rable mention/.test(normalized)) return 'Honorable Mention';
+  if (/best.*poster|poster.*best/.test(normalized)) return 'Best Poster';
+  if (/best.*paper|paper.*best/.test(normalized)) return 'Best Paper';
+  return label.replace(/\s+certificate$/i, '').replace(/\s+award$/i, '');
+}
 function AwardBadges({ pub, className = '' }) {
-  const items = publicationAwardItems(pub).filter(a => hasValue(a.label || a.title));
-  if (!items.length) return null;
-  return <div className={`award-badges ${className}`}>{items.map((a, i) => <Badge key={`${a.label || a.title}-${i}`} bg="warning" text="dark" className="award-badge">{a.label || a.title}</Badge>)}</div>;
+  const labels = unique(publicationAwardItems(pub).map(displayAwardLabel).filter(Boolean));
+  if (!labels.length) return null;
+  return <div className={`award-badges ${className}`}>{labels.map(label => <Badge key={label} bg="warning" text="dark" className="award-badge">{label}</Badge>)}</div>;
 }
 function LinkButton({ href, children, variant = 'outline-primary', size = 'sm', download = false, className = '', onClick }) {
   if (!hasValue(href) && !onClick) return null;
