@@ -1,10 +1,10 @@
 [
   {
     "id": "dic-sankey-masters",
-    "name": "Master's thesis student",
+    "name": "Victor Persson",
     "category": "Masters",
     "alumni": true,
-    "program": "M.Sc. thesis project",
+    "program": "Master's thesis project",
     "affiliation": "Linköping University",
     "project": "Summarizing Time-Varying Digital Image Correlation Strain Fields Using Sankey Diagrams",
     "duration": "2024–2025",
