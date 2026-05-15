@@ -521,7 +521,7 @@ function Students() {
   const StudentCard = ({ s }) => {
     const href = s.website || '#';
     const linked = Boolean(s.website);
-    const card = <BsCard className="student-card h-100"><BsCard.Body><div className="student-head"><img src={asset(s.photo)} alt={s.name}/><div><h3>{s.name}</h3><p>{s.program} · {s.affiliation}</p></div></div><p>{s.project}</p><small>{s.duration}{s.currentPosition ? ` · Current: ${s.currentPosition}` : ''}</small>{s.links?.length > 0 && <div className="card-actions mt-3">{s.links.map((l,i)=><LinkButton key={i} href={l.url || l.path}>{l.label || `Work ${i+1}`}</LinkButton>)}</div>}</BsCard.Body></BsCard>;
+    const card = <BsCard className="student-card h-100"><BsCard.Body><div className="student-head"><PersonPhoto person={s}/><div><h3>{s.name}</h3><p>{s.program} · {s.affiliation}</p></div></div><p>{s.project}</p><small>{s.duration}{s.currentPosition ? ` · Current: ${s.currentPosition}` : ''}</small>{s.links?.length > 0 && <div className="card-actions mt-3">{s.links.map((l,i)=><LinkButton key={i} href={l.url || l.path}>{l.label || `Work ${i+1}`}</LinkButton>)}</div>}</BsCard.Body></BsCard>;
     return linked ? <a className="student-link" href={href} {...externalAttrs}>{card}</a> : <div className="student-link">{card}</div>;
   };
   const renderGroup = (items, label, order) => <>{order.map(g => {

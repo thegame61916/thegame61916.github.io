@@ -40,6 +40,12 @@ test.describe('local media and asset references', () => {
     }
   });
 
+  test('students do not use generic placeholder images', () => {
+    for (const student of students) {
+      expect(student.photo || '', `${student.name} uses a placeholder image`).not.toMatch(/placeholder/i);
+    }
+  });
+
   test('generated media IDs are unique across gallery and hobbies', () => {
     const ids = [...(generatedMedia.gallery || []), ...(generatedMedia.hobbies || [])].map(item => item.id);
     expect(new Set(ids).size).toBe(ids.length);

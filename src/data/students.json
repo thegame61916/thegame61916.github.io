@@ -13,19 +13,8 @@
     "projects": [
       "time-varying-topology"
     ],
-    "photo": "/assets/students/placeholder.svg",
-    "website": "",
-    "links": [
-      {
-        "label": "Thesis / project PDF",
-        "url": "",
-        "path": ""
-      },
-      {
-        "label": "Project page",
-        "url": "",
-        "path": ""
-      }
-    ]
+    "photo": "",
+    "website": "https://www.linkedin.com/in/victor-persson-0335a7259/",
+    "links": []
   }
 ]
