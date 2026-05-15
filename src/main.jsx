@@ -515,6 +515,22 @@ function Gallery() { const allGallery = [...gallery, ...(generatedMedia.gallery 
 function Contact() { return <Section title="Contact"><Row className="g-3"><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Email</h3>{site.emails.map(e => <p key={e}><a href={`mailto:${e}`}>{e}</a></p>)}<h3>Address</h3><p>{site.affiliation}<br/>Linköping University, Sweden</p></BsCard.Body></BsCard></Col><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Profiles</h3><div className="vertical-links">{Object.entries(site.links).map(([label, url]) => <LinkButton key={label} href={url}>{label}</LinkButton>)}</div></BsCard.Body></BsCard></Col></Row></Section>; }
 function NewsPage({ setRoute }) { const [view, setView] = useState('list'); return <Section title="News / Updates" aside={<ButtonGroup><Button variant={view === 'list' ? 'primary' : 'outline-primary'} onClick={() => setView('list')}><List size={16}/></Button><Button variant={view === 'grid' ? 'primary' : 'outline-primary'} onClick={() => setView('grid')}><LayoutGrid size={16}/></Button></ButtonGroup>}><div className={view === 'grid' ? 'news-grid' : 'news-list'}>{news.map(n => <NewsCard item={n} key={n.date + n.title} setRoute={setRoute}/>)}</div></Section>; }
 function NotFound() { return <Section title="Not found"><p>The requested page was not found.</p></Section>; }
-function App() { const [route, setRoute] = useState(location.hash.replace('#', '') || 'home'); React.useEffect(() => { const fn = () => setRoute(location.hash.replace('#', '') || 'home'); window.addEventListener('hashchange', fn); return () => window.removeEventListener('hashchange', fn); }, []); const setR = r => goRoute(r, setRoute); let page; if (route.startsWith('publication:')) page = <PublicationPage id={route.split(':')[1]} setRoute={setR}/>; else if (route.startsWith('project:')) page = <ProjectPage id={route.split(':')[1]} setRoute={setR}/>; else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>; return <><Header route={route} setRoute={setR}/><Container fluid="xxl" as="main" className="site-main"><GlobalSearch setRoute={setR}/>{page}</Container><footer className="site-footer"><Container fluid="xxl"><strong>{site.name}</strong><span>{site.affiliation}</span><small>Update content through JSON files and media folders; run scan scripts when adding files.</small></Container></footer></>; }
+function App() {
+  const [route, setRoute] = useState(location.hash.replace('#', '') || 'home');
+  React.useEffect(() => {
+    const fn = () => setRoute(location.hash.replace('#', '') || 'home');
+    window.addEventListener('hashchange', fn);
+    return () => window.removeEventListener('hashchange', fn);
+  }, []);
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [route]);
+  const setR = r => goRoute(r, setRoute);
+  let page;
+  if (route.startsWith('publication:')) page = <PublicationPage id={route.split(':')[1]} setRoute={setR}/>;
+  else if (route.startsWith('project:')) page = <ProjectPage id={route.split(':')[1]} setRoute={setR}/>;
+  else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
+  return <><Header route={route} setRoute={setR}/><Container fluid="xxl" as="main" className="site-main"><GlobalSearch setRoute={setR}/>{page}</Container><footer className="site-footer"><Container fluid="xxl"><strong>{site.name}</strong><span>{site.affiliation}</span><small>Update content through JSON files and media folders; run scan scripts when adding files.</small></Container></footer></>;
+}
 
 createRoot(document.getElementById('root')).render(<App/>);

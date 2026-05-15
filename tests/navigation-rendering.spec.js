@@ -55,6 +55,17 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
+  test('opening a publication card resets scroll to the top of the detail page', async ({ page }) => {
+    await navigateHash(page, 'home');
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+
+    await page.locator('.home-pub-card').first().click();
+    await expect(page).toHaveURL(/#publication:/);
+    await expect(page.locator('.publication-detail-head')).toBeVisible();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(20);
+  });
+
   test('award badges render one normalized label per awarded publication', async ({ page }) => {
     await navigateHash(page, 'publications');
     const badgeTexts = await page.locator('.pub-card .award-badge').evaluateAll(nodes => nodes.map(node => node.textContent.trim()));
