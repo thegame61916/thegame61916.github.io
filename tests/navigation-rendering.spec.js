@@ -42,6 +42,13 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
+  test('victor student profile shows the updated program and current position', async ({ page }) => {
+    await navigateHash(page, 'people');
+    await expect(page.getByRole('heading', { name: 'Victor Persson' })).toBeVisible();
+    await expect(page.getByText('M.Sc. Media Technology & Engineering')).toBeVisible();
+    await expect(page.getByText('Application Engineer at Image Systems Motion Analysis')).toBeVisible();
+  });
+
   test('publication detail page renders preview, materials and BibTeX', async ({ page }) => {
     await navigateHash(page, `publication:${firstPublication.id}`);
     await expect(page.getByRole('heading', { name: firstPublication.title })).toBeVisible();
