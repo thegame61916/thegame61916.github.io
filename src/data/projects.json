@@ -3,7 +3,7 @@
     "id": "reeb-space-fiber-analysis",
     "title": "Interactive Fiber Analysis of Bivariate Fields",
     "status": "Ongoing",
-    "image": "/assets/projects/reeb-space.svg",
+    "image": "/assets/teasers/reeb-space-fiber-analysis.png",
     "short": "Efficient algorithms and interfaces for bringing Reeb-space based bivariate analysis into practical use.",
     "description": "This project develops scalable computational frameworks for Reeb spaces, Jacobi sets, and related multivariate topological structures with emphasis on interactive exploration of bivariate scientific fields.",
     "publications": [
@@ -24,7 +24,7 @@
     "id": "electronic-structure-visualization",
     "title": "Topology-Driven Visualization of Electronic Structure Evolution",
     "status": "Completed / Continuing",
-    "image": "/assets/projects/electronic-structure.svg",
+    "image": "/assets/teasers/electronic-structure-visualization.png",
     "short": "Visual analysis of donor-acceptor behavior, electronic transitions, and molecular electronic structure evolution.",
     "description": "This line of work uses bivariate fields, continuous scatterplots, image moments, and topological analysis to study molecular electronic transitions and light-induced electronic structure changes.",
     "publications": [
@@ -51,7 +51,7 @@
     "id": "spectral-ct-volume-fusion",
     "title": "Topology-Aware Volume Fusion for Spectral CT",
     "status": "Ongoing",
-    "image": "/assets/projects/spectral-ct.svg",
+    "image": "/assets/teasers/spectral-ct-volume-fusion.png",
     "short": "Feature-preserving fusion of multi-energy spectral CT volumes using histograms and extremum graphs.",
     "description": "This project explores topology-aware fusion strategies that preserve salient anatomical structures while reducing dimensionality and improving compatibility with standard CT visualization workflows.",
     "publications": [
@@ -78,7 +78,7 @@
     "id": "time-varying-topology",
     "title": "Feature Tracking in Time-Varying Data",
     "status": "Ongoing",
-    "image": "/assets/projects/time-varying.svg",
+    "image": "/assets/teasers/time-varying-topology.png",
     "short": "Topology-based simplification and tracking of features in time-varying scalar and bivariate fields.",
     "description": "This research studies Jacobi sets and related structures for extracting, simplifying, and tracking topological features over time in scientific datasets.",
     "publications": [

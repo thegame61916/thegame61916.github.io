@@ -338,12 +338,13 @@ function deriveThemes() {
   return defaultThemes.map(t => {
     const pubs = publications.filter(p => pubKeywords(p).some(k => normalizeKeyword(k).includes(t.id.split('-')[0])) || (p.themes || []).includes(t.id) || (p.projects || []).some(pid => (projectMap[pid]?.themes || []).includes(t.id)));
     const projs = projects.filter(p => (p.themes || []).includes(t.id) || (p.publications || []).some(pid => pubs.some(x => x.id === pid)));
-    return { ...t, publications: pubs, projects: projs };
+    const image = projs.find(p => p.image)?.image || pubs.find(p => p.thumbnail)?.thumbnail || '';
+    return { ...t, publications: pubs, projects: projs, image };
   });
 }
 function ThemeCard({ theme, setRoute, list = false }) {
   const [open, setOpen] = useState(false);
-  return <BsCard className={`theme-card h-100 ${list ? 'theme-card-list' : ''}`}><BsCard.Body><h3>{theme.title}</h3><p>{theme.description}</p><div className="summary-pills"><button onClick={() => goRoute('publications', setRoute)}>{theme.publications.length} publications</button><button onClick={() => goRoute('projects', setRoute)}>{theme.projects.length} projects</button></div><Button variant="link" size="sm" className="p-0 mt-2" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button><Collapse in={open}><div className="compact-related mt-2">{theme.publications.slice(0, 6).map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.title}</button>)}</div></Collapse></BsCard.Body></BsCard>;
+  return <BsCard className={`theme-card h-100 ${list ? 'theme-card-list' : ''}`}>{theme.image && <div className="theme-thumb"><img src={asset(theme.image)} alt={`${theme.title} teaser`} loading="lazy"/></div>}<BsCard.Body><h3>{theme.title}</h3><p>{theme.description}</p><div className="summary-pills"><button onClick={() => goRoute('publications', setRoute)}>{theme.publications.length} publications</button><button onClick={() => goRoute('projects', setRoute)}>{theme.projects.length} projects</button></div><Button variant="link" size="sm" className="p-0 mt-2" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button><Collapse in={open}><div className="compact-related mt-2">{theme.publications.slice(0, 6).map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.title}</button>)}</div></Collapse></BsCard.Body></BsCard>;
 }
 function Projects({ setRoute }) {
   const [view, setView] = useState('grid');

@@ -42,6 +42,14 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
+  test('research themes render teaser images for every card', async ({ page }) => {
+    await navigateHash(page, 'research');
+    await expect(page.locator('.theme-card img')).toHaveCount(4);
+    await expect(page.locator('.theme-card img').first()).toBeVisible();
+    await expectHealthyLayout(page);
+    await page.assertNoErrors();
+  });
+
   test('victor student profile shows the updated program and current position', async ({ page }) => {
     await navigateHash(page, 'people');
     await expect(page.getByRole('heading', { name: 'Victor Persson' })).toBeVisible();

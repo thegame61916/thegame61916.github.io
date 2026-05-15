@@ -16,7 +16,7 @@
     "doi": "https://doi.org/10.1109/TVCG.2025.3543619",
     "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/Paper_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
     "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/Supp_Material_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
-    "thumbnail": "/assets/publications/csp-moments-2025.svg",
+    "thumbnail": "/assets/teasers/csp-moments-2025.png",
     "tags": [
       "continuous scatterplots",
       "time-varying data",
@@ -82,7 +82,7 @@
     "doi": "https://doi.org/10.1109/TVCG.2023.3237768",
     "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/CSPOperators_Mohit.pdf",
     "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/supplementary_CSPOperators_Mohit.pdf",
-    "thumbnail": "/assets/publications/csp-operators-2024.svg",
+    "thumbnail": "/assets/teasers/csp-operators-2024.png",
     "tags": [
       "continuous scatterplots",
       "bivariate analysis",
@@ -140,7 +140,7 @@
     "doi": "https://doi.org/10.1007/s00371-024-03484-2",
     "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/Jacobi_Set_Simplification_for_Tracking_TOPO_FeaturesinTVSF.pdf",
     "supplement": "https://vgl.csa.iisc.ac.in/pdf/pub/JS_Simplification_Supplementary.pdf",
-    "thumbnail": "/assets/publications/jacobi-simplification-2024.svg",
+    "thumbnail": "/assets/teasers/jacobi-simplification-2024.png",
     "tags": [
       "Jacobi sets",
       "time-varying scalar fields",
@@ -201,7 +201,7 @@
     "year": 2025,
     "doi": "https://doi.org/10.1109/TopoInVis68599.2025.00010",
     "pdf": "https://arxiv.org/pdf/2508.14719",
-    "thumbnail": "/assets/publications/volume-fusion-2025.svg",
+    "thumbnail": "/assets/teasers/volume-fusion-2025.png",
     "tags": [
       "spectral CT",
       "extremum graph",
@@ -266,7 +266,7 @@
     "year": 2025,
     "doi": "",
     "pdf": "https://conferences.eg.org/vcbm2025/wp-content/uploads/sites/26/2025/09/Topology-Guided-Volume-Fusion-for-Multi-Energy-Spectral-Computed-Tomography.pdf",
-    "thumbnail": "/assets/publications/spectral-ct-vcbm-poster-2025.svg",
+    "thumbnail": "/assets/teasers/spectral-ct-vcbm-poster-2025.png",
     "tags": [
       "spectral CT",
       "multi-energy CT",
@@ -330,7 +330,7 @@
     "venue": "TopoInVis",
     "year": 2022,
     "doi": "https://doi.org/10.1109/TopoInVis57755.2022.00012",
-    "thumbnail": "/assets/publications/fiber-surface-2022.svg",
+    "thumbnail": "/assets/teasers/fiber-surface-2022.png",
     "tags": [
       "fiber surfaces",
       "Jacobi sets",
@@ -380,7 +380,7 @@
     "year": 2021,
     "doi": "https://doi.org/10.1109/VIS49827.2021.9623300",
     "pdf": "https://www.diva-portal.se/smash/get/diva2%3A1626723/FULLTEXT02.pdf",
-    "thumbnail": "/assets/publications/segmentation-peeling-2021.svg",
+    "thumbnail": "/assets/teasers/segmentation-peeling-2021.png",
     "tags": [
       "electronic transitions",
       "visual analysis",
@@ -425,7 +425,7 @@
     "venue": "ICVGIP",
     "year": 2018,
     "doi": "https://doi.org/10.1145/3293353.3293384",
-    "thumbnail": "/assets/publications/contour-tree-augmentation-2018.svg",
+    "thumbnail": "/assets/teasers/contour-tree-augmentation-2018.png",
     "tags": [
       "contour trees",
       "topology",

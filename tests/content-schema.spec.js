@@ -26,6 +26,7 @@ test.describe('content data integrity', () => {
       expect(publication.venue, `${publication.id} venue`).toBeTruthy();
       expect(publication.year, `${publication.id} year`).toBeTruthy();
       expect(publication.thumbnail, `${publication.id} thumbnail`).toMatch(/^\/assets\//);
+      expect(publication.thumbnail, `${publication.id} thumbnail`).toMatch(/\.png$/);
       expect(publication.abstract, `${publication.id} abstract`).toBeTruthy();
       expect(publication.filterKeywords?.length || 0, `${publication.id} filterKeywords`).toBeGreaterThan(0);
       for (const authorId of publication.authors || []) expect(collaboratorIds.has(authorId), `${publication.id} missing author ${authorId}`).toBe(true);
@@ -36,6 +37,7 @@ test.describe('content data integrity', () => {
       expect(project.title, `${project.id} title`).toBeTruthy();
       expect(project.short, `${project.id} short`).toBeTruthy();
       expect(project.image, `${project.id} image`).toMatch(/^\/assets\//);
+      expect(project.image, `${project.id} image`).toMatch(/\.png$/);
       for (const publicationId of project.publications || []) expect(publicationIds.has(publicationId), `${project.id} missing publication ${publicationId}`).toBe(true);
       for (const collaboratorId of project.collaborators || []) expect(collaboratorIds.has(collaboratorId), `${project.id} missing collaborator ${collaboratorId}`).toBe(true);
     }
