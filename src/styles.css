@@ -203,3 +203,46 @@
 }
 .search-panel button.active,
 .search-panel button[aria-selected="true"]{background:var(--soft);outline:2px solid rgba(23,87,126,.22);outline-offset:-2px}
+
+/* Wide-screen edge alignment: keep the main navigation and hero anchored to the viewport, not an old fixed desktop cap. */
+.container-xxl,
+.site-nav .container-xxl{
+  max-width:calc(100vw - clamp(16px,2vw,48px))!important;
+}
+.site-main{
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.site-nav .container-xxl{
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.hero-grid{
+  grid-template-columns:minmax(0,1fr) clamp(360px,22vw,520px)!important;
+  gap:clamp(1rem,1.35vw,2rem);
+}
+@media(min-width:1900px){
+  .container-xxl,
+  .site-nav .container-xxl{
+    max-width:calc(100vw - 48px)!important;
+  }
+  .profile-panel img{
+    width:clamp(178px,8vw,220px);
+    height:clamp(178px,8vw,220px);
+  }
+}
+@media(max-width:1199px){
+  .hero-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+@media(max-width:767px){
+  .container-xxl,
+  .site-nav .container-xxl{
+    max-width:calc(100vw - 12px)!important;
+  }
+  .site-nav .container-xxl{
+    padding-left:.5rem!important;
+    padding-right:.5rem!important;
+  }
+}

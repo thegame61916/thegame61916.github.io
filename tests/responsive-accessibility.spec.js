@@ -54,4 +54,31 @@ test.describe('responsive layout and accessibility basics', () => {
     await expectHealthyLayout(page);
     await page.assertNoErrors();
   });
+
+  test('wide screens keep navigation and hero close to viewport edges', async ({ page }) => {
+    await page.setViewportSize({ width: 2560, height: 1200 });
+    await navigateHash(page, 'home');
+
+    const metrics = await page.evaluate(() => {
+      const nav = document.querySelector('.site-nav .container-xxl').getBoundingClientRect();
+      const hero = document.querySelector('.hero-grid').getBoundingClientRect();
+      const profile = document.querySelector('.profile-panel').getBoundingClientRect();
+      return {
+        viewportWidth: window.innerWidth,
+        navLeft: nav.left,
+        navRightGap: window.innerWidth - nav.right,
+        heroLeft: hero.left,
+        heroRightGap: window.innerWidth - hero.right,
+        profileRightGap: window.innerWidth - profile.right
+      };
+    });
+
+    expect(metrics.navLeft).toBeLessThanOrEqual(28);
+    expect(metrics.navRightGap).toBeLessThanOrEqual(28);
+    expect(metrics.heroLeft).toBeLessThanOrEqual(28);
+    expect(metrics.heroRightGap).toBeLessThanOrEqual(28);
+    expect(metrics.profileRightGap).toBeLessThanOrEqual(28);
+    await expectHealthyLayout(page);
+    await page.assertNoErrors();
+  });
 });
