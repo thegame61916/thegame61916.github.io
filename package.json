@@ -13,7 +13,11 @@
     "validate:content": "node scripts/validate-content.js",
     "prepare:content": "npm run scan:media && npm run extract:keywords && npm run validate:content",
     "setup": "npm install && npm run prepare:content",
-    "build:with-keywords": "npm run scan:media && npm run extract:keywords && npm run validate:content && vite build"
+    "build:with-keywords": "npm run scan:media && npm run extract:keywords && npm run validate:content && vite build",
+    "test": "npm run validate:content && npm run test:e2e",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:node22": "npx -y -p node@22 -c 'playwright test'"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.1",
@@ -26,6 +30,7 @@
     "vite": "8.0.12"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "pdf-parse": "2.4.5"
   }
 }

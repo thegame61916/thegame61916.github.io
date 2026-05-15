@@ -128,8 +128,9 @@ function AwardBadges({ pub, className = '' }) {
 }
 function LinkButton({ href, children, variant = 'outline-primary', size = 'sm', download = false, className = '', onClick }) {
   if (!hasValue(href) && !onClick) return null;
-  const external = href && String(href).startsWith('http');
-  return <Button as={href ? 'a' : 'button'} size={size} variant={variant} className={`rounded-pill d-inline-flex align-items-center gap-1 ${className}`} href={href} download={download || undefined} onClick={onClick} {...(external ? externalAttrs : {})}>{children}{external && <ExternalLink size={13} />}</Button>;
+  const linkHref = hasValue(href) ? href : undefined;
+  const external = linkHref && String(linkHref).startsWith('http');
+  return <Button as={linkHref ? 'a' : 'button'} size={size} variant={variant} className={`rounded-pill d-inline-flex align-items-center gap-1 ${className}`} href={linkHref} download={download || undefined} onClick={onClick} {...(external ? externalAttrs : {})}>{children}{external && <ExternalLink size={13} />}</Button>;
 }
 function Section({ title, eyebrow, children, aside }) {
   return <section className="section"><div className="section-title-row"><div>{eyebrow && <div className="eyebrow">{eyebrow}</div>}<h2>{title}</h2></div>{aside}</div>{children}</section>;
