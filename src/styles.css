@@ -197,6 +197,11 @@
 .home-media-block .home-media-preview video,
 .home-media-block .home-media-preview img{width:100%!important;height:100%!important;object-fit:cover}
 .home-media-block .home-media-select + .home-media-preview{margin-top:.85rem}
+
+/* Collaborator image fallback for records without an official headshot. */
+.person-initials{display:inline-grid;place-items:center;border-radius:50%;background:#edf6fb;color:#17577e;font-weight:800;border:1px solid var(--line);flex:0 0 auto}
+.person-chip .person-initials{width:36px;height:36px;font-size:.78rem}
+.person-card .person-initials{width:96px;height:96px;margin:0 auto;font-size:1.55rem}
 @media(max-width:1199px){
   .home-side-column{height:auto}
   .home-media-block{margin-top:1rem!important}

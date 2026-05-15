@@ -34,6 +34,12 @@ test.describe('local media and asset references', () => {
     for (const assetPath of paths) expect(publicAssetExists(assetPath), `Missing asset: ${assetPath}`).toBe(true);
   });
 
+  test('collaborators do not use generic placeholder images', () => {
+    for (const collaborator of collaborators) {
+      expect(collaborator.photo || '', `${collaborator.name} uses a placeholder image`).not.toMatch(/placeholder/i);
+    }
+  });
+
   test('generated media IDs are unique across gallery and hobbies', () => {
     const ids = [...(generatedMedia.gallery || []), ...(generatedMedia.hobbies || [])].map(item => item.id);
     expect(new Set(ids).size).toBe(ids.length);
