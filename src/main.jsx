@@ -318,7 +318,20 @@ function About() { return <><Section title="Biography"><div className="prose"><p
 function AwardsSection() {
   const paperAwards = publications.filter(p => p.award).map(p => ({ title: p.award, organization: p.venue, year: p.year, description: p.title, publicationId: p.id }));
   const merged = [...paperAwards, ...awards];
-  return <Section title="Awards and Recognitions"><Row className="g-3">{merged.map((a, idx) => <Col md={6} xl={4} key={`${a.title}-${idx}`}><button className="award-card card h-100" onClick={() => a.publicationId && (location.hash = `publication:${a.publicationId}`)}><BsCard.Body><Award size={18}/><h3>{a.title}</h3><p>{a.organization} · {a.year}</p><small>{a.description}</small></BsCard.Body></button></Col>)}</Row></Section>;
+  const deduped = Object.values(merged.reduce((acc, item) => {
+    const key = `${String(item.title || '').trim().toLowerCase()}::${String(item.year || '').trim()}`;
+    const prev = acc[key];
+    if (!prev) {
+      acc[key] = item;
+      return acc;
+    }
+    const prevDescLen = String(prev.description || '').trim().length;
+    const nextDescLen = String(item.description || '').trim().length;
+    // Keep the richer entry when duplicates exist (typically the curated JSON item).
+    if (nextDescLen > prevDescLen) acc[key] = item;
+    return acc;
+  }, {}));
+  return <Section title="Awards and Recognitions"><Row className="g-3">{deduped.map((a, idx) => <Col md={6} xl={4} key={`${a.title}-${idx}`}><button className="award-card card h-100" onClick={() => a.publicationId && (location.hash = `publication:${a.publicationId}`)}><BsCard.Body><Award size={18}/><h3>{a.title}</h3><p>{a.organization} · {a.year}</p><small>{a.description}</small></BsCard.Body></button></Col>)}</Row></Section>;
 }
 function ViewSwitch({ view, setView }) {
   return <ButtonGroup aria-label="Switch view"><Button variant={view === 'list' ? 'primary' : 'outline-primary'} onClick={() => setView('list')}><List size={16}/></Button><Button variant={view === 'grid' ? 'primary' : 'outline-primary'} onClick={() => setView('grid')}><LayoutGrid size={16}/></Button></ButtonGroup>;
