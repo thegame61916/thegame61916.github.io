@@ -7,7 +7,7 @@
       "id": "recent-talk-placeholder",
       "type": "image",
       "title": "Recent Talk Highlight",
-      "caption": "Add a recent talk photo, poster image, or visualization highlight here.",
+      "caption": "",
       "image": "/assets/gallery/research-placeholder.svg",
       "alt": "Placeholder media highlight",
       "link": "#talks",
