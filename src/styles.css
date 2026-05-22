@@ -305,7 +305,7 @@
   z-index:0;
   background-image:var(--pub-teaser-image);
   background-size:cover;
-  background-position:center;
+  background-position:var(--pub-teaser-focus, 50% 50%);
   filter:blur(20px) saturate(1.08);
   transform:scale(1.05);
   opacity:.78;
@@ -323,11 +323,190 @@
   width:100%!important;
   height:100%!important;
   aspect-ratio:auto!important;
-  object-fit:contain!important;
-  object-position:center center!important;
-  padding:.35rem!important;
+  object-fit:cover!important;
+  object-position:var(--pub-teaser-focus, 50% 50%)!important;
+  padding:0!important;
   border:0!important;
   border-radius:0!important;
   box-shadow:none!important;
   background:transparent!important;
+}
+
+/* Match publication + homepage thumbnails to the same immersive cover-fill style. */
+.pub-thumb,
+.home-pub-list-card .home-pub-thumb{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(165deg,#eef4f9,#e9f2f8)!important;
+}
+.pub-thumb::before,
+.home-pub-list-card .home-pub-thumb::before{
+  content:"";
+  position:absolute;
+  inset:-6%;
+  z-index:0;
+  background-image:var(--pub-teaser-image);
+  background-size:cover;
+  background-position:var(--pub-teaser-focus, 50% 50%);
+  filter:blur(16px) saturate(1.05);
+  transform:scale(1.04);
+  opacity:.74;
+}
+.pub-thumb::after,
+.home-pub-list-card .home-pub-thumb::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:radial-gradient(circle at center, rgba(255,255,255,.06), rgba(15,23,42,.1));
+}
+.pub-thumb img,
+.home-pub-list-card .home-pub-thumb img{
+  position:relative!important;
+  z-index:2;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:var(--pub-teaser-focus, 50% 50%)!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+
+/* Home card stability: prevent grid-height overflow and keep cover fill clipped to frame. */
+.home-pub-list-card .home-pub-thumb{
+  min-height:0!important;
+  align-self:stretch;
+}
+.home-pub-list-card .home-pub-thumb img{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+}
+@media(min-width:641px){
+  .home-pub-list-card .home-pub-thumb{
+    aspect-ratio:auto!important;
+    height:100%;
+  }
+}
+
+/* Final guardrail: force homepage publication thumbnails to stay inside card bounds. */
+.home-pub-card.home-pub-list-card{
+  overflow:hidden!important;
+}
+.home-pub-card.home-pub-list-card .home-pub-thumb{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  line-height:0!important;
+  overflow:hidden!important;
+}
+.home-pub-card.home-pub-list-card .home-pub-thumb::before,
+.home-pub-card.home-pub-list-card .home-pub-thumb::after,
+.home-pub-card.home-pub-list-card .home-pub-thumb img{
+  position:absolute!important;
+  inset:0!important;
+}
+.home-pub-card.home-pub-list-card .home-pub-thumb img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  aspect-ratio:auto!important;
+  object-fit:cover!important;
+  object-position:var(--pub-teaser-focus, 50% 50%)!important;
+}
+@supports (overflow: clip){
+  .home-pub-card.home-pub-list-card .home-pub-thumb{
+    overflow:clip!important;
+  }
+}
+
+/* Publication card top row: links aligned right of `type · year` (home + publications page). */
+.pub-topline-right{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.45rem;
+  flex-wrap:wrap;
+  margin-left:auto;
+}
+.pub-topline-right .award-badges{
+  margin:0;
+}
+.pub-topline-links{
+  justify-content:flex-end;
+  gap:.35rem;
+}
+.pub-topline-links .btn{
+  white-space:nowrap;
+}
+@media(max-width:991px){
+  .pub-topline-right{
+    width:100%;
+    justify-content:flex-start;
+    margin-left:0;
+    margin-top:.35rem;
+  }
+  .pub-topline-links{
+    justify-content:flex-start;
+  }
+}
+
+/* Publication list cards: teaser column stretches with long details and divider spans full card height. */
+.pub-card-list{
+  align-items:stretch!important;
+  grid-template-columns:minmax(260px,340px) minmax(0,1fr)!important;
+}
+.pub-card-list .pub-thumb{
+  align-self:stretch!important;
+  height:100%!important;
+  min-height:100%!important;
+  aspect-ratio:auto!important;
+  width:100%!important;
+  border-right:1px solid var(--line)!important;
+  border-bottom:0!important;
+}
+.pub-card-list .pub-thumb::before,
+.pub-card-list .pub-thumb::after,
+.pub-card-list .pub-thumb img{
+  position:absolute!important;
+  inset:0!important;
+}
+.pub-card-list .pub-thumb img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:var(--pub-teaser-focus, 50% 50%)!important;
+}
+.pub-card .card-body{
+  padding:.85rem 1rem!important;
+}
+.pub-card .card-body p{
+  margin-bottom:.35rem;
+}
+.pub-card .card-body h3{
+  margin:.4rem 0 .35rem;
+}
+@media(max-width:991px){
+  .pub-card-list{
+    grid-template-columns:1fr!important;
+  }
+  .pub-card-list .pub-thumb{
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:16/9!important;
+    border-right:0!important;
+    border-bottom:1px solid var(--line)!important;
+  }
 }

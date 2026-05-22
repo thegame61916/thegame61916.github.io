@@ -234,7 +234,7 @@ function Home({ setRoute }) {
       <div className="hero-copy"><div className="eyebrow">{site.title} · {site.affiliation}</div><h1>{site.name}</h1><p className="tagline">{site.tagline}</p><p className="lead mb-3">{site.bioShort}</p><div className="hero-actions"><LinkButton href="#publications" variant="primary">Publications</LinkButton><LinkButton href={site.cv}>Download CV</LinkButton><LinkButton href={site.links['Google Scholar']}>Google Scholar</LinkButton><LinkButton href={site.links.LinkedIn}>LinkedIn</LinkButton><LinkButton href={`mailto:${site.emails[0]}`}>Contact</LinkButton></div></div>
       <div className="profile-panel"><img src={asset(site.photo)} alt={`${site.name} profile`} /><h3>{site.name}</h3><p>{site.title}</p><small>Linköping University, Sweden</small><div className="stats-row two"><Stat value={publications.length} label="publications" route="publications" setRoute={setRoute}/><Stat value={themeCount} label="research themes" route="research" setRoute={setRoute}/></div></div>
     </section>
-    <Row className="g-4 mt-1 home-lower"><Col xl={8}><Section title="Recent Publications" aside={<Button variant="link" size="sm" onClick={() => goRoute('publications', setRoute)}>View all</Button>}><div className="home-publications">{featured.map(p => <HomePublicationCard key={p.id} pub={p} setRoute={setRoute}/>)}</div></Section></Col><Col xl={4} className="home-side-column"><Section title="News"><ScrollableNews setRoute={setRoute}/></Section><HomeMediaHighlight setRoute={setRoute}/></Col></Row>
+    <Row className="g-4 mt-1 home-lower"><Col xl={8}><Section title="Recent Publications" aside={<Button variant="link" size="sm" onClick={() => goRoute('publications', setRoute)}>View all</Button>}><div className="home-publications pub-list">{featured.map(p => <PublicationCard key={p.id} pub={p} setRoute={setRoute} list />)}</div></Section></Col><Col xl={4} className="home-side-column"><Section title="News"><ScrollableNews setRoute={setRoute}/></Section><HomeMediaHighlight setRoute={setRoute}/></Col></Row>
   </>;
 }
 function ScrollableNews({ setRoute }) {
@@ -373,15 +373,15 @@ function Publications({ setRoute }) {
 }
 function PublicationCard({ pub, setRoute, list = false }) {
   const kws = pubKeywords(pub, { forFilter: true });
+  const links = <div className="card-actions pub-topline-links"><Button size="sm" className="rounded-pill" onClick={(e) => { e.stopPropagation(); goRoute(`publication:${pub.id}`, setRoute); }}>Details</Button><LinkButton href={primaryPubLink(pub)} onClick={(e) => e?.stopPropagation?.()}>PDF</LinkButton><LinkButton href={pub.doi} onClick={(e) => e?.stopPropagation?.()}>DOI</LinkButton></div>;
   return <div role="button" tabIndex={0} className={`pub-card card h-100 ${list ? 'pub-card-list' : ''}`} onClick={() => goRoute(`publication:${pub.id}`, setRoute)} onKeyDown={(e) => { if (e.key === 'Enter') goRoute(`publication:${pub.id}`, setRoute); }}>
-    <div className="pub-thumb"><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
+    <div className="pub-thumb" style={{ '--pub-teaser-image': `url("${asset(pub.thumbnail)}")`, '--pub-teaser-focus': pub.thumbnailFocus || pub.teaserFocus || '50% 50%' }}><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
     <BsCard.Body>
-      <div className="pub-topline"><span className="pub-meta">{pub.type} · {pub.year}</span><AwardBadges pub={pub}/></div>
+      <div className="pub-topline"><span className="pub-meta">{pub.type} · {pub.year}</span><div className="pub-topline-right"><AwardBadges pub={pub}/>{links}</div></div>
       <h3>{pub.title}</h3>
       <p className="authors">{pub.authorText}</p>
       <p><em>{pub.venue}</em></p>
       <Tags tags={kws} limit={list ? 12 : 8}/>
-      <div className="card-actions"><Button size="sm" className="rounded-pill" onClick={(e) => { e.stopPropagation(); goRoute(`publication:${pub.id}`, setRoute); }}>Details</Button><LinkButton href={primaryPubLink(pub)} onClick={(e) => e?.stopPropagation?.()}>PDF</LinkButton><LinkButton href={pub.doi} onClick={(e) => e?.stopPropagation?.()}>DOI</LinkButton></div>
     </BsCard.Body>
   </div>;
 }
@@ -395,7 +395,7 @@ function HomePublicationCard({ pub, setRoute }) {
     onClick={() => goRoute(`publication:${pub.id}`, setRoute)}
     onKeyDown={(e) => { if (e.key === 'Enter') goRoute(`publication:${pub.id}`, setRoute); }}
   >
-    <div className="home-pub-thumb"><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
+    <div className="home-pub-thumb" style={{ '--pub-teaser-image': `url("${asset(pub.thumbnail)}")`, '--pub-teaser-focus': pub.thumbnailFocus || pub.teaserFocus || '50% 50%' }}><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
     <div className="home-pub-body">
       <div className="home-pub-topline"><span className="pub-meta">{pub.type} · {pub.year}</span><AwardBadges pub={pub}/></div>
       <h3>{pub.title}</h3>
@@ -431,7 +431,7 @@ function PublicationPage({ id, setRoute }) {
   return <Section title={p.title} eyebrow={`${p.venue} · ${p.year}`}>
     <Row className="g-4 align-items-start publication-detail-head">
       <Col lg={4} xl={3}>
-        <div className="publication-teaser-wrap" style={{ '--pub-teaser-image': `url("${asset(p.thumbnail)}")` }}><img className="publication-teaser" src={asset(p.thumbnail)} alt={`${p.title} teaser`} /></div>
+        <div className="publication-teaser-wrap" style={{ '--pub-teaser-image': `url("${asset(p.thumbnail)}")`, '--pub-teaser-focus': p.thumbnailFocus || p.teaserFocus || '50% 50%' }}><img className="publication-teaser" src={asset(p.thumbnail)} alt={`${p.title} teaser`} /></div>
         <div className="card-actions mt-3"><LinkButton href={preview} variant="primary">Download PDF</LinkButton>{supplements.slice(0,2).map((s,i)=><LinkButton key={i} href={s.path || s.url}>{s.label || 'Supplement'}</LinkButton>)}{certs.slice(0,2).map((c,i)=><LinkButton key={`cert-${i}`} href={c.path || c.url}>{c.label || c.title || `Certificate ${i+1}`}</LinkButton>)}<LinkButton href={p.doi}>DOI</LinkButton></div>
       </Col>
       <Col lg={8} xl={9}>
