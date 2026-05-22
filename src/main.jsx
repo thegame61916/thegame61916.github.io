@@ -431,7 +431,7 @@ function PublicationPage({ id, setRoute }) {
   return <Section title={p.title} eyebrow={`${p.venue} · ${p.year}`}>
     <Row className="g-4 align-items-start publication-detail-head">
       <Col lg={4} xl={3}>
-        <div className="publication-teaser-wrap"><img className="publication-teaser" src={asset(p.thumbnail)} alt={`${p.title} teaser`} /></div>
+        <div className="publication-teaser-wrap" style={{ '--pub-teaser-image': `url("${asset(p.thumbnail)}")` }}><img className="publication-teaser" src={asset(p.thumbnail)} alt={`${p.title} teaser`} /></div>
         <div className="card-actions mt-3"><LinkButton href={preview} variant="primary">Download PDF</LinkButton>{supplements.slice(0,2).map((s,i)=><LinkButton key={i} href={s.path || s.url}>{s.label || 'Supplement'}</LinkButton>)}{certs.slice(0,2).map((c,i)=><LinkButton key={`cert-${i}`} href={c.path || c.url}>{c.label || c.title || `Certificate ${i+1}`}</LinkButton>)}<LinkButton href={p.doi}>DOI</LinkButton></div>
       </Col>
       <Col lg={8} xl={9}>
@@ -513,7 +513,7 @@ function PersonPhoto({ person, className = '', style }) {
   return <span className={`person-initials ${className}`} style={style} aria-label={person.name}>{personInitials(person)}</span>;
 }
 function PeopleStrip({ ids = [] }) { return <div className="people-strip">{ids.map(id => people[id]).filter(Boolean).map(person => <a key={person.id} href={person.website || '#'} {...(person.website ? externalAttrs : {})} className="person-chip"><PersonPhoto person={person}/><span><strong>{person.name}</strong><small>{person.affiliation}</small></span></a>)}</div>; }
-function People() { return <><Section title="Collaborators"><Row className="g-3">{collaborators.filter(c => c.id !== 'mohit-sharma').map(c => <Col sm={6} lg={4} xl={3} xxl={2} key={c.id}><a href={c.website || '#'} {...(c.website ? externalAttrs : {})} className="person-card card h-100" style={{display:'flex',alignItems:'center',gap:'1rem',textAlign:'left',padding:'1rem'}}><PersonPhoto person={c} className="person-card-photo" style={{width:'84px',height:'84px',borderRadius:'50%',objectFit:'cover',background:'#f1f5f9',flex:'0 0 auto',margin:0}}/><div className="person-card-body" style={{minWidth:0,flex:1,display:'flex',flexDirection:'column',justifyContent:'center'}}><h3>{c.name}</h3><p>{c.designation}</p><small>{c.affiliation}</small><em>{c.area}</em></div></a></Col>)}</Row></Section><Students/></>; }
+function People() { return <><Section title="Collaborators"><Row className="g-3">{collaborators.filter(c => c.id !== 'mohit-sharma').map(c => <Col sm={6} lg={4} xl={3} xxl={2} key={c.id}><a href={c.website || '#'} {...(c.website ? externalAttrs : {})} className="person-card person-card--collaborator card h-100"><PersonPhoto person={c} className="person-card-photo"/><div className="person-card-body"><h3>{c.name}</h3><p>{c.designation}</p><small>{c.affiliation}</small><em>{c.area}</em></div></a></Col>)}</Row></Section><Students/></>; }
 function Students() {
   const liveOrder = ['Masters','Undergrad','Intern','PhD','Postdoc'];
   const alumniOrder = ['Masters','Undergrad','Intern','PhD','Postdoc'];

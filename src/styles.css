@@ -256,3 +256,78 @@
 
 /* Research theme teasers. */
 .theme-card{overflow:hidden}.theme-thumb{width:100%;aspect-ratio:16/9;background:#f8fafc;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}.theme-thumb img{width:100%;height:100%;object-fit:contain;background:#f8fafc;border-bottom:0}
+
+/* Collaborator cards: image left, details right. */
+.person-card{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:1rem}
+.person-card .person-card-photo{width:92px;height:92px;border-radius:18px;object-fit:cover;margin:0}
+.person-card--collaborator .person-card-photo{border-radius:50%}
+.person-card-body{min-width:0;display:flex;flex-direction:column;justify-content:center}
+.person-card-body h3{margin:0 0 .2rem}
+.person-card-body p{margin:.15rem 0}
+.person-card-body em{display:block;color:var(--muted);font-size:.82rem;margin-top:.35rem}
+@media(max-width:767px){
+  .person-card{grid-template-columns:78px minmax(0,1fr);gap:.85rem}
+  .person-card .person-card-photo{width:78px;height:78px}
+}
+
+/* Preserve full paper teaser thumbnails in homepage publication cards (no cropping). */
+.home-pub-list-card .home-pub-thumb{
+  min-height:0!important;
+}
+.home-pub-list-card .home-pub-thumb img{
+  position:static!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:none!important;
+  padding:.55rem!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+@media(max-width:640px){
+  .home-pub-list-card .home-pub-thumb img{
+    height:auto!important;
+  }
+}
+
+/* Publication detail teaser: no crop artifacts + immersive blend into container. */
+.publication-teaser-wrap{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(165deg,#eef4f9,#e9f2f8)!important;
+}
+.publication-teaser-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-6%;
+  z-index:0;
+  background-image:var(--pub-teaser-image);
+  background-size:cover;
+  background-position:center;
+  filter:blur(20px) saturate(1.08);
+  transform:scale(1.05);
+  opacity:.78;
+}
+.publication-teaser-wrap::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:radial-gradient(circle at center, rgba(255,255,255,.06), rgba(15,23,42,.12));
+}
+.publication-teaser-wrap .publication-teaser{
+  position:relative!important;
+  z-index:2;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:.35rem!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
