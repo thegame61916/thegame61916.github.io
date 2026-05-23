@@ -374,7 +374,7 @@ function HomeMediaPreview({ item }) {
   const src = item.image || item.path || item.video || item.url || '';
   if (type === 'youtube') {
     const embedUrl = toYouTubeEmbed(item.url || item.video, item.autoplayMuted && inView);
-    return <div className="home-media-preview" ref={ref}><iframe title={item.title || 'YouTube media highlight'} src={embedUrl} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div>;
+    return <div className="home-media-preview" ref={ref}><iframe title={item.title || 'YouTube media highlight'} src={embedUrl} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; compute-pressure" allowFullScreen loading="lazy" /></div>;
   }
   if (type === 'video') {
     return <div className="home-media-preview" ref={ref}><video src={asset(src)} poster={item.poster ? asset(item.poster) : undefined} muted={item.muted !== false} autoPlay={item.autoplayMuted !== false && inView} loop={item.loop !== false} playsInline controls={item.controls === true} preload="metadata" /></div>;
@@ -603,7 +603,7 @@ function PreviewItem({ item }) {
   if (!item?.src) return null;
   const src = item.type === 'video' ? youtubeEmbed(item.src) : item.src;
   const isVideo = item.type === 'video' || String(src).includes('youtube.com/embed') || String(src).includes('vimeo.com');
-  return <div className="preview-frame-wrap">{isVideo ? <iframe className="material-frame" src={src} title={item.label} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/> : <iframe className="material-frame" src={src} title={item.label} loading="lazy"/>}</div>;
+  return <div className="preview-frame-wrap">{isVideo ? <iframe className="material-frame" src={src} title={item.label} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compute-pressure" allowFullScreen/> : <iframe className="material-frame" src={src} title={item.label} loading="lazy"/>}</div>;
 }
 function PreviewMedia({ videos = [], supplements = [] }) {
   const previewVideo = videos.find(v => v.preview);
@@ -613,7 +613,7 @@ function PreviewMedia({ videos = [], supplements = [] }) {
   const title = previewVideo?.label || previewSupp?.label || 'Supplementary preview';
   if (!src) return null;
   const isYouTube = String(src).includes('youtube.com') || String(src).includes('youtu.be');
-  return <div className="supp-preview"><h3>{title}</h3>{isYouTube ? <iframe src={youtubeEmbed(src)} title={title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/> : <iframe src={src} title={title}/>}</div>;
+  return <div className="supp-preview"><h3>{title}</h3>{isYouTube ? <iframe src={youtubeEmbed(src)} title={title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compute-pressure" allowFullScreen/> : <iframe src={src} title={title}/>}</div>;
 }
 function youtubeEmbed(url) { try { const u = new URL(url); const id = u.hostname.includes('youtu.be') ? u.pathname.slice(1) : u.searchParams.get('v'); return id ? `https://www.youtube.com/embed/${id}` : url; } catch { return url; } }
 function personInitials(person) {
@@ -656,7 +656,7 @@ function TalkCard({ talk: t, setRoute }) {
   const hasVideo = hasValue(t.video);
   const talkPubs = (t.publications || []).map(id => pubMap[id]).filter(Boolean);
   return <BsCard className="h-100 talk-card">
-    {hasVideo && <div className="talk-video-wrap"><iframe src={youtubeEmbed(t.video)} title={t.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div>}
+    {hasVideo && <div className="talk-video-wrap"><iframe src={youtubeEmbed(t.video)} title={t.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; compute-pressure" allowFullScreen loading="lazy" /></div>}
     <BsCard.Body><h3>{t.title}</h3>{t.date ? <p>{t.date}</p> : null}<p>{t.description}</p>
       {talkPubs.length > 0 && <>
         <Button variant="link" size="sm" className="p-0 mt-1" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button>
@@ -878,7 +878,7 @@ function Gallery({ setRoute, initialMediaId = '' }) {
         {hasNav && <button className="lightbox-nav lightbox-nav-next" aria-label="Next media" onClick={openNext}><ChevronRight size={24}/></button>}
         {lightType === 'video'
           ? (lightIsEmbeddedVideo
-              ? <iframe className="lightbox-media lightbox-media-frame" src={lightSrc} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+              ? <iframe className="lightbox-media lightbox-media-frame" src={lightSrc} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compute-pressure" allowFullScreen/>
               : <video className="lightbox-media" src={asset(light.src)} controls autoPlay playsInline/>)
           : <img className="lightbox-media" src={asset(light.src)} alt={light.title}/>}
         <div className="lightbox-overlay">
