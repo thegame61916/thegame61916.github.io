@@ -1,3 +1,208 @@
 [
-  {"id":"research-placeholder","title":"Research visualizations","type":"image","category":"Research","src":"/assets/gallery/research-placeholder.svg","caption":"Topology-based visualizations and scientific data analysis highlights.","related":["reeb-space-fiber-analysis"]}
+  {
+    "id": "vis-2025-vienna-group",
+    "groupId": "vis-2025-trip",
+    "title": "IEEE VIS 2025 Group Photo, Vienna",
+    "type": "image",
+    "category": "Conferences",
+    "src": "/assets/gallery/conferences/ieee-vis-2025-vienna-group.jpg",
+    "caption": "Group photo during IEEE VIS 2025 (November 2-7, 2025) at Austria Center Vienna, Vienna, Austria.",
+    "tags": ["conference", "ieee vis", "vienna", "austria center vienna", "november 2025"]
+  },
+  {
+    "id": "vis-2025-museum-welcome",
+    "groupId": "vis-2025-trip",
+    "title": "IEEE VIS 2025 Welcome Event",
+    "type": "image",
+    "category": "Conferences",
+    "src": "/assets/gallery/conferences/ieee-vis-2025-natural-history-museum-welcome.jpeg",
+    "caption": "Natural History Museum visit as part of the IEEE VIS 2025 welcome event in Vienna (November 2-7, 2025).",
+    "tags": ["conference", "ieee vis", "welcome event", "vienna", "november 2025"]
+  },
+  {
+    "id": "csp-moments-arcs-2024-talk",
+    "groupId": "csp-moments-talks",
+    "relatedIds": ["csp-moments-paper-pdf"],
+    "title": "ACM India ARCS 2024 Lightning Talk",
+    "type": "image",
+    "category": "Research Talks",
+    "src": "/assets/gallery/research-talks/acm-arcs-2024-lightning-talk-csp-moments.jpg",
+    "caption": "Lightning talk at ACM India ARCS 2024 on the TVCG paper on continuous scatterplot and image moments for time-varying bivariate field analysis.",
+    "tags": ["research talk", "acm india arcs", "tvcg", "continuous scatterplot"]
+  },
+  {
+    "id": "csp-moments-vis-2025-talk",
+    "groupId": "csp-moments-talks",
+    "relatedIds": ["csp-moments-paper-pdf"],
+    "title": "IEEE VIS 2025 Paper Presentation",
+    "type": "image",
+    "category": "Research Talks",
+    "src": "/assets/gallery/research-talks/ieee-vis-2025-csp-moments-presentation.png",
+    "caption": "Presenting the TVCG paper at IEEE VIS 2025 (November 2-7, 2025) at Austria Center Vienna.",
+    "tags": ["research talk", "ieee vis", "tvcg", "vienna", "austria center vienna"]
+  },
+  {
+    "id": "csp-moments-paper-pdf",
+    "groupId": "csp-moments-talks",
+    "publicationId": "csp-moments-2025",
+    "title": "TVCG Paper PDF",
+    "type": "pdf",
+    "category": "Research Talks",
+    "src": "https://vgl.csa.iisc.ac.in/pdf/pub/Paper_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
+    "caption": "Paper material related to the above talk photos.",
+    "tags": ["paper", "pdf", "tvcg"]
+  },
+  {
+    "id": "ncvpripg-2024-talk",
+    "groupId": "ncvpripg-2024",
+    "title": "NCVPRIPG 2024 Presentation (IIST, Thiruvananthapuram)",
+    "type": "image",
+    "category": "Research Talks",
+    "src": "/assets/gallery/research-talks/ncvpripg-2024-electronic-transitions-talk.png",
+    "caption": "Presenting work on electronic transitions and multivariate fields using topology at the Ninth National Conference on Computer Vision, Pattern Recognition, Image Processing, and Graphics (NCVPRIPG 2024), held July 18-20, 2024 at IIST, Thiruvananthapuram.",
+    "tags": ["research talk", "ncvpripg", "topology", "electronic transitions", "iist", "thiruvananthapuram", "july 2024"]
+  },
+  {
+    "id": "topoinvis-2025-award-photo",
+    "groupId": "topoinvis-2025-award",
+    "relatedIds": ["topoinvis-2025-award-certificate", "topoinvis-2025-paper-pdf"],
+    "title": "TopoInVis 2025 Honorable Mention",
+    "type": "image",
+    "category": "Awards",
+    "src": "/assets/gallery/awards/topoinvis-2025-honorable-mention-award.jpeg",
+    "caption": "Receiving the Honorable Mention award at the IEEE Workshop on Topological Data Analysis and Visualization (TopoInVis 2025), co-located with IEEE VIS 2025 in Vienna.",
+    "tags": ["award", "honorable mention", "topoinvis", "ieee vis 2025", "vienna"]
+  },
+  {
+    "id": "topoinvis-2025-award-certificate",
+    "groupId": "topoinvis-2025-award",
+    "publicationId": "volume-fusion-2025",
+    "title": "Honorable Mention Certificate",
+    "type": "pdf",
+    "category": "Awards",
+    "src": "/assets/certificates/2025 VIS Certificates_HonorableMention.pdf",
+    "caption": "Official certificate for the TopoInVis 2025 Honorable Mention at the IEEE Workshop on Topological Data Analysis and Visualization.",
+    "tags": ["certificate", "pdf", "award", "topoinvis"]
+  },
+  {
+    "id": "topoinvis-2025-paper-pdf",
+    "groupId": "topoinvis-2025-award",
+    "publicationId": "volume-fusion-2025",
+    "title": "Related Paper PDF",
+    "type": "pdf",
+    "category": "Awards",
+    "src": "https://arxiv.org/pdf/2508.14719",
+    "caption": "Publication associated with the award recognition.",
+    "tags": ["paper", "pdf", "topoinvis"]
+  },
+  {
+    "id": "phd-convocation-2024-photo",
+    "groupId": "phd-convocation-2024",
+    "title": "PhD Convocation 2024 (Photo)",
+    "type": "image",
+    "category": "Convocation",
+    "src": "/assets/gallery/convocation/phd-convocation-2024-degree-photo.jpg",
+    "caption": "Receiving the PhD degree at IISc Convocation 2024.",
+    "tags": ["convocation", "phd", "iisc"]
+  },
+  {
+    "id": "phd-convocation-2024-video",
+    "groupId": "phd-convocation-2024",
+    "title": "PhD Convocation 2024 (Video)",
+    "type": "video",
+    "category": "Convocation",
+    "src": "/assets/gallery/convocation/phd-convocation-2024-degree-video.mp4",
+    "caption": "Convocation moment from the PhD degree ceremony.",
+    "tags": ["convocation", "phd", "video", "iisc"]
+  },
+  {
+    "id": "mtech-gold-medal-2017",
+    "groupId": "iiit-convocation-2017",
+    "title": "M.Tech Gold Medal, IIIT Convocation 2017",
+    "type": "image",
+    "category": "Convocation",
+    "src": "/assets/gallery/convocation/mtech-gold-medal-iiit-2017.jpg",
+    "caption": "Receiving the M.Tech Gold Medal at IIIT Convocation 2017.",
+    "tags": ["convocation", "mtech", "gold medal", "iiit"]
+  },
+  {
+    "id": "vgl-lab-team-photo",
+    "groupId": "vgl-lab-life",
+    "title": "VGL Team Photo, IISc",
+    "type": "image",
+    "category": "Lab Life",
+    "src": "/assets/gallery/lab-life/vgl-iisc-team-photo.jpg",
+    "caption": "Lab photo with the Visualization and Graphics Lab team at IISc.",
+    "tags": ["lab", "team", "iisc", "vgl"]
+  },
+  {
+    "id": "iisc-open-day-2024-collage",
+    "groupId": "iisc-open-day-2024",
+    "title": "IISc Open Day 2024",
+    "type": "image",
+    "category": "Outreach",
+    "src": "/assets/gallery/outreach/iisc-open-day-2024-collage.jpeg",
+    "caption": "Open Day collage with research presentation snapshots and campus scenes.",
+    "tags": ["outreach", "open day", "iisc"]
+  },
+  {
+    "id": "acm-india-council-summit-2023",
+    "groupId": "acm-service-2023",
+    "title": "ACM India Council Summit 2023",
+    "type": "image",
+    "category": "Academic Service",
+    "src": "/assets/gallery/academic-service/acm-india-council-summit-2023.jpeg",
+    "caption": "Attended as Vice Chair of the ACM Student Chapter, IISc.",
+    "tags": ["acm", "academic service", "student chapter"]
+  },
+  {
+    "id": "poetry-iisc-open-mic",
+    "groupId": "poetry-performances",
+    "title": "Poetry at IISc Open Mic",
+    "type": "image",
+    "category": "Poetry",
+    "src": "/assets/gallery/poetry/poetry-iisc-open-mic.jpeg",
+    "caption": "Poetry performance at an IISc open mic session.",
+    "tags": ["poetry", "open mic", "performance"]
+  },
+  {
+    "id": "poetry-bangalore-open-mic",
+    "groupId": "poetry-performances",
+    "title": "Poetry Performance in Bangalore",
+    "type": "image",
+    "category": "Poetry",
+    "src": "/assets/gallery/poetry/poetry-open-mic-bangalore.png",
+    "caption": "Poetry performance at an open mic event in Bangalore.",
+    "tags": ["poetry", "open mic", "bangalore"]
+  },
+  {
+    "id": "theatre-first-production",
+    "groupId": "theatre-performances",
+    "title": "First Theatre Production",
+    "type": "image",
+    "category": "Theatre",
+    "src": "/assets/gallery/theatre/first-theatre-production-antim-pyar-se.png",
+    "caption": "First theatre production: Antim Pyar Se, adapted from Rabindranath Tagore.",
+    "tags": ["theatre", "stage", "production"]
+  },
+  {
+    "id": "theatre-iisc-showcase-2024",
+    "groupId": "theatre-performances",
+    "title": "IISc Drama Club Showcase 2024",
+    "type": "image",
+    "category": "Theatre",
+    "src": "/assets/gallery/theatre/iisc-drama-club-showcase-2024-mozael.png",
+    "caption": "IISc Drama Club showcase (2024): a production of Manto's Mozail, directed and acted by me.",
+    "tags": ["theatre", "drama club", "iisc", "manto"]
+  },
+  {
+    "id": "theatre-stage-street-plays-collage",
+    "groupId": "theatre-performances",
+    "title": "Stage and Street Play Collage",
+    "type": "image",
+    "category": "Theatre",
+    "src": "/assets/gallery/theatre/stage-and-street-plays-collage.png",
+    "caption": "Collage from stage plays and street play performances over the years.",
+    "tags": ["theatre", "street play", "stage performance"]
+  }
 ]

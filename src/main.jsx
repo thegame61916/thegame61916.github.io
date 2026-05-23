@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import Fuse from 'fuse.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Card as BsCard, Badge, Button, ButtonGroup, Form, Navbar, Nav, Offcanvas, Tab, Tabs, Collapse } from 'react-bootstrap';
-import { Search, ExternalLink, Mail, FileText, GraduationCap, Award, BookOpen, Users, Images, Briefcase, Home as HomeIcon, Newspaper, X, LayoutGrid, List, Download, PlayCircle, ChevronDown, Eye } from 'lucide-react';
+import { Search, ExternalLink, Mail, FileText, GraduationCap, Award, BookOpen, Users, Images, Briefcase, Home as HomeIcon, Newspaper, X, LayoutGrid, List, Download, PlayCircle, ChevronDown, Eye, Image as ImageIcon, Video } from 'lucide-react';
 import site from './data/site.json';
 import publications from './data/publications.json';
 import generatedPublicationKeywords from './data/generated-publication-keywords.json';
@@ -17,6 +17,7 @@ import awards from './data/awards.json';
 import timeline from './data/timeline.json';
 import talks from './data/talks.json';
 import gallery from './data/gallery.json';
+import hobbies from './data/hobbies.json';
 import generatedMedia from './data/generated-media.json';
 import homeMedia from './data/home-media.json';
 import { byId, externalAttrs, hasValue, asset, prettyDate, unique } from './utils/helpers';
@@ -547,8 +548,94 @@ function Students() {
 }
 function Teaching() { return <><Section title="Teaching"><Row className="g-3">{teaching.map(t => <Col md={6} xl={4} key={t.institution + t.course}><BsCard className="h-100"><BsCard.Body><h3>{t.course}</h3><p>{t.role} · {t.institution}</p><small>{t.year}</small><p>{t.description}</p></BsCard.Body></BsCard></Col>)}</Row></Section><Section title="Teaching Interests"><BsCard><BsCard.Body>Data Structures and Algorithms; Computer Graphics and Scientific Visualization; Topological Data Analysis and Computational Topology.</BsCard.Body></BsCard></Section></>; }
 function Talks() { return <Section title="Talks & Presentations"><Row className="g-3">{talks.map(t => <Col md={6} xl={4} key={t.id}><BsCard className="h-100"><BsCard.Body><h3>{t.title}</h3><p>{t.venue} {t.date ? `· ${t.date}` : ''}</p><p>{t.description}</p><div className="card-actions"><LinkButton href={t.slides}>Slides</LinkButton><LinkButton href={t.video}>Video</LinkButton>{(t.media || []).map((m,i)=><LinkButton key={i} href={m.path || m.url}>{m.label || m.type || `Media ${i+1}`}</LinkButton>)}</div></BsCard.Body></BsCard></Col>)}</Row></Section>; }
-function MediaCard({ item, onOpen }) { const isVideo = item.type === 'video'; return <button className="media-card" onClick={() => onOpen(item)}>{isVideo ? <video src={asset(item.src)} muted playsInline preload="metadata"/> : <img src={asset(item.src)} alt={item.title} loading="lazy"/>}<div><Badge bg="light" text="dark">{item.category}</Badge><h3>{item.title}</h3><p>{item.caption || item.description}</p></div></button>; }
-function Gallery() { const allGallery = [...gallery, ...(generatedMedia.gallery || [])]; const cats = unique(allGallery.map(g => g.category)); const [active, setActive] = useState('All'); const [light, setLight] = useState(null); const items = active === 'All' ? allGallery : allGallery.filter(g => g.category === active); return <><Section title="Gallery"><div className="filters-pills"><Button size="sm" variant={active === 'All' ? 'primary' : 'outline-primary'} onClick={() => setActive('All')}>All</Button>{cats.map(c => <Button size="sm" variant={active === c ? 'primary' : 'outline-primary'} key={c} onClick={() => setActive(c)}>{c}</Button>)}</div><div className="media-grid">{items.map(item => <MediaCard key={item.id} item={item} onOpen={setLight}/>)}</div></Section>{light && <div className="lightbox" onClick={() => setLight(null)}><button aria-label="Close"><X/></button>{light.type === 'video' ? <video src={asset(light.src)} controls autoPlay/> : <img src={asset(light.src)} alt={light.title}/>}<h3>{light.title}</h3><p>{light.caption || light.description}</p></div>}</>; }
+function normalizeMediaType(item = {}) {
+  const explicit = String(item.type || '').toLowerCase();
+  if (explicit) return explicit;
+  const src = String(item.src || item.image || item.path || item.url || '').toLowerCase();
+  if (!src) return 'image';
+  if (src.includes('youtube.com') || src.includes('youtu.be') || src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov')) return 'video';
+  if (src.endsWith('.pdf')) return 'pdf';
+  if (src.endsWith('.ppt') || src.endsWith('.pptx') || src.endsWith('.key')) return 'slides';
+  return 'image';
+}
+function mediaSource(item = {}) { return item.src || item.image || item.path || item.url || ''; }
+function normalizeMediaItem(item = {}, defaults = {}) {
+  const type = normalizeMediaType(item);
+  const source = mediaSource(item);
+  return {
+    ...item,
+    ...defaults,
+    id: item.id || defaults.id || `${defaults.groupId || 'media'}-${Math.random().toString(36).slice(2, 8)}`,
+    title: item.title || item.label || defaults.title || 'Media item',
+    type,
+    src: source,
+    category: item.category || defaults.category || 'General',
+    tags: unique([...(item.tags || []), ...(defaults.tags || [])]).filter(Boolean),
+    groupId: item.groupId || defaults.groupId || '',
+    relatedIds: item.relatedIds || defaults.relatedIds || [],
+    description: item.description || item.caption || defaults.description || '',
+    thumbnail: item.thumbnail || defaults.thumbnail || ''
+  };
+}
+function buildUnifiedMedia() {
+  const galleryItems = [...gallery, ...(generatedMedia.gallery || [])].map(item => normalizeMediaItem(item));
+  const talkItems = talks.flatMap(t => {
+    const groupId = t.groupId || t.id;
+    const base = { category: 'Research Talks', groupId, title: t.title, description: t.description, tags: ['talk'] };
+    const items = [];
+    if (hasValue(t.slides)) items.push(normalizeMediaItem({ id: `${t.id}-slides`, type: 'slides', src: t.slides, label: 'Slides' }, base));
+    if (hasValue(t.video)) items.push(normalizeMediaItem({ id: `${t.id}-video`, type: 'video', src: t.video, label: 'Video' }, base));
+    (t.images || []).forEach((img, i) => items.push(normalizeMediaItem({ id: `${t.id}-image-${i + 1}`, type: 'image', ...(typeof img === 'string' ? { src: img } : img) }, base)));
+    (t.media || []).forEach((m, i) => items.push(normalizeMediaItem({ id: m.id || `${t.id}-media-${i + 1}`, ...m }, base)));
+    return items;
+  });
+  const hobbyItems = hobbies.flatMap(h => (h.media || []).map((m, i) => normalizeMediaItem({ id: m.id || `${h.id}-media-${i + 1}`, ...m }, { category: h.title, groupId: h.id, tags: [h.id] })));
+  const mergedRaw = [...galleryItems, ...talkItems, ...hobbyItems].filter(item => hasValue(item.src));
+  const seen = new Set();
+  const merged = mergedRaw.filter(item => {
+    const key = `${normalizeMediaType(item)}::${String(item.src).trim()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  const byId = Object.fromEntries(merged.map(item => [item.id, item]));
+  return merged.map(item => {
+    const groupMatches = item.groupId ? merged.filter(other => other.groupId && other.groupId === item.groupId && other.id !== item.id).map(other => other.id) : [];
+    const explicit = (item.relatedIds || []).filter(Boolean);
+    const reverse = merged.filter(other => (other.relatedIds || []).includes(item.id)).map(other => other.id);
+    const relatedIds = unique([...explicit, ...groupMatches, ...reverse]).filter(id => byId[id]);
+    return { ...item, relatedIds };
+  });
+}
+function lightboxVideoSrc(item) {
+  const src = String(item.src || '');
+  if (!src) return '';
+  if (src.includes('youtube.com') || src.includes('youtu.be')) return youtubeEmbed(src);
+  return asset(src);
+}
+function MediaCard({ item, onOpen }) {
+  const type = normalizeMediaType(item);
+  const src = mediaSource(item);
+  const preview = item.thumbnail || (type === 'image' ? src : '');
+  return <button className="media-card" onClick={() => onOpen(item)}>
+    {preview ? <img src={asset(preview)} alt={item.title} loading="lazy"/> : <div className="media-card-empty">{type.toUpperCase()}</div>}
+    <div><Badge bg="light" text="dark">{item.category}</Badge><h3>{item.title}</h3><p>{item.description}</p></div>
+  </button>;
+}
+function Gallery({ setRoute }) {
+  const mediaItems = useMemo(() => buildUnifiedMedia(), []);
+  const categories = ['All', ...unique(mediaItems.map(g => g.category).filter(Boolean)).sort((a, b) => a.localeCompare(b))];
+  const visualTypes = ['image', 'video'];
+  const types = ['All', ...visualTypes];
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeType, setActiveType] = useState('All');
+  const [light, setLight] = useState(null);
+  const byId = useMemo(() => Object.fromEntries(mediaItems.map(item => [item.id, item])), [mediaItems]);
+  const items = mediaItems.filter(item => (activeCategory === 'All' || item.category === activeCategory) && (activeType === 'All' || normalizeMediaType(item) === activeType) && visualTypes.includes(normalizeMediaType(item)));
+  const relatedAll = light ? (light.relatedIds || []).map(id => byId[id]).filter(Boolean) : [];
+  const relatedVisual = relatedAll.filter(item => visualTypes.includes(normalizeMediaType(item)));
+  const relatedPublications = unique(relatedAll.filter(item => ['pdf', 'slides'].includes(normalizeMediaType(item)) && hasValue(item.publicationId)).map(item => item.publicationId));
+  return <><Section title="Gallery"><div className="filters-bar publication-filters"><Form.Select value={activeCategory} onChange={e => setActiveCategory(e.target.value)}>{categories.map(c => <option key={c} value={c}>{c}</option>)}</Form.Select><Form.Select value={activeType} onChange={e => setActiveType(e.target.value)}>{types.map(t => <option key={t} value={t}>{t === 'All' ? 'All media types' : t.toUpperCase()}</option>)}</Form.Select></div><div className="media-grid">{items.map(item => <MediaCard key={item.id} item={item} onOpen={setLight}/>)}</div></Section>{light && <div className="lightbox" onClick={() => setLight(null)}><button aria-label="Close"><X/></button>{normalizeMediaType(light) === 'video' ? <iframe src={lightboxVideoSrc(light)} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/> : <img src={asset(light.src)} alt={light.title}/>}<h3>{light.title}</h3><p>{light.description}</p>{relatedVisual.length > 0 && <div className="mt-2"><strong>Related materials</strong><div className="gallery-related mt-2">{relatedVisual.map(item => <button key={item.id} className="gallery-related-item" onClick={(e) => { e.stopPropagation(); setLight(item); }}><span>{normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>}</span>{item.title}</button>)}</div></div>}{relatedPublications.length > 0 && <div className="mini-links mt-2">{relatedPublications.map(pubId => <button key={pubId} onClick={(e) => { e.stopPropagation(); goRoute(`publication:${pubId}`, setRoute); setLight(null); }}><FileText size={14}/> Open related publication</button>)}</div>}</div>}</>; }
 function Contact() { return <Section title="Contact"><Row className="g-3"><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Email</h3>{site.emails.map(e => <p key={e}><a href={`mailto:${e}`}>{e}</a></p>)}<h3>Address</h3><p>{site.affiliation}<br/>Linköping University, Sweden</p></BsCard.Body></BsCard></Col><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Profiles</h3><div className="vertical-links">{Object.entries(site.links).map(([label, url]) => <LinkButton key={label} href={url}>{label}</LinkButton>)}</div></BsCard.Body></BsCard></Col></Row></Section>; }
 function NewsPage({ setRoute }) { const [view, setView] = useState('list'); return <Section title="News / Updates" aside={<ButtonGroup><Button variant={view === 'list' ? 'primary' : 'outline-primary'} onClick={() => setView('list')}><List size={16}/></Button><Button variant={view === 'grid' ? 'primary' : 'outline-primary'} onClick={() => setView('grid')}><LayoutGrid size={16}/></Button></ButtonGroup>}><div className={view === 'grid' ? 'news-grid' : 'news-list'}>{news.map(n => <NewsCard item={n} key={n.date + n.title} setRoute={setRoute}/>)}</div></Section>; }
 function NotFound() { return <Section title="Not found"><p>The requested page was not found.</p></Section>; }
@@ -566,7 +653,7 @@ function App() {
   let page;
   if (route.startsWith('publication:')) page = <PublicationPage id={route.split(':')[1]} setRoute={setR}/>;
   else if (route.startsWith('project:')) page = <ProjectPage id={route.split(':')[1]} setRoute={setR}/>;
-  else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
+  else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery setRoute={setR}/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
   return <><Header route={route} setRoute={setR}/><Container fluid="xxl" as="main" className="site-main"><GlobalSearch setRoute={setR}/>{page}</Container><footer className="site-footer"><Container fluid="xxl"><strong>{site.name}</strong><span>{site.affiliation}</span></Container></footer></>;
 }
 

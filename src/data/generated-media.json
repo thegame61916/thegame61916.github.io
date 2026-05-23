@@ -1,6 +1,212 @@
 {
-  "gallery": [],
+  "gallery": [
+    {
+      "id": "gallery-research-talks-acm-arcs-2024-lightning-talk-csp-moments",
+      "title": "Acm Arcs 2024 Lightning Talk Csp Moments",
+      "type": "image",
+      "category": "Research Talks",
+      "src": "/assets/gallery/research-talks/acm-arcs-2024-lightning-talk-csp-moments.jpg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-academic-service-acm-india-council-summit-2023",
+      "title": "Acm India Council Summit 2023",
+      "type": "image",
+      "category": "Academic Service",
+      "src": "/assets/gallery/academic-service/acm-india-council-summit-2023.jpeg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-theatre-first-theatre-production-antim-pyar-se",
+      "title": "First Theatre Production Antim Pyar Se",
+      "type": "image",
+      "category": "Theatre",
+      "src": "/assets/gallery/theatre/first-theatre-production-antim-pyar-se.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-research-talks-ieee-vis-2025-csp-moments-presentation",
+      "title": "Ieee Vis 2025 Csp Moments Presentation",
+      "type": "image",
+      "category": "Research Talks",
+      "src": "/assets/gallery/research-talks/ieee-vis-2025-csp-moments-presentation.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-conferences-ieee-vis-2025-natural-history-museum-welcome",
+      "title": "Ieee Vis 2025 Natural History Museum Welcome",
+      "type": "image",
+      "category": "Conferences",
+      "src": "/assets/gallery/conferences/ieee-vis-2025-natural-history-museum-welcome.jpeg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-conferences-ieee-vis-2025-vienna-group",
+      "title": "Ieee Vis 2025 Vienna Group",
+      "type": "image",
+      "category": "Conferences",
+      "src": "/assets/gallery/conferences/ieee-vis-2025-vienna-group.jpg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-theatre-iisc-drama-club-showcase-2024-mozael",
+      "title": "Iisc Drama Club Showcase 2024 Mozael",
+      "type": "image",
+      "category": "Theatre",
+      "src": "/assets/gallery/theatre/iisc-drama-club-showcase-2024-mozael.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-outreach-iisc-open-day-2024-collage",
+      "title": "Iisc Open Day 2024 Collage",
+      "type": "image",
+      "category": "Outreach",
+      "src": "/assets/gallery/outreach/iisc-open-day-2024-collage.jpeg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-convocation-mtech-gold-medal-iiit-2017",
+      "title": "Mtech Gold Medal Iiit 2017",
+      "type": "image",
+      "category": "Convocation",
+      "src": "/assets/gallery/convocation/mtech-gold-medal-iiit-2017.jpg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-research-talks-ncvpripg-2024-electronic-transitions-talk",
+      "title": "Ncvpripg 2024 Electronic Transitions Talk",
+      "type": "image",
+      "category": "Research Talks",
+      "src": "/assets/gallery/research-talks/ncvpripg-2024-electronic-transitions-talk.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-convocation-phd-convocation-2024-degree-photo",
+      "title": "Phd Convocation 2024 Degree Photo",
+      "type": "image",
+      "category": "Convocation",
+      "src": "/assets/gallery/convocation/phd-convocation-2024-degree-photo.jpg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-convocation-phd-convocation-2024-degree-video",
+      "title": "Phd Convocation 2024 Degree Video",
+      "type": "video",
+      "category": "Convocation",
+      "src": "/assets/gallery/convocation/phd-convocation-2024-degree-video.mp4",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-poetry-poetry-iisc-open-mic",
+      "title": "Poetry Iisc Open Mic",
+      "type": "image",
+      "category": "Poetry",
+      "src": "/assets/gallery/poetry/poetry-iisc-open-mic.jpeg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-poetry-poetry-open-mic-bangalore",
+      "title": "Poetry Open Mic Bangalore",
+      "type": "image",
+      "category": "Poetry",
+      "src": "/assets/gallery/poetry/poetry-open-mic-bangalore.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-theatre-stage-and-street-plays-collage",
+      "title": "Stage And Street Plays Collage",
+      "type": "image",
+      "category": "Theatre",
+      "src": "/assets/gallery/theatre/stage-and-street-plays-collage.png",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-awards-topoinvis-2025-honorable-mention-award",
+      "title": "Topoinvis 2025 Honorable Mention Award",
+      "type": "image",
+      "category": "Awards",
+      "src": "/assets/gallery/awards/topoinvis-2025-honorable-mention-award.jpeg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    },
+    {
+      "id": "gallery-lab-life-vgl-iisc-team-photo",
+      "title": "Vgl Iisc Team Photo",
+      "type": "image",
+      "category": "Lab Life",
+      "src": "/assets/gallery/lab-life/vgl-iisc-team-photo.jpg",
+      "caption": "",
+      "description": "",
+      "date": "",
+      "related": []
+    }
+  ],
   "galleryFolders": [
+    {
+      "id": "gallery-academic-service",
+      "title": "Academic Service",
+      "folder": "academic-service",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-awards",
+      "title": "Awards",
+      "folder": "awards",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
     {
       "id": "gallery-conferences",
       "title": "Conferences",
@@ -11,9 +217,36 @@
       "order": 999
     },
     {
+      "id": "gallery-convocation",
+      "title": "Convocation",
+      "folder": "convocation",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
       "id": "gallery-fitness",
       "title": "Fitness",
       "folder": "fitness",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-lab-life",
+      "title": "Lab Life",
+      "folder": "lab-life",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-outreach",
+      "title": "Outreach",
+      "folder": "outreach",
       "description": "",
       "youtube": "",
       "website": "",
@@ -38,6 +271,15 @@
       "order": 999
     },
     {
+      "id": "gallery-research-talks",
+      "title": "Research Talks",
+      "folder": "research-talks",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
       "id": "gallery-talks",
       "title": "Talks",
       "folder": "talks",
@@ -50,6 +292,15 @@
       "id": "gallery-theater",
       "title": "Theater",
       "folder": "theater",
+      "description": "",
+      "youtube": "",
+      "website": "",
+      "order": 999
+    },
+    {
+      "id": "gallery-theatre",
+      "title": "Theatre",
+      "folder": "theatre",
       "description": "",
       "youtube": "",
       "website": "",
