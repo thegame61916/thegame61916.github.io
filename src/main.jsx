@@ -257,6 +257,7 @@ function HomeMediaHighlight({ setRoute }) {
         type: 'image',
         title: item.title,
         caption: item.description || item.caption || item.title,
+        subcaption: item.description || item.caption || '',
         image: item.src,
         alt: item.title,
         link: `#gallery:${item.id}`,
@@ -267,13 +268,15 @@ function HomeMediaHighlight({ setRoute }) {
   const defaultItem = items.find(item => item.id === homeMedia.defaultItemId) || items[0];
   const [activeId, setActiveId] = useState(defaultItem.id || items[0].id);
   const [slideDirection, setSlideDirection] = useState('next');
+  const [slideMode, setSlideMode] = useState('manual');
   const [previousSlide, setPreviousSlide] = useState(null);
   const active = items.find(item => item.id === activeId) || defaultItem;
   const activeIndex = Math.max(0, items.findIndex(item => item.id === active.id));
-  const setSlide = (id, direction = 'next') => {
+  const setSlide = (id, direction = 'next', mode = 'manual') => {
     if (id === active.id) return;
     setPreviousSlide(active);
     setSlideDirection(direction);
+    setSlideMode(mode);
     setActiveId(id);
   };
   const showPrevious = (event) => {
@@ -289,7 +292,10 @@ function HomeMediaHighlight({ setRoute }) {
     const timer = window.setInterval(() => {
       setActiveId(current => {
         const index = items.findIndex(item => item.id === current);
+        const previous = items[index >= 0 ? index : 0];
+        if (previous) setPreviousSlide(previous);
         setSlideDirection('next');
+        setSlideMode('auto');
         return items[(index + 1) % items.length].id;
       });
     }, 4500);
@@ -303,7 +309,7 @@ function HomeMediaHighlight({ setRoute }) {
   return <div className="home-media-block" aria-label={homeMedia.title || 'Homepage media highlight'}>
     <div className="home-media-card">
       <div className="home-media-carousel" onClick={openTarget}>
-        <div className={`home-media-track ${previousSlide ? `home-media-track-${slideDirection}` : 'home-media-track-single'}`} key={`${previousSlide?.id || 'start'}-${active.id}`} onAnimationEnd={() => setPreviousSlide(null)}>
+        <div className={`home-media-track ${previousSlide ? `home-media-track-${slideDirection} home-media-track-${slideMode}` : 'home-media-track-single'}`} key={`${previousSlide?.id || 'start'}-${active.id}`} onAnimationEnd={() => setPreviousSlide(null)}>
           {previousSlide && <div className="home-media-slide"><HomeMediaPreview item={previousSlide}/></div>}
           <div className="home-media-slide"><HomeMediaPreview item={active}/></div>
         </div>
@@ -311,8 +317,9 @@ function HomeMediaHighlight({ setRoute }) {
           <button className="home-media-nav home-media-nav-prev" aria-label="Previous gallery image" onClick={showPrevious}><ChevronLeft size={18}/></button>
           <button className="home-media-nav home-media-nav-next" aria-label="Next gallery image" onClick={showNext}><ChevronRight size={18}/></button>
         </>}
-        {(active.caption || hasValue(active.link)) && <div className="home-media-body home-media-overlay">
-          {active.caption && <p>{active.caption}</p>}
+        {(active.title || active.caption || hasValue(active.link)) && <div className="home-media-body home-media-overlay">
+          {active.title && <h3>{active.title}</h3>}
+          {active.subcaption && <p>{active.subcaption}</p>}
           {hasValue(active.link) && <Button size="sm" variant="light" className="rounded-pill" onClick={(event) => { event.stopPropagation(); openTarget(); }}>{active.linkText || 'Open related item'}</Button>}
         </div>}
       </div>
