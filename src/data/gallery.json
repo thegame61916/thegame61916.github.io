@@ -98,7 +98,7 @@
   {
     "id": "phd-convocation-2024-photo",
     "groupId": "phd-convocation-2024",
-    "title": "PhD Convocation 2024 (Photo)",
+    "title": "PhD Convocation 2024",
     "type": "image",
     "category": "Convocation",
     "src": "/assets/gallery/convocation/phd-convocation-2024-degree-photo.jpg",
@@ -108,7 +108,7 @@
   {
     "id": "phd-convocation-2024-video",
     "groupId": "phd-convocation-2024",
-    "title": "PhD Convocation 2024 (Video)",
+    "title": "PhD Convocation 2024",
     "type": "video",
     "category": "Convocation",
     "src": "/assets/gallery/convocation/phd-convocation-2024-degree-video.mp4",

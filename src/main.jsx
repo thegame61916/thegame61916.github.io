@@ -618,7 +618,10 @@ function MediaCard({ item, onOpen }) {
   const src = mediaSource(item);
   const preview = item.thumbnail || (type === 'image' ? src : '');
   return <button className="media-card" onClick={() => onOpen(item)}>
-    {preview ? <img src={asset(preview)} alt={item.title} loading="lazy"/> : <div className="media-card-empty">{type.toUpperCase()}</div>}
+    <div className="media-thumb">
+      {preview ? <img src={asset(preview)} alt={item.title} loading="lazy" /> : type === 'video' ? <video src={asset(src)} muted playsInline preload="metadata" /> : <div className="media-card-empty">{type.toUpperCase()}</div>}
+      {type === 'video' && <span className="media-play-badge"><PlayCircle size={32}/></span>}
+    </div>
     <div><Badge bg="light" text="dark">{item.category}</Badge><h3>{item.title}</h3><p>{item.description}</p></div>
   </button>;
 }
