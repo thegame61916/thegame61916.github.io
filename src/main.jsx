@@ -153,7 +153,7 @@ function goRoute(route, setRoute) { location.hash = route; setRoute(route); }
 
 function Header({ route, setRoute }) {
   const [show, setShow] = useState(false);
-  const NavLinks = <>{navItems.map(([id, label, Icon]) => <Nav.Link key={id} href={`#${id}`} active={route === id} onClick={() => { setRoute(id); setShow(false); }}><Icon size={15}/>{label}</Nav.Link>)}</>;
+  const NavLinks = <>{navItems.map(([id, label, Icon]) => <Nav.Link key={id} href={`#${id}`} active={route === id || (id === 'gallery' && route.startsWith('gallery:'))} onClick={() => { setRoute(id); setShow(false); }}><Icon size={15}/>{label}</Nav.Link>)}</>;
   return <Navbar sticky="top" expand="xl" className="site-nav">
     <Container fluid="xxl">
       <Navbar.Brand href="#home" onClick={() => setRoute('home')} className="brand"><span className="brand-photo"><img src={asset(site.photo)} alt={`${site.name} profile`} /></span><span><strong>{site.name}</strong><small>{site.affiliation}</small></span></Navbar.Brand>
@@ -577,6 +577,53 @@ function normalizeMediaItem(item = {}, defaults = {}) {
     thumbnail: item.thumbnail || defaults.thumbnail || ''
   };
 }
+const MONTHS = {
+  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
+};
+function inferredMediaTimestamp(item = {}) {
+  const explicitDate = String(item.date || item.eventDate || '').trim();
+  if (explicitDate) {
+    const parsed = Date.parse(explicitDate);
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+  const parts = [
+    item.title,
+    item.caption,
+    item.description,
+    item.category,
+    ...(item.tags || [])
+  ].filter(Boolean).map(x => String(x));
+  const text = parts.join(' ');
+  const lower = text.toLowerCase();
+
+  const ymd = lower.match(/\b(19|20)\d{2}[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])\b/);
+  if (ymd) {
+    const parsed = Date.parse(ymd[0].replace(/\./g, '-').replace(/\//g, '-'));
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+
+  const monthYear = lower.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}(?:\s*[-–]\s*\d{1,2})?,?\s+(19|20)\d{2}\b|\b(january|february|march|april|may|june|july|august|september|october|november|december),?\s+(19|20)\d{2}\b/);
+  if (monthYear) {
+    const token = monthYear[0];
+    const m = token.match(/(january|february|march|april|may|june|july|august|september|october|november|december)/);
+    const y = token.match(/\b(19|20)\d{2}\b/);
+    if (m && y) return Date.UTC(Number(y[0]), MONTHS[m[1]], 15);
+  }
+
+  const years = lower.match(/\b(19|20)\d{2}\b/g);
+  if (years && years.length) {
+    const latest = Math.max(...years.map(Number));
+    return Date.UTC(latest, 6, 1);
+  }
+  return Number.NEGATIVE_INFINITY;
+}
+function compareMediaChronology(a, b) {
+  const ta = inferredMediaTimestamp(a);
+  const tb = inferredMediaTimestamp(b);
+  if (ta !== tb) return tb - ta;
+  return String(a.title || '').localeCompare(String(b.title || ''));
+}
 function buildUnifiedMedia() {
   const galleryItems = [...gallery, ...(generatedMedia.gallery || [])].map(item => normalizeMediaItem(item));
   const talkItems = talks.flatMap(t => {
@@ -597,7 +644,7 @@ function buildUnifiedMedia() {
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
-  });
+  }).sort(compareMediaChronology);
   const byId = Object.fromEntries(merged.map(item => [item.id, item]));
   return merged.map(item => {
     const groupMatches = item.groupId ? merged.filter(other => other.groupId && other.groupId === item.groupId && other.id !== item.id).map(other => other.id) : [];
@@ -625,7 +672,7 @@ function MediaCard({ item, onOpen }) {
     <div><Badge bg="light" text="dark">{item.category}</Badge><h3>{item.title}</h3><p>{item.description}</p></div>
   </button>;
 }
-function Gallery({ setRoute }) {
+function Gallery({ setRoute, initialMediaId = '' }) {
   const mediaItems = useMemo(() => buildUnifiedMedia(), []);
   const categories = ['All', ...unique(mediaItems.map(g => g.category).filter(Boolean)).sort((a, b) => a.localeCompare(b))];
   const visualTypes = ['image', 'video'];
@@ -635,6 +682,30 @@ function Gallery({ setRoute }) {
   const [light, setLight] = useState(null);
   const byId = useMemo(() => Object.fromEntries(mediaItems.map(item => [item.id, item])), [mediaItems]);
   const items = mediaItems.filter(item => (activeCategory === 'All' || item.category === activeCategory) && (activeType === 'All' || normalizeMediaType(item) === activeType) && visualTypes.includes(normalizeMediaType(item)));
+  const isCreativeMedia = (item) => ['poetry', 'theatre', 'theater'].includes(normalizeKeyword(item.category));
+  const academicItems = items.filter(item => !isCreativeMedia(item));
+  const creativeItems = items.filter(isCreativeMedia);
+  const galleryGroups = [
+    { key: 'academic', title: 'Research, Conferences, and Academic Life', items: academicItems },
+    { key: 'creative', title: 'Poetry and Theatre', items: creativeItems }
+  ].filter(group => group.items.length > 0);
+  const openMedia = (item) => {
+    if (!item) return;
+    setLight(item);
+    goRoute(`gallery:${item.id}`, setRoute);
+  };
+  const closeMedia = () => {
+    setLight(null);
+    goRoute('gallery', setRoute);
+  };
+  useEffect(() => {
+    if (!initialMediaId) {
+      setLight(null);
+      return;
+    }
+    const item = byId[initialMediaId];
+    setLight(item && visualTypes.includes(normalizeMediaType(item)) ? item : null);
+  }, [initialMediaId, byId]);
   const relatedAll = light ? (light.relatedIds || []).map(id => byId[id]).filter(Boolean) : [];
   const relatedVisual = relatedAll.filter(item => visualTypes.includes(normalizeMediaType(item)));
   const relatedPublications = unique(relatedAll.filter(item => ['pdf', 'slides'].includes(normalizeMediaType(item)) && hasValue(item.publicationId)).map(item => item.publicationId));
@@ -643,7 +714,7 @@ function Gallery({ setRoute }) {
       key: `media-${item.id}`,
       icon: normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>,
       label: item.title,
-      onClick: () => setLight(item)
+      onClick: () => openMedia(item)
     })),
     ...relatedPublications.map(pubId => ({
       key: `pub-${pubId}`,
@@ -660,17 +731,17 @@ function Gallery({ setRoute }) {
   const openPrev = () => {
     if (!hasNav) return;
     const prevIndex = (lightIndex - 1 + items.length) % items.length;
-    setLight(items[prevIndex]);
+    openMedia(items[prevIndex]);
   };
   const openNext = () => {
     if (!hasNav) return;
     const nextIndex = (lightIndex + 1) % items.length;
-    setLight(items[nextIndex]);
+    openMedia(items[nextIndex]);
   };
   useEffect(() => {
     if (!light) return undefined;
     const onKey = (e) => {
-      if (e.key === 'Escape') setLight(null);
+      if (e.key === 'Escape') closeMedia();
       if (e.key === 'ArrowLeft') openPrev();
       if (e.key === 'ArrowRight') openNext();
     };
@@ -683,10 +754,13 @@ function Gallery({ setRoute }) {
         <Form.Select value={activeCategory} onChange={e => setActiveCategory(e.target.value)}>{categories.map(c => <option key={c} value={c}>{c}</option>)}</Form.Select>
         <Form.Select value={activeType} onChange={e => setActiveType(e.target.value)}>{types.map(t => <option key={t} value={t}>{t === 'All' ? 'All media types' : t.toUpperCase()}</option>)}</Form.Select>
       </div>
-      <div className="media-grid">{items.map(item => <MediaCard key={item.id} item={item} onOpen={setLight}/>)}</div>
+      {galleryGroups.map(group => <div className="gallery-group" key={group.key}>
+        <div className="gallery-group-title"><h3>{group.title}</h3><span>{group.items.length} item{group.items.length === 1 ? '' : 's'}</span></div>
+        <div className="media-grid">{group.items.map(item => <MediaCard key={item.id} item={item} onOpen={openMedia}/>)}</div>
+      </div>)}
     </Section>
-    {light && <div className="lightbox" onClick={() => setLight(null)}>
-      <button className="lightbox-close" aria-label="Close" onClick={(e) => { e.stopPropagation(); setLight(null); }}><X/></button>
+    {light && <div className="lightbox" onClick={closeMedia}>
+      <button className="lightbox-close" aria-label="Close" onClick={(e) => { e.stopPropagation(); closeMedia(); }}><X/></button>
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
         {hasNav && <button className="lightbox-nav lightbox-nav-prev" aria-label="Previous media" onClick={openPrev}><ChevronLeft size={24}/></button>}
         {hasNav && <button className="lightbox-nav lightbox-nav-next" aria-label="Next media" onClick={openNext}><ChevronRight size={24}/></button>}
@@ -709,18 +783,24 @@ function NewsPage({ setRoute }) { const [view, setView] = useState('list'); retu
 function NotFound() { return <Section title="Not found"><p>The requested page was not found.</p></Section>; }
 function App() {
   const [route, setRoute] = useState(location.hash.replace('#', '') || 'home');
+  const previousRoute = useRef(route);
   React.useEffect(() => {
     const fn = () => setRoute(location.hash.replace('#', '') || 'home');
     window.addEventListener('hashchange', fn);
     return () => window.removeEventListener('hashchange', fn);
   }, []);
   React.useEffect(() => {
+    const fromGalleryPreview = previousRoute.current === 'gallery' || previousRoute.current.startsWith('gallery:');
+    const toGalleryPreview = route === 'gallery' || route.startsWith('gallery:');
+    previousRoute.current = route;
+    if (fromGalleryPreview && toGalleryPreview) return;
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [route]);
   const setR = r => goRoute(r, setRoute);
   let page;
   if (route.startsWith('publication:')) page = <PublicationPage id={route.split(':')[1]} setRoute={setR}/>;
   else if (route.startsWith('project:')) page = <ProjectPage id={route.split(':')[1]} setRoute={setR}/>;
+  else if (route.startsWith('gallery:')) page = <Gallery setRoute={setR} initialMediaId={route.slice('gallery:'.length)}/>;
   else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery setRoute={setR}/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
   return <><Header route={route} setRoute={setR}/><Container fluid="xxl" as="main" className="site-main"><GlobalSearch setRoute={setR}/>{page}</Container><footer className="site-footer"><Container fluid="xxl"><strong>{site.name}</strong><span>{site.affiliation}</span></Container></footer></>;
 }
