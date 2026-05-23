@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import Fuse from 'fuse.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Card as BsCard, Badge, Button, ButtonGroup, Form, Navbar, Nav, Offcanvas, Tab, Tabs, Collapse } from 'react-bootstrap';
-import { Search, ExternalLink, Mail, FileText, GraduationCap, Award, BookOpen, Users, Images, Briefcase, Home as HomeIcon, Newspaper, X, LayoutGrid, List, Download, PlayCircle, ChevronDown, Eye, Image as ImageIcon, Video } from 'lucide-react';
+import { Search, ExternalLink, Mail, FileText, GraduationCap, Award, BookOpen, Users, Images, Briefcase, Home as HomeIcon, Newspaper, X, LayoutGrid, List, Download, PlayCircle, ChevronDown, Eye, Image as ImageIcon, Video, ChevronLeft, ChevronRight } from 'lucide-react';
 import site from './data/site.json';
 import publications from './data/publications.json';
 import generatedPublicationKeywords from './data/generated-publication-keywords.json';
@@ -638,7 +638,59 @@ function Gallery({ setRoute }) {
   const relatedAll = light ? (light.relatedIds || []).map(id => byId[id]).filter(Boolean) : [];
   const relatedVisual = relatedAll.filter(item => visualTypes.includes(normalizeMediaType(item)));
   const relatedPublications = unique(relatedAll.filter(item => ['pdf', 'slides'].includes(normalizeMediaType(item)) && hasValue(item.publicationId)).map(item => item.publicationId));
-  return <><Section title="Gallery"><div className="filters-bar publication-filters"><Form.Select value={activeCategory} onChange={e => setActiveCategory(e.target.value)}>{categories.map(c => <option key={c} value={c}>{c}</option>)}</Form.Select><Form.Select value={activeType} onChange={e => setActiveType(e.target.value)}>{types.map(t => <option key={t} value={t}>{t === 'All' ? 'All media types' : t.toUpperCase()}</option>)}</Form.Select></div><div className="media-grid">{items.map(item => <MediaCard key={item.id} item={item} onOpen={setLight}/>)}</div></Section>{light && <div className="lightbox" onClick={() => setLight(null)}><button aria-label="Close"><X/></button>{normalizeMediaType(light) === 'video' ? <iframe src={lightboxVideoSrc(light)} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/> : <img src={asset(light.src)} alt={light.title}/>}<h3>{light.title}</h3><p>{light.description}</p>{relatedVisual.length > 0 && <div className="mt-2"><strong>Related materials</strong><div className="gallery-related mt-2">{relatedVisual.map(item => <button key={item.id} className="gallery-related-item" onClick={(e) => { e.stopPropagation(); setLight(item); }}><span>{normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>}</span>{item.title}</button>)}</div></div>}{relatedPublications.length > 0 && <div className="mini-links mt-2">{relatedPublications.map(pubId => <button key={pubId} onClick={(e) => { e.stopPropagation(); goRoute(`publication:${pubId}`, setRoute); setLight(null); }}><FileText size={14}/> Open related publication</button>)}</div>}</div>}</>; }
+  const lightType = normalizeMediaType(light || {});
+  const lightSrc = light ? lightboxVideoSrc(light) : '';
+  const lightIsEmbeddedVideo = lightType === 'video' && (String(lightSrc).includes('youtube.com/embed') || String(lightSrc).includes('vimeo.com'));
+  const lightIndex = light ? items.findIndex(item => item.id === light.id) : -1;
+  const hasNav = lightIndex >= 0 && items.length > 1;
+  const openPrev = () => {
+    if (!hasNav) return;
+    const prevIndex = (lightIndex - 1 + items.length) % items.length;
+    setLight(items[prevIndex]);
+  };
+  const openNext = () => {
+    if (!hasNav) return;
+    const nextIndex = (lightIndex + 1) % items.length;
+    setLight(items[nextIndex]);
+  };
+  useEffect(() => {
+    if (!light) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setLight(null);
+      if (e.key === 'ArrowLeft') openPrev();
+      if (e.key === 'ArrowRight') openNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [light, hasNav, lightIndex, items]);
+  return <>
+    <Section title="Gallery">
+      <div className="filters-bar publication-filters">
+        <Form.Select value={activeCategory} onChange={e => setActiveCategory(e.target.value)}>{categories.map(c => <option key={c} value={c}>{c}</option>)}</Form.Select>
+        <Form.Select value={activeType} onChange={e => setActiveType(e.target.value)}>{types.map(t => <option key={t} value={t}>{t === 'All' ? 'All media types' : t.toUpperCase()}</option>)}</Form.Select>
+      </div>
+      <div className="media-grid">{items.map(item => <MediaCard key={item.id} item={item} onOpen={setLight}/>)}</div>
+    </Section>
+    {light && <div className="lightbox" onClick={() => setLight(null)}>
+      <button className="lightbox-close" aria-label="Close" onClick={(e) => { e.stopPropagation(); setLight(null); }}><X/></button>
+      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+        {hasNav && <button className="lightbox-nav lightbox-nav-prev" aria-label="Previous media" onClick={openPrev}><ChevronLeft size={24}/></button>}
+        {hasNav && <button className="lightbox-nav lightbox-nav-next" aria-label="Next media" onClick={openNext}><ChevronRight size={24}/></button>}
+        {lightType === 'video'
+          ? (lightIsEmbeddedVideo
+              ? <iframe className="lightbox-media" src={lightSrc} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+              : <video className="lightbox-media" src={asset(light.src)} controls autoPlay playsInline/>)
+          : <img className="lightbox-media" src={asset(light.src)} alt={light.title}/>}
+        <div className="lightbox-overlay">
+          <h3>{light.title}</h3>
+          <p>{light.description}</p>
+          {relatedVisual.length > 0 && <div className="mt-2"><strong>Related materials</strong><div className="gallery-related mt-2">{relatedVisual.map(item => <button key={item.id} className="gallery-related-item" onClick={() => setLight(item)}><span>{normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>}</span>{item.title}</button>)}</div></div>}
+          {relatedPublications.length > 0 && <div className="mini-links mt-2">{relatedPublications.map(pubId => <button key={pubId} onClick={() => { goRoute(`publication:${pubId}`, setRoute); setLight(null); }}><FileText size={14}/> Open related publication</button>)}</div>}
+        </div>
+      </div>
+    </div>}
+  </>;
+}
 function Contact() { return <Section title="Contact"><Row className="g-3"><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Email</h3>{site.emails.map(e => <p key={e}><a href={`mailto:${e}`}>{e}</a></p>)}<h3>Address</h3><p>{site.affiliation}<br/>Linköping University, Sweden</p></BsCard.Body></BsCard></Col><Col lg={6}><BsCard className="h-100"><BsCard.Body><h3>Profiles</h3><div className="vertical-links">{Object.entries(site.links).map(([label, url]) => <LinkButton key={label} href={url}>{label}</LinkButton>)}</div></BsCard.Body></BsCard></Col></Row></Section>; }
 function NewsPage({ setRoute }) { const [view, setView] = useState('list'); return <Section title="News / Updates" aside={<ButtonGroup><Button variant={view === 'list' ? 'primary' : 'outline-primary'} onClick={() => setView('list')}><List size={16}/></Button><Button variant={view === 'grid' ? 'primary' : 'outline-primary'} onClick={() => setView('grid')}><LayoutGrid size={16}/></Button></ButtonGroup>}><div className={view === 'grid' ? 'news-grid' : 'news-list'}>{news.map(n => <NewsCard item={n} key={n.date + n.title} setRoute={setRoute}/>)}</div></Section>; }
 function NotFound() { return <Section title="Not found"><p>The requested page was not found.</p></Section>; }
