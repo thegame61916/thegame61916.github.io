@@ -162,14 +162,81 @@
 .home-side-column .section{margin-top:1.25rem}
 .home-media-card{border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 8px 26px rgba(15,23,42,.045)}
 .home-media-select{margin:.85rem .85rem 0;width:calc(100% - 1.7rem);border-radius:12px;border-color:var(--line);font-size:.9rem}
+.home-media-carousel{position:relative;cursor:pointer;background:#0b1220}
+.home-media-track{
+  display:flex;
+  width:200%;
+}
+.home-media-track-next{
+  transform:translateX(0);
+  animation:homeRollNext .52s cubic-bezier(.22,.61,.36,1) both;
+}
+.home-media-track-prev{
+  transform:translateX(-50%);
+  animation:homeRollPrev .52s cubic-bezier(.22,.61,.36,1) both;
+}
+.home-media-track .home-media-slide{
+  width:50%;
+  flex:0 0 50%;
+}
+.home-media-track-single{
+  display:block;
+  width:100%;
+  transform:none;
+  animation:none;
+}
+.home-media-track-single .home-media-slide{
+  width:100%;
+  flex:auto;
+}
+@keyframes homeRollNext{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@keyframes homeRollPrev{
+  from{transform:translateX(-50%)}
+  to{transform:translateX(0)}
+}
 .home-media-preview{width:100%;aspect-ratio:16/9;background:#f6f9fc;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
 .home-media-select + .home-media-preview{margin-top:.85rem;border-top:1px solid var(--line)}
 .home-media-preview img,.home-media-preview video,.home-media-preview iframe{width:100%;height:100%;display:block;border:0}
-.home-media-preview img{object-fit:cover;object-position:center}
+.home-media-preview img{object-fit:contain;object-position:center;background:#0b1220}
 .home-media-preview video{object-fit:cover;background:#0b1220}
 .home-media-body{padding:1rem}
 .home-media-body h3{font-size:1rem;line-height:1.3;margin:0 0 .35rem;color:var(--ink)}
 .home-media-body p{font-size:.9rem;color:var(--muted);margin:0 0 .75rem;line-height:1.45}
+.home-media-overlay{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:2;
+  padding:1.9rem .8rem .75rem!important;
+  color:#fff;
+  background:linear-gradient(180deg,rgba(2,6,23,0),rgba(2,6,23,.82));
+}
+.home-media-overlay p{
+  color:#fff!important;
+  text-shadow:0 1px 10px rgba(0,0,0,.45);
+}
+.home-media-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:3;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  background:rgba(15,23,42,.58);
+  box-shadow:0 5px 14px rgba(0,0,0,.22);
+}
+.home-media-nav:hover{background:rgba(15,23,42,.78)}
+.home-media-nav-prev{left:.55rem}
+.home-media-nav-next{right:.55rem}
 @media(max-width:1199px){.home-side-column{gap:0}.home-media-preview{max-height:360px}}
 
 /* Homepage right column balance: show exactly three compact news items, then media without overflowing. */
@@ -195,7 +262,9 @@
 .home-media-block .home-media-preview{aspect-ratio:16/9!important;height:auto!important;min-height:0!important;max-height:none!important;flex:none!important}
 .home-media-block .home-media-preview iframe,
 .home-media-block .home-media-preview video,
-.home-media-block .home-media-preview img{width:100%!important;height:100%!important;object-fit:cover}
+.home-media-block .home-media-preview img{width:100%!important;height:100%!important;object-fit:contain}
+.home-media-block .home-media-preview iframe,
+.home-media-block .home-media-preview video{object-fit:cover}
 .home-media-block .home-media-select + .home-media-preview{margin-top:.85rem}
 
 /* Collaborator image fallback for records without an official headshot. */
@@ -853,4 +922,52 @@
   height:100vh!important;
   max-width:100vw!important;
   max-height:100vh!important;
+}
+
+/* Talks page embeds and relevant publication links. */
+.talk-video-wrap{
+  aspect-ratio:16/9;
+  width:100%;
+  margin:0;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:#0f172a;
+}
+.talk-video-wrap iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+.talk-publications{
+  margin-top:.55rem!important;
+}
+.talk-card .card-body{
+  padding:1rem!important;
+}
+.talk-card h3{
+  font-size:1.05rem;
+  line-height:1.28;
+  margin-bottom:.35rem;
+}
+.talk-card p{
+  font-size:.9rem;
+  line-height:1.5;
+  margin-bottom:.4rem;
+}
+.talk-publications button{
+  text-align:left;
+  font-size:.85rem;
+  line-height:1.3;
+  padding:.35rem .65rem;
+}
+.talk-actions svg{
+  width:6.5px!important;
+  height:6.5px!important;
+}
+@media(max-width:576px){
+  .talk-video-wrap{
+    width:100%;
+  }
 }

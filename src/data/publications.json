@@ -48,7 +48,15 @@
         "id": "supplement-1"
       }
     ],
-    "videos": [],
+    "videos": [
+      {
+        "id": "video-1",
+        "label": "Image Moments for Tracking Evolution of CSPs",
+        "url": "https://www.youtube.com/watch?v=vDwvmn4kdHY",
+        "embed": true,
+        "preview": true
+      }
+    ],
     "links": [],
     "themes": [],
     "previewExampleNote": "Preview is now selectable from a dropdown. This example opens the supplementary PDF by default; change defaultPreview to paper, supplement-1, video-1, or any custom id.",

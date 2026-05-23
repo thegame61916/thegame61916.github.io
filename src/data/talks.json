@@ -1,16 +1,89 @@
 [
   {
-    "id": "reeb-space-chemistry-talk",
-    "title": "Reeb Space: A Topological Tool for Chemistry Data Analysis",
-    "venue": "Research seminar / invited talk",
-    "date": "",
-    "description": "Introductory talk on Reeb spaces and their use in visual analysis of electron density fields and molecular bonding behavior.",
+    "id": "image-moments-csp-evolution-talk",
+    "title": "Image Moments for Tracking Evolution of CSPs",
+    "venue": "VGL IISc (YouTube)",
+    "date": "2025",
+    "description": "Talk on tracking temporal evolution of continuous scatterplots using image moments for bivariate field analysis.",
     "slides": "",
-    "video": "",
+    "video": "https://www.youtube.com/watch?v=vDwvmn4kdHY",
+    "images": [],
+    "publications": [
+      "csp-moments-2025"
+    ],
+    "projects": [
+      "electronic-structure-visualization",
+      "time-varying-topology"
+    ],
+    "media": []
+  },
+  {
+    "id": "mohit-phd-defense-talk",
+    "title": "Mohit Sharma PhD Defense",
+    "venue": "VGL IISc (YouTube)",
+    "date": "2024",
+    "description": "PhD defense presentation covering topological and visual analysis methods for scientific data, including chemistry-focused bivariate field analysis.",
+    "slides": "",
+    "video": "https://www.youtube.com/watch?v=-R20dnto3sw",
     "images": [],
     "publications": [
       "csp-operators-2024",
-      "csp-moments-2025"
+      "csp-moments-2025",
+      "segmentation-peeling-2021",
+      "fiber-surface-2022"
+    ],
+    "projects": [
+      "electronic-structure-visualization",
+      "reeb-space-fiber-analysis",
+      "time-varying-topology"
+    ],
+    "media": []
+  },
+  {
+    "id": "topoinvis-2022-fiber-surface-talk",
+    "title": "TopoInVis 2022: Jacobi Set Driven Search for Flexible Fiber Surface Extraction",
+    "venue": "TopoInVis / IEEE VIS 2022 (YouTube)",
+    "date": "2022",
+    "description": "Conference talk on a Jacobi-set-driven method for searching and extracting flexible fiber surfaces in bivariate data.",
+    "slides": "",
+    "video": "https://www.youtube.com/watch?v=ckr0GhsV6vY",
+    "images": [],
+    "publications": [
+      "fiber-surface-2022"
+    ],
+    "projects": [
+      "reeb-space-fiber-analysis"
+    ],
+    "media": []
+  },
+  {
+    "id": "topoinvis-2022-fiber-surface-preview",
+    "title": "TopoInVis 2022 Preview: Jacobi Set Driven Search for Flexible Fiber Surface Extraction",
+    "venue": "TopoInVis Preview (YouTube)",
+    "date": "2022",
+    "description": "Preview talk for TopoInVis 2022 introducing the flexible fiber surface extraction approach.",
+    "slides": "",
+    "video": "https://www.youtube.com/watch?v=_hnK0VB-Egc",
+    "images": [],
+    "publications": [
+      "fiber-surface-2022"
+    ],
+    "projects": [
+      "reeb-space-fiber-analysis"
+    ],
+    "media": []
+  },
+  {
+    "id": "vis-2021-segmentation-peeling-preview",
+    "title": "VIS 2021 Preview: Segmentation Driven Peeling for Visual Analysis of Electronic Transitions",
+    "venue": "IEEE VIS Preview (YouTube)",
+    "date": "2021",
+    "description": "Preview presentation for IEEE VIS 2021 on segmentation-driven peeling for electronic transition analysis.",
+    "slides": "",
+    "video": "https://www.youtube.com/watch?v=xuA2T0bcx5I",
+    "images": [],
+    "publications": [
+      "segmentation-peeling-2021"
     ],
     "projects": [
       "electronic-structure-visualization"

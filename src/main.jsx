@@ -248,11 +248,53 @@ function ScrollableNews({ setRoute }) {
 }
 
 function HomeMediaHighlight({ setRoute }) {
-  const items = Array.isArray(homeMedia.items) ? homeMedia.items.filter(Boolean) : [];
+  const items = useMemo(() => {
+    const isCreativeMedia = (item) => ['poetry', 'theatre', 'theater'].includes(normalizeKeyword(item.category));
+    return buildUnifiedMedia()
+      .filter(item => normalizeMediaType(item) === 'image' && !isCreativeMedia(item))
+      .map(item => ({
+        id: item.id,
+        type: 'image',
+        title: item.title,
+        caption: item.description || item.caption || item.title,
+        image: item.src,
+        alt: item.title,
+        link: `#gallery:${item.id}`,
+        linkText: 'Open in gallery'
+      }));
+  }, []);
   if (homeMedia.enabled === false || items.length === 0) return null;
   const defaultItem = items.find(item => item.id === homeMedia.defaultItemId) || items[0];
   const [activeId, setActiveId] = useState(defaultItem.id || items[0].id);
+  const [slideDirection, setSlideDirection] = useState('next');
+  const [previousSlide, setPreviousSlide] = useState(null);
   const active = items.find(item => item.id === activeId) || defaultItem;
+  const activeIndex = Math.max(0, items.findIndex(item => item.id === active.id));
+  const setSlide = (id, direction = 'next') => {
+    if (id === active.id) return;
+    setPreviousSlide(active);
+    setSlideDirection(direction);
+    setActiveId(id);
+  };
+  const showPrevious = (event) => {
+    event.stopPropagation();
+    setSlide(items[(activeIndex - 1 + items.length) % items.length].id, 'prev');
+  };
+  const showNext = (event) => {
+    event.stopPropagation();
+    setSlide(items[(activeIndex + 1) % items.length].id, 'next');
+  };
+  useEffect(() => {
+    if (items.length <= 1) return undefined;
+    const timer = window.setInterval(() => {
+      setActiveId(current => {
+        const index = items.findIndex(item => item.id === current);
+        setSlideDirection('next');
+        return items[(index + 1) % items.length].id;
+      });
+    }, 4500);
+    return () => window.clearInterval(timer);
+  }, [items]);
   const openTarget = () => {
     if (!hasValue(active.link)) return;
     if (String(active.link).startsWith('#')) goRoute(String(active.link).replace('#', ''), setRoute);
@@ -260,14 +302,20 @@ function HomeMediaHighlight({ setRoute }) {
   };
   return <div className="home-media-block" aria-label={homeMedia.title || 'Homepage media highlight'}>
     <div className="home-media-card">
-      {items.length > 1 && <Form.Select className="home-media-select" value={activeId} onChange={e => setActiveId(e.target.value)} aria-label="Choose homepage media highlight">
-        {items.map(item => <option key={item.id} value={item.id}>{item.title || item.caption || item.id}</option>)}
-      </Form.Select>}
-      <HomeMediaPreview item={active}/>
-      {(active.caption || hasValue(active.link)) && <div className="home-media-body">
-        {active.caption && <p>{active.caption}</p>}
-        {hasValue(active.link) && <Button size="sm" variant="outline-primary" className="rounded-pill" onClick={openTarget}>{active.linkText || 'Open related item'}</Button>}
-      </div>}
+      <div className="home-media-carousel" onClick={openTarget}>
+        <div className={`home-media-track ${previousSlide ? `home-media-track-${slideDirection}` : 'home-media-track-single'}`} key={`${previousSlide?.id || 'start'}-${active.id}`} onAnimationEnd={() => setPreviousSlide(null)}>
+          {previousSlide && <div className="home-media-slide"><HomeMediaPreview item={previousSlide}/></div>}
+          <div className="home-media-slide"><HomeMediaPreview item={active}/></div>
+        </div>
+        {items.length > 1 && <>
+          <button className="home-media-nav home-media-nav-prev" aria-label="Previous gallery image" onClick={showPrevious}><ChevronLeft size={18}/></button>
+          <button className="home-media-nav home-media-nav-next" aria-label="Next gallery image" onClick={showNext}><ChevronRight size={18}/></button>
+        </>}
+        {(active.caption || hasValue(active.link)) && <div className="home-media-body home-media-overlay">
+          {active.caption && <p>{active.caption}</p>}
+          {hasValue(active.link) && <Button size="sm" variant="light" className="rounded-pill" onClick={(event) => { event.stopPropagation(); openTarget(); }}>{active.linkText || 'Open related item'}</Button>}
+        </div>}
+      </div>
     </div>
   </div>;
 }
@@ -547,7 +595,19 @@ function Students() {
   return <Section title="Students / Mentees and Alumni">{active.length ? renderGroup(active, 'Students', liveOrder) : null}{alumni.length ? renderGroup(alumni, 'Alumni', alumniOrder) : null}</Section>;
 }
 function Teaching() { return <><Section title="Teaching"><Row className="g-3">{teaching.map(t => <Col md={6} xl={4} key={t.institution + t.course}><BsCard className="h-100"><BsCard.Body><h3>{t.course}</h3><p>{t.role} · {t.institution}</p><small>{t.year}</small><p>{t.description}</p></BsCard.Body></BsCard></Col>)}</Row></Section><Section title="Teaching Interests"><BsCard><BsCard.Body>Data Structures and Algorithms; Computer Graphics and Scientific Visualization; Topological Data Analysis and Computational Topology.</BsCard.Body></BsCard></Section></>; }
-function Talks() { return <Section title="Talks & Presentations"><Row className="g-3">{talks.map(t => <Col md={6} xl={4} key={t.id}><BsCard className="h-100"><BsCard.Body><h3>{t.title}</h3><p>{t.venue} {t.date ? `· ${t.date}` : ''}</p><p>{t.description}</p><div className="card-actions"><LinkButton href={t.slides}>Slides</LinkButton><LinkButton href={t.video}>Video</LinkButton>{(t.media || []).map((m,i)=><LinkButton key={i} href={m.path || m.url}>{m.label || m.type || `Media ${i+1}`}</LinkButton>)}</div></BsCard.Body></BsCard></Col>)}</Row></Section>; }
+function Talks({ setRoute }) {
+  return <Section title="Talks & Presentations"><Row className="g-3">{talks.map(t => {
+    const hasVideo = hasValue(t.video);
+    const talkPubs = (t.publications || []).map(id => pubMap[id]).filter(Boolean);
+    return <Col md={6} xl={4} key={t.id}><BsCard className="h-100 talk-card">
+      {hasVideo && <div className="talk-video-wrap"><iframe src={youtubeEmbed(t.video)} title={t.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div>}
+      <BsCard.Body><h3>{t.title}</h3>{t.date ? <p>{t.date}</p> : null}<p>{t.description}</p>
+        {talkPubs.length > 0 && <div className="mini-links talk-publications">{talkPubs.map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.year} · {p.title}</button>)}</div>}
+        <div className="card-actions talk-actions mt-2"><LinkButton href={t.slides}>Slides</LinkButton><LinkButton href={t.video}>Open Video</LinkButton>{(t.media || []).map((m,i)=><LinkButton key={i} href={m.path || m.url}>{m.label || m.type || `Media ${i+1}`}</LinkButton>)}</div>
+      </BsCard.Body>
+    </BsCard></Col>;
+  })}</Row></Section>;
+}
 function normalizeMediaType(item = {}) {
   const explicit = String(item.type || '').toLowerCase();
   if (explicit) return explicit;
@@ -801,7 +861,7 @@ function App() {
   if (route.startsWith('publication:')) page = <PublicationPage id={route.split(':')[1]} setRoute={setR}/>;
   else if (route.startsWith('project:')) page = <ProjectPage id={route.split(':')[1]} setRoute={setR}/>;
   else if (route.startsWith('gallery:')) page = <Gallery setRoute={setR} initialMediaId={route.slice('gallery:'.length)}/>;
-  else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks/>, gallery: <Gallery setRoute={setR}/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
+  else page = { home: <Home setRoute={setR}/>, about: <About/>, research: <Research setRoute={setR}/>, projects: <Projects setRoute={setR}/>, publications: <Publications setRoute={setR}/>, people: <People/>, teaching: <Teaching/>, talks: <Talks setRoute={setR}/>, gallery: <Gallery setRoute={setR}/>, contact: <Contact/>, news: <NewsPage setRoute={setR}/> }[route] || <Home setRoute={setR}/>;
   return <><Header route={route} setRoute={setR}/><Container fluid="xxl" as="main" className="site-main"><GlobalSearch setRoute={setR}/>{page}</Container><footer className="site-footer"><Container fluid="xxl"><strong>{site.name}</strong><span>{site.affiliation}</span></Container></footer></>;
 }
 
