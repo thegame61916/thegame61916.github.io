@@ -423,7 +423,7 @@ function deriveThemes() {
     { id: 'multivariate-topology', title: 'Multivariate Topology', description: 'Reeb spaces, Jacobi sets, fiber surfaces, and scalable representations for bivariate and multifield data.' },
     { id: 'scientific-applications', title: 'Scientific Applications', description: 'Topology-driven analysis of chemistry, medical imaging, climate science, and simulation datasets.' },
     { id: 'time-varying-data', title: 'Time-Varying Data', description: 'Tracking, simplifying, and summarizing evolving features in scalar and multivariate fields.' },
-    { id: 'visual-analytics-ai', title: 'Visual Analytics and AI', description: 'Interactive systems and topology-based descriptors for interpretable analysis and machine learning workflows.' }
+    { id: 'visual-analytics-ai', title: 'Visual Analytics and AI', description: 'Interactive systems and topology-based descriptors for interpretable analysis and machine learning workflows.', status: 'Future ambition' }
   ];
   const themeImageCandidates = {
     'multivariate-topology': ['/assets/teasers/theme-multivariate-topology.png'],
@@ -431,8 +431,23 @@ function deriveThemes() {
     'time-varying-data': ['/assets/teasers/theme-time-varying-data.png'],
     'visual-analytics-ai': ['/assets/teasers/theme-visual-analytics-ai.png']
   };
+  const themeSeedPublications = {
+    'multivariate-topology': [
+      'fiber-surface-2022',
+      'jacobi-simplification-2024',
+      'volume-fusion-2025',
+      'spectral-ct-vcbm-poster-2025'
+    ]
+  };
   return defaultThemes.map(t => {
-    const pubs = publications.filter(p => pubKeywords(p).some(k => normalizeKeyword(k).includes(t.id.split('-')[0])) || (p.themes || []).includes(t.id) || (p.projects || []).some(pid => (projectMap[pid]?.themes || []).includes(t.id)));
+    if (t.status === 'Future ambition') {
+      const image = (themeImageCandidates[t.id] || [])[0] || '';
+      return { ...t, publications: [], projects: [], image };
+    }
+    const seededPubIds = themeSeedPublications[t.id] || [];
+    const seededPubs = seededPubIds.map(id => pubMap[id]).filter(Boolean);
+    const matchedPubs = publications.filter(p => pubKeywords(p).some(k => normalizeKeyword(k).includes(t.id.split('-')[0])) || (p.themes || []).includes(t.id) || (p.projects || []).some(pid => (projectMap[pid]?.themes || []).includes(t.id)));
+    const pubs = unique([...seededPubs, ...matchedPubs].map(p => p.id)).map(id => pubMap[id]).filter(Boolean);
     const projs = projects.filter(p => (p.themes || []).includes(t.id) || (p.publications || []).some(pid => pubs.some(x => x.id === pid)));
     const image = (themeImageCandidates[t.id] || [])[0] || projs.find(p => p.image)?.image || pubs.find(p => p.thumbnail)?.thumbnail || '';
     return { ...t, publications: pubs, projects: projs, image };
@@ -440,7 +455,7 @@ function deriveThemes() {
 }
 function ThemeCard({ theme, setRoute, list = false }) {
   const [open, setOpen] = useState(false);
-  return <BsCard className={`theme-card h-100 ${list ? 'theme-card-list' : ''}`}>{theme.image && <div className="theme-thumb"><img src={asset(theme.image)} alt={`${theme.title} teaser`} loading="lazy"/></div>}<BsCard.Body><h3>{theme.title}</h3><p>{theme.description}</p><div className="summary-pills"><button onClick={() => goRoute('publications', setRoute)}>{theme.publications.length} publications</button><button onClick={() => goRoute('projects', setRoute)}>{theme.projects.length} projects</button></div><Button variant="link" size="sm" className="p-0 mt-2" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button><Collapse in={open}><div className="compact-related mt-2">{theme.publications.slice(0, 6).map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.title}</button>)}</div></Collapse></BsCard.Body></BsCard>;
+  return <BsCard className={`theme-card h-100 ${list ? 'theme-card-list' : ''}`}>{theme.image && <div className="theme-thumb"><img src={asset(theme.image)} alt={`${theme.title} teaser`} loading="lazy"/></div>}<BsCard.Body>{theme.status && <Badge bg="warning" text="dark" className="mb-2">{theme.status}</Badge>}<h3>{theme.title}</h3><p>{theme.description}</p><div className="summary-pills"><button onClick={() => goRoute('publications', setRoute)}>{theme.publications.length} publications</button><button onClick={() => goRoute('projects', setRoute)}>{theme.projects.length} projects</button></div><Button variant="link" size="sm" className="p-0 mt-2" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button><Collapse in={open}><div className="compact-related mt-2">{theme.publications.slice(0, 6).map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.title}</button>)}</div></Collapse></BsCard.Body></BsCard>;
 }
 function Projects({ setRoute }) {
   const [view, setView] = useState('grid');
@@ -636,18 +651,23 @@ function Students() {
   return <Section title="Students / Mentees and Alumni">{active.length ? renderGroup(active, 'Students', liveOrder) : null}{alumni.length ? renderGroup(alumni, 'Alumni', alumniOrder) : null}</Section>;
 }
 function Teaching() { return <><Section title="Teaching"><Row className="g-3">{teaching.map(t => <Col md={6} xl={4} key={t.institution + t.course}><BsCard className="h-100"><BsCard.Body><h3>{t.course}</h3><p>{t.role} · {t.institution}</p><small>{t.year}</small><p>{t.description}</p></BsCard.Body></BsCard></Col>)}</Row></Section><Section title="Teaching Interests"><BsCard><BsCard.Body>Data Structures and Algorithms; Computer Graphics and Scientific Visualization; Topological Data Analysis and Computational Topology.</BsCard.Body></BsCard></Section></>; }
+function TalkCard({ talk: t, setRoute }) {
+  const [open, setOpen] = useState(false);
+  const hasVideo = hasValue(t.video);
+  const talkPubs = (t.publications || []).map(id => pubMap[id]).filter(Boolean);
+  return <BsCard className="h-100 talk-card">
+    {hasVideo && <div className="talk-video-wrap"><iframe src={youtubeEmbed(t.video)} title={t.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div>}
+    <BsCard.Body><h3>{t.title}</h3>{t.date ? <p>{t.date}</p> : null}<p>{t.description}</p>
+      {talkPubs.length > 0 && <>
+        <Button variant="link" size="sm" className="p-0 mt-1" onClick={() => setOpen(!open)}>Show related items <ChevronDown size={14}/></Button>
+        <Collapse in={open}><div className="compact-related mt-2">{talkPubs.map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.title}</button>)}</div></Collapse>
+      </>}
+      <div className="card-actions talk-actions mt-2"><LinkButton href={t.slides}>Slides</LinkButton><LinkButton href={t.video}>Open Video</LinkButton>{(t.media || []).map((m,i)=><LinkButton key={i} href={m.path || m.url}>{m.label || m.type || `Media ${i+1}`}</LinkButton>)}</div>
+    </BsCard.Body>
+  </BsCard>;
+}
 function Talks({ setRoute }) {
-  return <Section title="Talks & Presentations"><Row className="g-3">{talks.map(t => {
-    const hasVideo = hasValue(t.video);
-    const talkPubs = (t.publications || []).map(id => pubMap[id]).filter(Boolean);
-    return <Col md={6} xl={4} key={t.id}><BsCard className="h-100 talk-card">
-      {hasVideo && <div className="talk-video-wrap"><iframe src={youtubeEmbed(t.video)} title={t.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div>}
-      <BsCard.Body><h3>{t.title}</h3>{t.date ? <p>{t.date}</p> : null}<p>{t.description}</p>
-        {talkPubs.length > 0 && <div className="mini-links talk-publications">{talkPubs.map(p => <button key={p.id} onClick={() => goRoute(`publication:${p.id}`, setRoute)}>{p.year} · {p.title}</button>)}</div>}
-        <div className="card-actions talk-actions mt-2"><LinkButton href={t.slides}>Slides</LinkButton><LinkButton href={t.video}>Open Video</LinkButton>{(t.media || []).map((m,i)=><LinkButton key={i} href={m.path || m.url}>{m.label || m.type || `Media ${i+1}`}</LinkButton>)}</div>
-      </BsCard.Body>
-    </BsCard></Col>;
-  })}</Row></Section>;
+  return <Section title="Talks & Presentations"><Row className="g-3">{talks.map(t => <Col md={6} xl={4} key={t.id}><TalkCard talk={t} setRoute={setRoute}/></Col>)}</Row></Section>;
 }
 function normalizeMediaType(item = {}) {
   const explicit = String(item.type || '').toLowerCase();
