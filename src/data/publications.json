@@ -30,7 +30,7 @@
       "molecular data",
       "photoexcitation"
     ],
-    "abstract": "This work presents a structured approach for feature-directed visual exploration of time-varying bivariate fields using continuous scatterplots and image moment descriptors, with applications to electronic structure evolution after photoexcitation.",
+    "abstract": "Photoinduced electronic transitions are complex quantum-mechanical processes where electrons move between energy levels due to light absorption. This induces dynamics in electronic structure and nuclear geometry, driving important physical and chemical processes in fields like photobiology, materials design, and medicine. The evolving electronic structure can be characterized by two electron density fields: hole and particle natural transition orbitals (NTOs). Studying these density fields helps understand electronic charge movement between donor and acceptor regions within a molecule. Previous works rely on side-by-side visual comparisons of isosurfaces, statistical approaches, or bivariate field analysis with few instances. We propose a new method to analyze time-varying bivariate fields with many instances, which is relevant for understanding electronic structure changes during light-induced dynamics. Since NTO fields depend on nuclear geometry, the nuclear motion results in numerous time steps to analyze. This paper presents a structured approach to feature-directed visual exploration of time-varying bivariate fields using continuous scatterplots (CSPs) and image moment-based descriptors, tailored for studying evolving electronic structures post-photoexcitation. The CSP of the bivariate field at each time step is represented by a four-length image moment vector. The collection of all vector descriptors forms a point cloud in R^4, visualized using principal component analysis. Selecting appropriate principal components results in a representation of the point cloud as a curve on the plane, aiding tasks such as identifying key time steps, recognizing patterns within the bivariate field, and tracking the temporal evolution. We demonstrate this with two case studies on excited-state molecular dynamics, showing how bivariate field analysis provides application-specific insights.",
     "bibtex": "@article{sharma2025cspmoments, title={Continuous Scatterplot and Image Moments for Time-Varying Bivariate Field Analysis of Electronic Structure Evolution}, author={Sharma, Mohit and Masood, Talha Bin and List, Nanna Holmgaard and Hotz, Ingrid and Natarajan, Vijay}, journal={IEEE Transactions on Visualization and Computer Graphics}, year={2025}}",
     "projects": [
       "electronic-structure-visualization",
@@ -103,7 +103,7 @@
       "molecular visualization",
       "visual analytics"
     ],
-    "abstract": "This paper introduces continuous scatterplot operators for the analysis of bivariate fields and demonstrates their use in studying electronic transitions, donor-acceptor behavior, and molecular electronic structure.",
+    "abstract": "Electronic transitions in molecules due to the absorption or emission of light is a complex quantum mechanical process. Their study plays an important role in the design of novel materials. A common yet challenging task in the study is to determine the nature of electronic transitions, namely which subgroups of the molecule are involved in the transition by donating or accepting electrons, followed by an investigation of the variation in the donor-acceptor behavior for different transitions or conformations of the molecules. In this paper, we present a novel approach for the analysis of a bivariate field and show its applicability to the study of electronic transitions. This approach is based on two novel operators, the continuous scatterplot (CSP) lens operator and the CSP peel operator, that enable effective visual analysis of bivariate fields. Both operators can be applied independently or together to facilitate analysis. The operators motivate the design of control polygon inputs to extract fiber surfaces of interest in the spatial domain. The CSPs are annotated with a quantitative measure to further support the visual analysis. We study different molecular systems and demonstrate how the CSP peel and CSP lens operators help identify and study donor and acceptor characteristics in molecular systems.",
     "bibtex": "@article{sharma2024cspoperators, title={Continuous Scatterplot Operators for Bivariate Analysis and Study of Electronic Transitions}, author={Sharma, Mohit and Masood, Talha Bin and Thygesen, Signe S. and Linares, Mathieu and Hotz, Ingrid and Natarajan, Vijay}, journal={IEEE Transactions on Visualization and Computer Graphics}, year={2024}}",
     "projects": [
       "electronic-structure-visualization"
@@ -116,7 +116,7 @@
         "type": "pdf",
         "url": "https://vgl.csa.iisc.ac.in/pdf/pub/supplementary_CSPOperators_Mohit.pdf",
         "path": "",
-        "preview": false
+        "preview": true
       }
     ],
     "videos": [],
@@ -160,7 +160,7 @@
       "temporal topology",
       "feature correspondence"
     ],
-    "abstract": "This work simplifies Jacobi sets for time-varying scalar fields to reduce visual clutter and improve the analysis of topological feature tracks.",
+    "abstract": "The Jacobi set of a bivariate scalar field is the set of points where the gradients of the two constituent scalar fields align with each other. It captures the regions of topological changes in the bivariate field. The Jacobi set is a bivariate analog of critical points, and may correspond to features of interest. In the specific case of time-varying fields and when one of the scalar fields is time, the Jacobi set corresponds to temporal tracks of critical points, and serves as a feature-tracking graph. The Jacobi set of a bivariate field or a time-varying scalar field is complex, resulting in cluttered visualizations that are difficult to analyze. This paper addresses the problem of Jacobi set simplification. Specifically, we use the time-varying scalar field scenario to introduce a method that computes a reduced Jacobi set. The method is based on a stability measure called robustness that was originally developed for vector fields and helps capture the structural stability of critical points. We also present a mathematical analysis for the method, and describe an implementation for 2D time-varying scalar fields. Applications to both synthetic and real-world datasets demonstrate the effectiveness of the method for tracking features.",
     "bibtex": "@article{meduri2024jacobi, title={Jacobi Set Simplification for Tracking Topological Features in Time-Varying Scalar Fields}, author={Meduri, Dhruv and Sharma, Mohit and Natarajan, Vijay}, journal={The Visual Computer}, year={2024}}",
     "projects": [
       "time-varying-topology"
@@ -173,7 +173,7 @@
         "type": "pdf",
         "url": "https://vgl.csa.iisc.ac.in/pdf/pub/JS_Simplification_Supplementary.pdf",
         "path": "",
-        "preview": false
+        "preview": true
       }
     ],
     "videos": [],
@@ -223,7 +223,7 @@
       "visual analytics"
     ],
     "award": "Honorable Mention",
-    "abstract": "This paper proposes a topology-aware method for fusing spectral computed tomography data into a representative volume using histograms and extremum graphs while preserving salient anatomical structures.",
+    "abstract": "Photon-Counting Computed Tomography (PCCT) is a novel imaging modality that simultaneously acquires volumetric data at multiple X-ray energy levels, generating separate volumes that capture energy-dependent attenuation properties. Attenuation refers to the reduction in X-ray intensity as it passes through different tissues or materials. This spectral information enhances tissue and material differentiation, enabling more accurate diagnosis and analysis. However, the resulting multivolume datasets are often complex and redundant, making visualization and interpretation challenging. To address these challenges, we propose a method for fusing spectral PCCT data into a single representative volume that enables direct volume rendering and segmentation by leveraging both shared and complementary information across different channels. Our approach starts by computing 2D histograms between pairs of volumes to identify those that exhibit prominent structural features. These histograms reveal relationships and variations that may be difficult to discern from individual volumes alone. Next, we construct an extremum graph from the 2D histogram of two minimally correlated yet complementary volumes-selected to capture both shared and distinct features-thereby maximizing the information content. The graph captures the topological distribution of histogram extrema. By extracting prominent structure within this graph and projecting each grid point in histogram space onto it, we reduce the dimensionality to one, producing a unified volume. This representative volume retains key structural and material characteristics from the original spectral data while significantly reducing the analysis scope from multiple volumes to one. The result is a topology-aware, information-rich fusion of multi-energy CT datasets that facilitates more effective visualization and segmentation.",
     "bibtex": "@inproceedings{sharma2025volumefusion, title={Topology-Aware Volume Fusion for Spectral Computed Tomography via Histograms and Extremum Graph}, author={Sharma, Mohit and Nilsson, Emma and Falk, Martin and Masood, Talha Bin and Jollans, Lee and Persson, Anders and Ebbers, Tino and Hotz, Ingrid}, booktitle={TopoInVis}, year={2025}}",
     "projects": [
       "spectral-ct-volume-fusion"
@@ -288,7 +288,7 @@
       "poster"
     ],
     "award": "Best Poster Award",
-    "abstract": "This poster presents topology-guided volume fusion for multi-energy spectral computed tomography, using topological and histogram-based information to preserve important anatomical structures while producing a representative fused volume.",
+    "abstract": "Photon-Counting Computed Tomography (PCCT) captures multiple volumetric datasets at different X-ray energy levels, offering rich spectral information for improved tissue differentiation and material analysis. However, the high dimensionality and redundancy of these datasets pose challenges for visualization using conventional CT workflows. Standard techniques, including single-channel transfer functions or dimensionality reduction methods, often fail to exploit the complementary nature of spectral data, missing important features. We propose a topology-guided volume fusion pipeline that reduces multi-volume spectral CT data into a single fused scalar field while preserving key anatomical and material structures. Using topological data analysis (TDA), specifically extremum graphs from 2D histograms of the two least correlated volumes, we identify prominent structures and map them onto a single scalar field, enabling effective visualization and segmentation with standard tools.",
     "bibtex": "@misc{sharma2025vcbmposter, title={Topology-Guided Volume Fusion for Multi-Energy Spectral Computed Tomography}, author={Sharma, Mohit and Nilsson, Emma and Falk, Martin and Masood, Talha Bin and Jollans, Lee and Persson, Anders and Ebbers, Tino and Hotz, Ingrid}, howpublished={VCBM Poster}, year={2025}}",
     "projects": [
       "spectral-ct-volume-fusion"
@@ -338,6 +338,7 @@
     "venue": "TopoInVis",
     "year": 2022,
     "doi": "https://doi.org/10.1109/TopoInVis57755.2022.00012",
+    "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/Jacobi_Set_Driven_Search_for_Flexible_Fiber_Surface_Extraction.pdf",
     "thumbnail": "/assets/teasers/fiber-surface-2022.png",
     "tags": [
       "fiber surfaces",
@@ -351,7 +352,7 @@
       "Reeb space",
       "visual query"
     ],
-    "abstract": "A Jacobi-set-driven approach for flexible fiber surface extraction in bivariate fields.",
+    "abstract": "Isosurfaces are an important tool for analysis and visualization of univariate scalar fields. Earlier works have demonstrated the presence of interesting isosurfaces at isovalues close to critical values. This motivated the development of efficient methods for computing individual components of isosurfaces restricted to a region of interest. Generalization of isosurfaces to fiber surfaces and critical points to Jacobi sets has resulted in new approaches for analyzing bivariate scalar fields. Unlike isosurfaces, there exists no output sensitive method for computing fiber surfaces. Existing methods traverse through all the tetrahedra in the domain. In this paper, we propose the use of the Jacobi set to identify fiber surface components of interest and present an output sensitive approach for its computation. The Jacobi edges are used to initiate the search towards seed tetrahedra that contain the fiber surface, thereby reducing the search space. This approach also leads to effective analysis of the bivariate field by supporting the identification of relevant fiber surfaces near Jacobi edges.",
     "bibtex": "@inproceedings{sharma2022fiber, title={Jacobi Set Driven Search for Flexible Fiber Surface Extraction}, author={Sharma, Mohit and Natarajan, Vijay}, booktitle={TopoInVis}, year={2022}}",
     "projects": [
       "reeb-space-fiber-analysis"
@@ -400,7 +401,7 @@
       "visual analytics",
       "bivariate fields"
     ],
-    "abstract": "This work presents a segmentation-driven peeling method for visual analysis of electronic transitions using bivariate fields derived from electron density data.",
+    "abstract": "Electronic transitions in molecules due to absorption or emission of light is a complex quantum mechanical process. Their study plays an important role in the design of novel materials. A common yet challenging task in the study is to determine the nature of those electronic transitions, i.e. which subgroups of the molecule are involved in the transition by donating or accepting electrons, followed by an investigation of the variation in the donor-acceptor behavior for different transitions or conformations of the molecules. In this paper, we present a novel approach towards the study of electronic transitions based on the visual analysis of a bivariate field, namely the electron density in the hole and particle Natural Transition Orbital (NTO). The visual analysis focuses on the continuous scatter plots (CSPs) of the bivariate field linked to their spatial domain. The method supports selections in the CSP visualized as fiber surfaces in the spatial domain, the grouping of atoms, and segmentation of the density fields to peel the CSP. This peeling operator is central to the visual analysis process and helps identify donors and acceptors. We study different molecular systems, identifying local excitation and charge transfer excitations to demonstrate the utility of the method.",
     "bibtex": "@inproceedings{sharma2021peeling, title={Segmentation Driven Peeling for Visual Analysis of Electronic Transitions}, author={Sharma, Mohit and Masood, Talha Bin and Thygesen, Signe S. and Linares, Mathieu and Hotz, Ingrid and Natarajan, Vijay}, booktitle={IEEE VIS}, year={2021}}",
     "projects": [
       "electronic-structure-visualization"
@@ -433,6 +434,7 @@
     "venue": "ICVGIP",
     "year": 2018,
     "doi": "https://doi.org/10.1145/3293353.3293384",
+    "pdf": "https://vgl.csa.iisc.ac.in/pdf/pub/On_Demand_Augmentation_of_Contour_Trees_ICVGIP.pdf",
     "thumbnail": "/assets/teasers/contour-tree-augmentation-2018.png",
     "tags": [
       "contour trees",
@@ -445,7 +447,7 @@
       "level sets",
       "scalar field visualization"
     ],
-    "abstract": "An on-demand approach for augmenting contour trees to support flexible topological analysis of scalar fields.",
+    "abstract": "The contour tree represents the topology of level sets of a scalar function. Nodes of the tree correspond to critical level sets and arcs of the tree represent a collection of topologically equivalent level sets connecting two critical level sets. The augmented contour tree contains degree-2 nodes on the arcs that represent regular level sets. The degree-2 nodes correspond to regular points of the scalar function and other critical points that do not affect the number of level set components. The augmented contour tree is significantly larger in size and requires more effort to compute when compared to the contour tree. Applications of the contour tree to data exploration and visualization require the augmented contour tree. Current approaches propose algorithms to compute the contour tree and the augmented contour tree from scratch. Precomputing and storing the large augmented contour tree will not be necessary if the contour tree can be augmented on-demand. This paper poses the problem of computing the augmented contour tree given a contour tree as input. Computational experiments demonstrate that the on-demand augmentation can be computed fast while resulting in good memory savings.",
     "bibtex": "@inproceedings{sharma2018contour, title={On-Demand Augmentation of Contour Trees}, author={Sharma, Mohit and Natarajan, Vijay}, booktitle={ICVGIP}, year={2018}}",
     "projects": [
       "time-varying-topology"

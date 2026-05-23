@@ -103,11 +103,32 @@ function publicationFilterKeywords(pub) {
 function primaryPubLink(pub) {
   return pub.localPdf || pub.pdf || pub.doi || '';
 }
-function supplementaryItems(pub) {
-  const legacy = hasValue(pub.supplement) ? [{ label: 'Supplement', type: 'pdf', url: pub.supplement, preview: false }] : [];
-  return [...legacy, ...(pub.supplements || [])];
+function materialSource(item = {}) {
+  return String(item.path || item.url || '').trim();
 }
-function videoItems(pub) { return pub.videos || (hasValue(pub.video) ? [{ label: 'Video', url: pub.video, embed: true }] : []); }
+function isPdfMaterial(item = {}) {
+  const source = materialSource(item).toLowerCase();
+  return String(item.type || '').toLowerCase() === 'pdf' || source.endsWith('.pdf');
+}
+function supplementaryItems(pub) {
+  const supplements = (pub.supplements || []).map(item => ({
+    ...item,
+    label: isPdfMaterial(item) ? 'Supplementary PDF' : (item.label || 'Supplementary Material')
+  }));
+  const legacySource = hasValue(pub.supplement) ? String(pub.supplement).trim() : '';
+  const hasExplicitLegacy = legacySource && supplements.some(item => materialSource(item) === legacySource);
+  const legacy = legacySource && !hasExplicitLegacy
+    ? [{ label: 'Supplementary PDF', type: 'pdf', url: pub.supplement, preview: true }]
+    : [];
+  return [...legacy, ...supplements];
+}
+function videoItems(pub) {
+  const videos = pub.videos || (hasValue(pub.video) ? [{ url: pub.video, embed: true }] : []);
+  return videos.map((item, index) => ({
+    ...item,
+    label: videos.length > 1 ? `Supplementary Video ${index + 1}` : 'Supplementary Video'
+  }));
+}
 function publicationAwardItems(pub) {
   const items = [];
   if (hasValue(pub.award)) {
@@ -404,10 +425,16 @@ function deriveThemes() {
     { id: 'time-varying-data', title: 'Time-Varying Data', description: 'Tracking, simplifying, and summarizing evolving features in scalar and multivariate fields.' },
     { id: 'visual-analytics-ai', title: 'Visual Analytics and AI', description: 'Interactive systems and topology-based descriptors for interpretable analysis and machine learning workflows.' }
   ];
+  const themeImageCandidates = {
+    'multivariate-topology': ['/assets/teasers/theme-multivariate-topology.png'],
+    'scientific-applications': ['/assets/teasers/theme-scientific-applications.png.png', '/assets/teasers/theme-scientific-applications.png'],
+    'time-varying-data': ['/assets/teasers/theme-time-varying-data.png'],
+    'visual-analytics-ai': ['/assets/teasers/theme-visual-analytics-ai.png']
+  };
   return defaultThemes.map(t => {
     const pubs = publications.filter(p => pubKeywords(p).some(k => normalizeKeyword(k).includes(t.id.split('-')[0])) || (p.themes || []).includes(t.id) || (p.projects || []).some(pid => (projectMap[pid]?.themes || []).includes(t.id)));
     const projs = projects.filter(p => (p.themes || []).includes(t.id) || (p.publications || []).some(pid => pubs.some(x => x.id === pid)));
-    const image = projs.find(p => p.image)?.image || pubs.find(p => p.thumbnail)?.thumbnail || '';
+    const image = (themeImageCandidates[t.id] || [])[0] || projs.find(p => p.image)?.image || pubs.find(p => p.thumbnail)?.thumbnail || '';
     return { ...t, publications: pubs, projects: projs, image };
   });
 }
@@ -591,7 +618,7 @@ function Students() {
   const StudentCard = ({ s }) => {
     const href = s.website || '#';
     const linked = Boolean(s.website);
-    const card = <BsCard className="student-card h-100"><BsCard.Body><div className="student-head"><PersonPhoto person={s}/><div><h3>{s.name}</h3><p>{s.program} · {s.affiliation}</p></div></div><p>{s.project}</p><small>{s.duration}{s.currentPosition ? ` · Current: ${s.currentPosition}` : ''}</small>{s.links?.length > 0 && <div className="card-actions mt-3">{s.links.map((l,i)=><LinkButton key={i} href={l.url || l.path}>{l.label || `Work ${i+1}`}</LinkButton>)}</div>}</BsCard.Body></BsCard>;
+    const card = <BsCard className="student-card h-100"><BsCard.Body><div className="student-head"><PersonPhoto person={s}/><div><h3>{s.name}</h3><p>{s.program} · {s.affiliation}</p></div></div><p>{s.projectUrl ? <a href={s.projectUrl} {...externalAttrs} onClick={(e) => e.stopPropagation()}>{s.project}</a> : s.project}</p><small>{s.duration}{s.currentPosition ? ` · Current: ${s.currentPosition}` : ''}</small>{s.links?.length > 0 && <div className="card-actions mt-3">{s.links.map((l,i)=><LinkButton key={i} href={l.url || l.path}>{l.label || `Work ${i+1}`}</LinkButton>)}</div>}</BsCard.Body></BsCard>;
     return linked ? <a className="student-link" href={href} {...externalAttrs}>{card}</a> : <div className="student-link">{card}</div>;
   };
   const renderGroup = (items, label, order) => <>{order.map(g => {
@@ -693,18 +720,8 @@ function compareMediaChronology(a, b) {
 }
 function buildUnifiedMedia() {
   const galleryItems = [...gallery, ...(generatedMedia.gallery || [])].map(item => normalizeMediaItem(item));
-  const talkItems = talks.flatMap(t => {
-    const groupId = t.groupId || t.id;
-    const base = { category: 'Research Talks', groupId, title: t.title, description: t.description, tags: ['talk'] };
-    const items = [];
-    if (hasValue(t.slides)) items.push(normalizeMediaItem({ id: `${t.id}-slides`, type: 'slides', src: t.slides, label: 'Slides' }, base));
-    if (hasValue(t.video)) items.push(normalizeMediaItem({ id: `${t.id}-video`, type: 'video', src: t.video, label: 'Video' }, base));
-    (t.images || []).forEach((img, i) => items.push(normalizeMediaItem({ id: `${t.id}-image-${i + 1}`, type: 'image', ...(typeof img === 'string' ? { src: img } : img) }, base)));
-    (t.media || []).forEach((m, i) => items.push(normalizeMediaItem({ id: m.id || `${t.id}-media-${i + 1}`, ...m }, base)));
-    return items;
-  });
   const hobbyItems = hobbies.flatMap(h => (h.media || []).map((m, i) => normalizeMediaItem({ id: m.id || `${h.id}-media-${i + 1}`, ...m }, { category: h.title, groupId: h.id, tags: [h.id] })));
-  const mergedRaw = [...galleryItems, ...talkItems, ...hobbyItems].filter(item => hasValue(item.src));
+  const mergedRaw = [...galleryItems, ...hobbyItems].filter(item => hasValue(item.src));
   const seen = new Set();
   const merged = mergedRaw.filter(item => {
     const key = `${normalizeMediaType(item)}::${String(item.src).trim()}`;
@@ -756,6 +773,7 @@ function Gallery({ setRoute, initialMediaId = '' }) {
     { key: 'academic', title: 'Research, Conferences, and Academic Life', items: academicItems },
     { key: 'creative', title: 'Poetry and Theatre', items: creativeItems }
   ].filter(group => group.items.length > 0);
+  const displayedItems = galleryGroups.flatMap(group => group.items);
   const openMedia = (item) => {
     if (!item) return;
     setLight(item);
@@ -793,17 +811,17 @@ function Gallery({ setRoute, initialMediaId = '' }) {
   const lightType = normalizeMediaType(light || {});
   const lightSrc = light ? lightboxVideoSrc(light) : '';
   const lightIsEmbeddedVideo = lightType === 'video' && (String(lightSrc).includes('youtube.com/embed') || String(lightSrc).includes('vimeo.com'));
-  const lightIndex = light ? items.findIndex(item => item.id === light.id) : -1;
-  const hasNav = lightIndex >= 0 && items.length > 1;
+  const lightIndex = light ? displayedItems.findIndex(item => item.id === light.id) : -1;
+  const hasNav = lightIndex >= 0 && displayedItems.length > 1;
   const openPrev = () => {
     if (!hasNav) return;
-    const prevIndex = (lightIndex - 1 + items.length) % items.length;
-    openMedia(items[prevIndex]);
+    const prevIndex = (lightIndex - 1 + displayedItems.length) % displayedItems.length;
+    openMedia(displayedItems[prevIndex]);
   };
   const openNext = () => {
     if (!hasNav) return;
-    const nextIndex = (lightIndex + 1) % items.length;
-    openMedia(items[nextIndex]);
+    const nextIndex = (lightIndex + 1) % displayedItems.length;
+    openMedia(displayedItems[nextIndex]);
   };
   useEffect(() => {
     if (!light) return undefined;
@@ -814,7 +832,7 @@ function Gallery({ setRoute, initialMediaId = '' }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [light, hasNav, lightIndex, items]);
+  }, [light, hasNav, lightIndex, displayedItems]);
   return <>
     <Section title="Gallery">
       <div className="filters-bar publication-filters">
