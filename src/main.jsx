@@ -605,10 +605,17 @@ function personInitials(person) {
   return person.name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase();
 }
 function PersonPhoto({ person, className = '', style }) {
-  if (person.photo) return <img className={className} style={style} src={asset(person.photo)} alt={person.name}/>;
+  const photo = person.id === 'mohit-sharma' ? site.photo : person.photo;
+  if (photo) return <img className={className} style={style} src={asset(photo)} alt={person.name}/>;
   return <span className={`person-initials ${className}`} style={style} aria-label={person.name}>{personInitials(person)}</span>;
 }
-function PeopleStrip({ ids = [] }) { return <div className="people-strip">{ids.map(id => people[id]).filter(Boolean).map(person => <a key={person.id} href={person.website || '#'} {...(person.website ? externalAttrs : {})} className="person-chip"><PersonPhoto person={person}/><span><strong>{person.name}</strong><small>{person.affiliation}</small></span></a>)}</div>; }
+function PeopleStrip({ ids = [] }) {
+  return <div className="people-strip">{ids.map(id => people[id]).filter(Boolean).map(person => {
+    const isMohit = person.id === 'mohit-sharma';
+    const href = isMohit ? '#home' : (person.website || '#');
+    return <a key={person.id} href={href} {...(!isMohit && person.website ? externalAttrs : {})} className="person-chip"><PersonPhoto person={person}/><span><strong>{person.name}</strong><small>{person.affiliation}</small></span></a>;
+  })}</div>;
+}
 function People() { return <><Section title="Collaborators"><Row className="g-3">{collaborators.filter(c => c.id !== 'mohit-sharma').map(c => <Col sm={6} lg={4} xl={3} xxl={2} key={c.id}><a href={c.website || '#'} {...(c.website ? externalAttrs : {})} className="person-card person-card--collaborator card h-100"><PersonPhoto person={c} className="person-card-photo"/><div className="person-card-body"><h3>{c.name}</h3><p>{c.designation}</p><small>{c.affiliation}</small><em>{c.area}</em></div></a></Col>)}</Row></Section><Students/></>; }
 function Students() {
   const liveOrder = ['Masters','Undergrad','Intern','PhD','Postdoc'];
