@@ -638,6 +638,20 @@ function Gallery({ setRoute }) {
   const relatedAll = light ? (light.relatedIds || []).map(id => byId[id]).filter(Boolean) : [];
   const relatedVisual = relatedAll.filter(item => visualTypes.includes(normalizeMediaType(item)));
   const relatedPublications = unique(relatedAll.filter(item => ['pdf', 'slides'].includes(normalizeMediaType(item)) && hasValue(item.publicationId)).map(item => item.publicationId));
+  const relatedActions = [
+    ...relatedVisual.map(item => ({
+      key: `media-${item.id}`,
+      icon: normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>,
+      label: item.title,
+      onClick: () => setLight(item)
+    })),
+    ...relatedPublications.map(pubId => ({
+      key: `pub-${pubId}`,
+      icon: <FileText size={16}/>,
+      label: 'Open Publication',
+      onClick: () => { goRoute(`publication:${pubId}`, setRoute); setLight(null); }
+    }))
+  ];
   const lightType = normalizeMediaType(light || {});
   const lightSrc = light ? lightboxVideoSrc(light) : '';
   const lightIsEmbeddedVideo = lightType === 'video' && (String(lightSrc).includes('youtube.com/embed') || String(lightSrc).includes('vimeo.com'));
@@ -678,14 +692,13 @@ function Gallery({ setRoute }) {
         {hasNav && <button className="lightbox-nav lightbox-nav-next" aria-label="Next media" onClick={openNext}><ChevronRight size={24}/></button>}
         {lightType === 'video'
           ? (lightIsEmbeddedVideo
-              ? <iframe className="lightbox-media" src={lightSrc} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+              ? <iframe className="lightbox-media lightbox-media-frame" src={lightSrc} title={light.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
               : <video className="lightbox-media" src={asset(light.src)} controls autoPlay playsInline/>)
           : <img className="lightbox-media" src={asset(light.src)} alt={light.title}/>}
         <div className="lightbox-overlay">
           <h3>{light.title}</h3>
           <p>{light.description}</p>
-          {relatedVisual.length > 0 && <div className="mt-2"><strong>Related materials</strong><div className="gallery-related mt-2">{relatedVisual.map(item => <button key={item.id} className="gallery-related-item" onClick={() => setLight(item)}><span>{normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>}</span>{item.title}</button>)}</div></div>}
-          {relatedPublications.length > 0 && <div className="mini-links mt-2">{relatedPublications.map(pubId => <button key={pubId} onClick={() => { goRoute(`publication:${pubId}`, setRoute); setLight(null); }}><FileText size={14}/> Open related publication</button>)}</div>}
+          {relatedActions.length > 0 && <div className="lightbox-actions mt-2">{relatedActions.map(action => <button key={action.key} className="lightbox-action-btn" onClick={action.onClick}><span>{action.icon}</span>{action.label}</button>)}</div>}
         </div>
       </div>
     </div>}

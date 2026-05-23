@@ -676,9 +676,16 @@
 .lightbox-media{
   width:100%;
   height:100%;
+  max-width:100%;
+  max-height:100%;
   display:block;
   object-fit:contain;
-  background:#0b1220;
+  background:transparent;
+}
+.lightbox-media-frame{
+  width:100%;
+  height:100%;
+  border:0;
 }
 .lightbox-close{
   position:fixed!important;
@@ -732,6 +739,36 @@
   background:rgba(255,255,255,.08)!important;
   color:#fff!important;
 }
+.lightbox-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.55rem;
+  max-width:min(980px,94vw);
+  margin-inline:auto;
+}
+.lightbox-action-btn{
+  position:static!important;
+  top:auto!important;
+  right:auto!important;
+  left:auto!important;
+  bottom:auto!important;
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:.45rem;
+  width:auto;
+  min-height:38px;
+  padding:.45rem .8rem!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+  white-space:nowrap;
+}
+.lightbox-action-btn:hover{
+  background:rgba(255,255,255,.16)!important;
+}
 @media(max-width:767px){
   .lightbox-overlay{
     padding:.9rem .85rem 1.05rem;
@@ -775,4 +812,21 @@
   }
   .lightbox-nav-prev{left:.55rem!important}
   .lightbox-nav-next{right:.55rem!important}
+}
+
+/* Final lightbox sizing override: use the whole browser viewport without cropping. */
+.lightbox .lightbox-content > .lightbox-media{
+  width:100vw!important;
+  height:100vh!important;
+  max-width:100vw!important;
+  max-height:100vh!important;
+  border-radius:0!important;
+  object-fit:contain!important;
+  background:transparent!important;
+}
+.lightbox .lightbox-content > iframe.lightbox-media{
+  width:100vw!important;
+  height:100vh!important;
+  max-width:100vw!important;
+  max-height:100vh!important;
 }

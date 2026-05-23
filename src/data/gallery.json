@@ -21,14 +21,14 @@
   },
   {
     "id": "csp-moments-arcs-2024-talk",
-    "groupId": "csp-moments-talks",
-    "relatedIds": ["csp-moments-paper-pdf"],
+    "groupId": "csp-operators-talks",
+    "relatedIds": ["csp-operators-paper-pdf"],
     "title": "ACM India ARCS 2024 Lightning Talk",
     "type": "image",
     "category": "Research Talks",
     "src": "/assets/gallery/research-talks/acm-arcs-2024-lightning-talk-csp-moments.jpg",
-    "caption": "Lightning talk at ACM India ARCS 2024 on the TVCG paper on continuous scatterplot and image moments for time-varying bivariate field analysis.",
-    "tags": ["research talk", "acm india arcs", "tvcg", "continuous scatterplot"]
+    "caption": "Lightning talk at ACM India ARCS 2024 on the TVCG paper on continuous scatterplot operators for bivariate analysis and study of electronic transitions.",
+    "tags": ["research talk", "acm india arcs", "tvcg", "continuous scatterplot operators", "electronic transitions"]
   },
   {
     "id": "csp-moments-vis-2025-talk",
@@ -51,6 +51,17 @@
     "src": "https://vgl.csa.iisc.ac.in/pdf/pub/Paper_Continuous_Scatterplot_and_Image_Moments_for_Time_Varying_Bivariate_Field_Analysis.pdf",
     "caption": "Paper material related to the above talk photos.",
     "tags": ["paper", "pdf", "tvcg"]
+  },
+  {
+    "id": "csp-operators-paper-pdf",
+    "groupId": "csp-operators-talks",
+    "publicationId": "csp-operators-2024",
+    "title": "TVCG Paper PDF",
+    "type": "pdf",
+    "category": "Research Talks",
+    "src": "https://vgl.csa.iisc.ac.in/pdf/pub/CSPOperators_Mohit.pdf",
+    "caption": "Paper material related to the ACM India ARCS 2024 lightning talk.",
+    "tags": ["paper", "pdf", "tvcg", "continuous scatterplot operators"]
   },
   {
     "id": "ncvpripg-2024-talk",
