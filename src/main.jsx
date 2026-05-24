@@ -285,6 +285,20 @@ function HomeMediaHighlight({ setRoute }) {
         linkText: 'Open in gallery'
       }));
   }, []);
+  useEffect(() => {
+    const preloaders = items
+      .map(item => item.image)
+      .filter(Boolean)
+      .map((src) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = asset(src);
+        return img;
+      });
+    return () => {
+      preloaders.forEach((img) => { img.src = ''; });
+    };
+  }, [items]);
   if (homeMedia.enabled === false || items.length === 0) return null;
   const defaultItem = items.find(item => item.id === homeMedia.defaultItemId) || items[0];
   const [activeId, setActiveId] = useState(defaultItem.id || items[0].id);
@@ -330,7 +344,7 @@ function HomeMediaHighlight({ setRoute }) {
   return <div className="home-media-block" aria-label={homeMedia.title || 'Homepage media highlight'}>
     <div className="home-media-card">
       <div className="home-media-carousel" onClick={openTarget}>
-        <div className={`home-media-track ${previousSlide ? `home-media-track-${slideDirection} home-media-track-${slideMode}` : 'home-media-track-single'}`} key={`${previousSlide?.id || 'start'}-${active.id}`} onAnimationEnd={() => setPreviousSlide(null)}>
+        <div className={`home-media-track ${previousSlide ? `home-media-track-${slideDirection} home-media-track-${slideMode}` : 'home-media-track-single'}`} onAnimationEnd={() => setPreviousSlide(null)}>
           {previousSlide && <div className="home-media-slide"><HomeMediaPreview item={previousSlide}/></div>}
           <div className="home-media-slide"><HomeMediaPreview item={active}/></div>
         </div>
@@ -379,7 +393,7 @@ function HomeMediaPreview({ item }) {
   if (type === 'video') {
     return <div className="home-media-preview" ref={ref}><video src={asset(src)} poster={item.poster ? asset(item.poster) : undefined} muted={item.muted !== false} autoPlay={item.autoplayMuted !== false && inView} loop={item.loop !== false} playsInline controls={item.controls === true} preload="metadata" /></div>;
   }
-  return <div className="home-media-preview image" ref={ref}><img src={asset(src)} alt={item.alt || item.title || item.caption || 'Homepage media highlight'} loading="lazy" /></div>;
+  return <div className="home-media-preview image" ref={ref}><img src={asset(src)} alt={item.alt || item.title || item.caption || 'Homepage media highlight'} loading="eager" decoding="async" /></div>;
 }
 function newsTarget(n) {
   if (n.route) return { route: n.route };
