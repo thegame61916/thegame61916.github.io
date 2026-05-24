@@ -39,7 +39,12 @@
     "date": "2024-03-21",
     "title": "Ph.D. defense at IISc Bangalore",
     "description": "Defended Ph.D. thesis titled Topological Structures and Operators for Bivariate Data Visualization.",
-    "links": [],
+    "links": [
+      {
+        "label": "Watch talk",
+        "url": "https://www.youtube.com/watch?v=-R20dnto3sw"
+      }
+    ],
     "route": ""
   }
 ]
