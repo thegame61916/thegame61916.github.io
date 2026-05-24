@@ -153,7 +153,7 @@
     "type": "image",
     "category": "Outreach",
     "src": "/assets/gallery/outreach/iisc-open-day-2024-collage.jpeg",
-    "caption": "Open Day collage with research presentation snapshots and campus scenes.",
+    "caption": "",
     "tags": ["outreach", "open day", "iisc"]
   },
   {
@@ -216,11 +216,11 @@
   {
     "id": "theatre-stage-street-plays-collage",
     "groupId": "theatre-performances",
-    "title": "Stage and Street Play Collage",
+    "title": "Stage and Street Plays",
     "type": "image",
     "category": "Theatre",
     "src": "/assets/gallery/theatre/stage-and-street-plays-collage.png",
-    "caption": "Collage from stage plays and street play performances over the years.",
+    "caption": "Stage and street play performances over the years.",
     "tags": ["theatre", "street play", "stage performance"]
   }
 ]
