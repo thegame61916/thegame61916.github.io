@@ -912,7 +912,26 @@ function Gallery({ setRoute, initialMediaId = '' }) {
   const relatedAll = light ? (light.relatedIds || []).map(id => byId[id]).filter(Boolean) : [];
   const relatedVisual = relatedAll.filter(item => visualTypes.includes(normalizeMediaType(item)));
   const relatedPublications = unique(relatedAll.filter(item => ['pdf', 'slides'].includes(normalizeMediaType(item)) && hasValue(item.publicationId)).map(item => item.publicationId));
+  const relatedLinks = light
+    ? unique((light.relatedLinks || [])
+      .filter(link => hasValue(link?.url))
+      .map(link => JSON.stringify({
+        label: String(link.label || '').trim(),
+        type: String(link.type || '').trim().toLowerCase(),
+        url: String(link.url || '').trim()
+      })))
+      .map(payload => JSON.parse(payload))
+    : [];
   const relatedActions = [
+    ...relatedLinks.map((link, index) => {
+      const isVideo = link.type === 'video' || /(youtube\.com|youtu\.be|vimeo\.com)/i.test(link.url);
+      return {
+        key: `link-${index}-${link.url}`,
+        icon: isVideo ? <Video size={16}/> : <ExternalLink size={16}/>,
+        label: link.label || (isVideo ? 'Open Related Video' : 'Open Related Link'),
+        onClick: () => window.open(link.url, '_blank', 'noopener,noreferrer')
+      };
+    }),
     ...relatedVisual.map(item => ({
       key: `media-${item.id}`,
       icon: normalizeMediaType(item) === 'video' ? <Video size={16}/> : <ImageIcon size={16}/>,

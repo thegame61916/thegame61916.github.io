@@ -203,6 +203,13 @@
     "type": "image",
     "category": "Theatre",
     "src": "/assets/gallery/theatre/iisc-drama-club-showcase-2024-mozael.png",
+    "relatedLinks": [
+      {
+        "label": "Full Play (YouTube)",
+        "type": "video",
+        "url": "https://www.youtube.com/watch?v=xLVHhA9az-E"
+      }
+    ],
     "caption": "IISc Drama Club showcase (2024): a production of Manto's Mozail, directed and acted by me.",
     "tags": ["theatre", "drama club", "iisc", "manto"]
   },

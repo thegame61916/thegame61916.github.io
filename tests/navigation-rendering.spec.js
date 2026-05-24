@@ -79,33 +79,34 @@ test.describe('navigation and rendering', () => {
     await expect(page.getByText('Application Engineer at Image Systems Motion Analysis')).toBeVisible();
   });
 
-  test('publication detail page renders preview, materials and BibTeX', async ({ page }) => {
+  test('publication detail page renders preview, resource links and BibTeX', async ({ page }) => {
     await navigateHash(page, `publication:${firstPublication.id}`);
     await expect(page.getByRole('heading', { name: firstPublication.title })).toBeVisible();
     await expect(page.getByText(firstPublication.authorText)).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Preview' })).toBeVisible();
-    await page.getByRole('tab', { name: 'Materials' }).click();
-    await expect(page.getByText(/PDF, supplementary material/i)).toBeVisible();
+    await expect(page.getByRole('tab', { name: 'Preview' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'PDF' }).first()).toBeVisible();
     await page.getByRole('tab', { name: 'BibTeX' }).click();
     await expect(page.locator('.bibtex')).toContainText('@');
     await expectHealthyLayout(page);
     await page.assertNoErrors();
   });
 
-  test('publication details open on materials and preview labels remain clear', async ({ page }) => {
+  test('publication details open on preview and preview labels remain clear', async ({ page }) => {
     const posterPublication = publications.find(pub => pub.type?.toLowerCase().includes('poster'));
 
     await navigateHash(page, `publication:${firstPublication.id}`);
-    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveAttribute('aria-selected', 'true');
-    await page.getByRole('tab', { name: 'Preview' }).click();
+    await expect(page.getByRole('tab', { name: 'Preview' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveCount(0);
     const paperPreviewSelect = page.locator('.preview-toolbar select');
     await expect(paperPreviewSelect).toHaveValue('paper');
     await expect(paperPreviewSelect.locator('option').first()).toHaveText('Paper');
     await expect(paperPreviewSelect).not.toContainText('Paper PDF');
 
     await navigateHash(page, `publication:${posterPublication.id}`);
-    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveAttribute('aria-selected', 'true');
-    await page.getByRole('tab', { name: 'Preview' }).click();
+    await expect(page.getByRole('tab', { name: 'Preview' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveCount(0);
     const posterPreviewSelect = page.locator('.preview-toolbar select');
     await expect(posterPreviewSelect).toHaveValue('paper');
     await expect(posterPreviewSelect.locator('option').first()).toHaveText('Extended Abstract');
