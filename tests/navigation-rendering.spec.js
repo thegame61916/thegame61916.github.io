@@ -107,15 +107,32 @@ test.describe('navigation and rendering', () => {
     await expect(posterPreviewSelect.locator('option').first()).toHaveText('Extended Abstract');
   });
 
-  test('opening a publication card resets scroll to the top of the detail page', async ({ page }) => {
-    await navigateHash(page, 'home');
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+  test('publications page is ordered reverse-chronologically', async ({ page }) => {
+    await navigateHash(page, 'publications');
+    const metaTexts = await page.locator('.pub-card .pub-meta').allTextContents();
+    const years = metaTexts
+      .map((text) => Number((text.match(/\b(19|20)\d{2}\b/) || [])[0]))
+      .filter((value) => Number.isFinite(value));
 
-    await page.locator('.home-pub-card').first().click();
-    await expect(page).toHaveURL(/#publication:/);
-    await expect(page.locator('.publication-detail-head')).toBeVisible();
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(20);
+    expect(years.length).toBeGreaterThan(1);
+    for (let i = 1; i < years.length; i += 1) {
+      expect(years[i - 1]).toBeGreaterThanOrEqual(years[i]);
+    }
+  });
+
+  test('opening publication cards from home and publications lands at top of detail page', async ({ page }) => {
+    const assertOpensAtTop = async (route, cardSelector) => {
+      await navigateHash(page, route);
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+      await page.locator(cardSelector).first().click();
+      await expect(page).toHaveURL(/#publication:/);
+      await expect(page.locator('.publication-detail-head')).toBeVisible();
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(20);
+    };
+
+    await assertOpensAtTop('home', '.home-pub-card');
+    await assertOpensAtTop('publications', '.pub-card');
   });
 
   test('award badges render one normalized label per awarded publication', async ({ page }) => {

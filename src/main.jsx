@@ -171,6 +171,20 @@ function Tags({ tags = [], limit = 8 }) {
   return <div className="tag-cloud">{shown.map(t => <Badge bg="light" text="dark" className="tag" key={t}>{t}</Badge>)}</div>;
 }
 function goRoute(route, setRoute) { location.hash = route; setRoute(route); }
+function comparePublicationsByChronology(a, b) {
+  const yearDelta = (Number(b?.year) || 0) - (Number(a?.year) || 0);
+  if (yearDelta !== 0) return yearDelta;
+  const typeDelta = String(a?.type || a?.category || '').localeCompare(String(b?.type || b?.category || ''));
+  if (typeDelta !== 0) return typeDelta;
+  return String(a?.title || '').localeCompare(String(b?.title || ''));
+}
+function goPublicationDetail(pubId, setRoute) {
+  goRoute(`publication:${pubId}`, setRoute);
+  window.requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  });
+}
 
 function Header({ route, setRoute }) {
   const [show, setShow] = useState(false);
@@ -249,7 +263,7 @@ function GlobalSearch({ setRoute }) {
 function Stat({ value, label, route, setRoute }) { return <button className="stat" onClick={() => route && goRoute(route, setRoute)}><strong>{value}</strong><span>{label}</span></button>; }
 
 function Home({ setRoute }) {
-  const featured = [...publications].sort((a, b) => (b.year || 0) - (a.year || 0)).slice(0, 4);
+  const featured = [...publications].sort(comparePublicationsByChronology).slice(0, 4);
   const themeCount = unique(projects.flatMap(p => p.themes || p.tags || [p.id])).length || projects.length;
   return <>
     <section className="hero-grid">
@@ -493,12 +507,12 @@ function Publications({ setRoute }) {
   const filtered = publications.filter(p => {
     const text = [p.title, p.authorText, p.venue, p.year, pubKeywords(p).join(' ')].join(' ').toLowerCase();
     return (!q || text.includes(q.toLowerCase())) && (year === 'All' || String(p.year) === String(year)) && (type === 'All' || p.type === type || p.category === type) && (kw === 'All' || publicationFilterKeywords(p).includes(kw));
-  });
+  }).sort(comparePublicationsByChronology);
   return <Section title="Publications"><div className="filters-bar publication-filters"><Form.Control placeholder="Search title, author, venue, keyword" value={q} onChange={e => setQ(e.target.value)} /><Form.Select value={year} onChange={e => setYear(e.target.value)}>{years.map(y => <option key={y}>{y}</option>)}</Form.Select><Form.Select value={type} onChange={e => setType(e.target.value)}>{types.map(t => <option key={t}>{t}</option>)}</Form.Select><Form.Select value={kw} onChange={e => setKw(e.target.value)}>{keywords.map(k => <option key={k} value={k}>{k === 'All' ? 'All keywords' : `${k} (${keywordCounts[k] || ''})`}</option>)}</Form.Select><ButtonGroup><Button variant={view === 'list' ? 'primary' : 'outline-primary'} onClick={() => setView('list')}><List size={16}/></Button><Button variant={view === 'grid' ? 'primary' : 'outline-primary'} onClick={() => setView('grid')}><LayoutGrid size={16}/></Button></ButtonGroup></div><div className={view === 'grid' ? 'pub-grid' : 'pub-list'}>{filtered.map(p => <PublicationCard key={p.id} pub={p} setRoute={setRoute} list={view === 'list'}/>)}</div></Section>;
 }
 function PublicationCard({ pub, setRoute, list = false }) {
   const kws = pubKeywords(pub, { forFilter: true });
-  const openDetails = () => goRoute(`publication:${pub.id}`, setRoute);
+  const openDetails = () => goPublicationDetail(pub.id, setRoute);
   const openDetailsFromLink = (e) => {
     e?.stopPropagation?.();
     openDetails();
@@ -517,13 +531,14 @@ function PublicationCard({ pub, setRoute, list = false }) {
 }
 function HomePublicationCard({ pub, setRoute }) {
   const kws = pubKeywords(pub, { forFilter: true }).slice(0, 4);
+  const openDetails = () => goPublicationDetail(pub.id, setRoute);
   const stop = (e) => e.stopPropagation();
   return <article
     role="button"
     tabIndex={0}
     className="home-pub-card home-pub-list-card"
-    onClick={() => goRoute(`publication:${pub.id}`, setRoute)}
-    onKeyDown={(e) => { if (e.key === 'Enter') goRoute(`publication:${pub.id}`, setRoute); }}
+    onClick={openDetails}
+    onKeyDown={(e) => { if (e.key === 'Enter') openDetails(); }}
   >
     <div className="home-pub-thumb" style={{ '--pub-teaser-image': `url("${asset(pub.thumbnail)}")`, '--pub-teaser-focus': pub.thumbnailFocus || pub.teaserFocus || '50% 50%' }}><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
     <div className="home-pub-body">
@@ -534,7 +549,7 @@ function HomePublicationCard({ pub, setRoute }) {
       <div className="home-pub-footer">
         <div className="tag-cloud compact-tags">{kws.map(t => <Badge bg="light" text="dark" className="tag" key={t}>{t}</Badge>)}</div>
         <div className="home-pub-links" onClick={stop}>
-          <Button size="sm" variant="primary" className="rounded-pill" onClick={() => goRoute(`publication:${pub.id}`, setRoute)}>Details</Button>
+          <Button size="sm" variant="primary" className="rounded-pill" onClick={openDetails}>Details</Button>
           <LinkButton href={primaryPubLink(pub)}>PDF</LinkButton>
           <LinkButton href={pub.doi}>DOI</LinkButton>
           {videoItems(pub).slice(0,1).map((v, i) => <LinkButton key={`hv-${i}`} href={v.url}>Video</LinkButton>)}
