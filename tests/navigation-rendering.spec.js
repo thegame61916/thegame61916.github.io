@@ -86,7 +86,7 @@ test.describe('navigation and rendering', () => {
     await expect(page.getByRole('tab', { name: 'Preview' })).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Preview' })).toHaveAttribute('aria-selected', 'true');
     await expect(page.getByRole('tab', { name: 'Materials' })).toHaveCount(0);
-    await expect(page.getByRole('link', { name: 'PDF' }).first()).toBeVisible();
+    await expect(page.locator('.publication-detail-head .card-actions .btn').filter({ hasText: /^PDF$/ }).first()).toBeVisible();
     await page.getByRole('tab', { name: 'BibTeX' }).click();
     await expect(page.locator('.bibtex')).toContainText('@');
     await expectHealthyLayout(page);
