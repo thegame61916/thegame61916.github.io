@@ -26,6 +26,7 @@ import './styles.css';
 const people = byId(collaborators);
 const pubMap = byId(publications);
 const projectMap = byId(projects);
+const publicationInsertionOrder = Object.fromEntries(publications.map((pub, index) => [pub.id, index]));
 const navItems = [
   ['home', 'Home', HomeIcon], ['about', 'About', GraduationCap], ['research', 'Research', BookOpen],
   ['projects', 'Projects', Briefcase], ['publications', 'Publications', FileText], ['people', 'People', Users],
@@ -174,6 +175,15 @@ function goRoute(route, setRoute) { location.hash = route; setRoute(route); }
 function comparePublicationsByChronology(a, b) {
   const yearDelta = (Number(b?.year) || 0) - (Number(a?.year) || 0);
   if (yearDelta !== 0) return yearDelta;
+
+  const rankA = Number.isFinite(Number(a?.sortOrder)) ? Number(a.sortOrder) : Number.POSITIVE_INFINITY;
+  const rankB = Number.isFinite(Number(b?.sortOrder)) ? Number(b.sortOrder) : Number.POSITIVE_INFINITY;
+  if (rankA !== rankB) return rankA - rankB;
+
+  const insertedA = publicationInsertionOrder[a?.id] ?? Number.POSITIVE_INFINITY;
+  const insertedB = publicationInsertionOrder[b?.id] ?? Number.POSITIVE_INFINITY;
+  if (insertedA !== insertedB) return insertedA - insertedB;
+
   return String(a?.title || '').localeCompare(String(b?.title || ''));
 }
 function goPublicationDetail(pubId, setRoute) {
@@ -453,7 +463,7 @@ function deriveThemes() {
   ];
   const themeImageCandidates = {
     'multivariate-topology': ['/assets/teasers/theme-multivariate-topology.png'],
-    'scientific-applications': ['/assets/teasers/theme-scientific-applications.png.png', '/assets/teasers/theme-scientific-applications.png'],
+    'scientific-applications': ['/assets/teasers/theme-scientific-applications.png', '/assets/teasers/theme-scientific-applications.png.png'],
     'time-varying-data': ['/assets/teasers/theme-time-varying-data.png'],
     'visual-analytics-ai': ['/assets/teasers/theme-visual-analytics-ai.png']
   };
@@ -565,13 +575,31 @@ function PublicationPage({ id, setRoute }) {
   const supplements = supplementaryItems(p);
   const videos = videoItems(p);
   const certs = publicationAwardItems(p);
+  const resourceLinks = (() => {
+    const items = [];
+    const seen = new Set();
+    const add = (label, href) => {
+      const url = String(href || '').trim();
+      if (!url) return;
+      const text = String(label || 'Resource').trim() || 'Resource';
+      const key = `${text.toLowerCase()}::${url}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      items.push({ label: text, href: url });
+    };
+    supplements.forEach((s, i) => add(s.label || `Supplement ${i + 1}`, s.path || s.url));
+    videos.forEach((v, i) => add(v.label || `Video ${i + 1}`, v.url || v.path));
+    certs.forEach((c, i) => add(c.label || c.title || `Certificate ${i + 1}`, c.path || c.url));
+    (p.links || []).forEach((l, i) => add(l.label || `Link ${i + 1}`, l.url || l.path));
+    return items;
+  })();
   const previewItems = buildPreviewItems(p, preview, supplements, videos, certs);
   const defaultPreviewId = defaultPublicationPreviewId(previewItems, p);
-  const [activeTab, setActiveTab] = useState('materials');
+  const [activeTab, setActiveTab] = useState('preview');
   const [selectedPreviewId, setSelectedPreviewId] = useState(defaultPreviewId);
   React.useEffect(() => {
     setSelectedPreviewId(defaultPreviewId);
-    setActiveTab('materials');
+    setActiveTab('preview');
   }, [id, defaultPreviewId]);
   const selectedPreview = previewItems.find(item => item.id === selectedPreviewId) || previewItems[0];
 
@@ -579,7 +607,11 @@ function PublicationPage({ id, setRoute }) {
     <Row className="g-4 align-items-start publication-detail-head">
       <Col lg={4} xl={3}>
         <div className="publication-teaser-wrap" style={{ '--pub-teaser-image': `url("${asset(p.thumbnail)}")`, '--pub-teaser-focus': p.thumbnailFocus || p.teaserFocus || '50% 50%' }}><img className="publication-teaser" src={asset(p.thumbnail)} alt={`${p.title} teaser`} /></div>
-        <div className="card-actions mt-3"><LinkButton href={preview} variant="primary">Download PDF</LinkButton>{supplements.slice(0,2).map((s,i)=><LinkButton key={i} href={s.path || s.url}>{s.label || 'Supplement'}</LinkButton>)}{certs.slice(0,2).map((c,i)=><LinkButton key={`cert-${i}`} href={c.path || c.url}>{c.label || c.title || `Certificate ${i+1}`}</LinkButton>)}<LinkButton href={p.doi}>DOI</LinkButton></div>
+        <div className="card-actions mt-3">
+          <LinkButton href={preview} variant="primary">PDF</LinkButton>
+          {resourceLinks.map((item, i) => <LinkButton key={`resource-${i}`} href={item.href}>{item.label}</LinkButton>)}
+          <LinkButton href={p.doi}>DOI</LinkButton>
+        </div>
       </Col>
       <Col lg={8} xl={9}>
         <p className="authors fs-6">{p.authorText}</p>
@@ -590,14 +622,13 @@ function PublicationPage({ id, setRoute }) {
         <PeopleStrip ids={p.authors}/>
       </Col>
     </Row>
-    <Tabs activeKey={activeTab} onSelect={(eventKey) => setActiveTab(eventKey || 'materials')} mountOnEnter unmountOnExit className="mt-4">
+    <Tabs activeKey={activeTab} onSelect={(eventKey) => setActiveTab(eventKey || 'preview')} mountOnEnter unmountOnExit className="mt-4">
       <Tab eventKey="preview" title="Preview">
         <div className="preview-browser">
           {previewItems.length > 1 && <div className="preview-toolbar"><Form.Label className="mb-0"><Eye size={16}/> Preview material</Form.Label><Form.Select value={selectedPreview?.id || ''} onChange={e => setSelectedPreviewId(e.target.value)}>{previewItems.map(item => <option value={item.id} key={item.id}>{item.label}</option>)}</Form.Select></div>}
           {selectedPreview ? <PreviewItem item={selectedPreview}/> : <p className="muted mt-3">No previewable material available.</p>}
         </div>
       </Tab>
-      <Tab eventKey="materials" title="Materials"><div className="p-3"><h3>PDF, supplementary material, videos, code and data</h3><div className="material-list"><LinkButton href={preview} variant="primary">PDF</LinkButton>{supplements.map((s,i)=><LinkButton key={i} href={s.path || s.url}>{s.label || `Supplement ${i+1}`}</LinkButton>)}{videos.map((v,i)=><LinkButton key={i} href={v.url || v.path}>{v.label || `Video ${i+1}`}</LinkButton>)}{certs.map((c,i)=><LinkButton key={`cert-${i}`} href={c.path || c.url}>{c.label || c.title || `Certificate ${i+1}`}</LinkButton>)}{(p.links || []).map((l,i)=><LinkButton key={i} href={l.url}>{l.label}</LinkButton>)}</div></div></Tab>
       <Tab eventKey="bibtex" title="BibTeX"><pre className="bibtex">{p.bibtex}</pre></Tab>
       <Tab eventKey="related" title="Related">{p.projects?.length > 0 && <div className="p-3"><h3>Related projects</h3><div className="mini-links">{p.projects.map(pid => <button key={pid} onClick={() => goRoute(`project:${pid}`, setRoute)}>{projectMap[pid]?.title}</button>)}</div></div>}</Tab>
     </Tabs>
