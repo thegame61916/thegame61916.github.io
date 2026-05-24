@@ -76,6 +76,12 @@ npm run build
 npm run preview
 ```
 
+To produce a release build and sync the root `assets/main.js` and `assets/main.css` (used by branch-source Pages fallback), run:
+
+```bash
+npm run build:release
+```
+
 ## Updating content without touching React code
 
 Edit the JSON files in `src/data/`:
@@ -197,6 +203,7 @@ Then use `localPdf` or `pdf` paths such as:
 2. In GitHub, go to **Settings → Pages**.
 3. Choose **GitHub Actions** as the source.
 4. The included `.github/workflows/deploy.yml` builds and deploys automatically.
+5. The workflow also attempts to enforce Pages `workflow` build mode and syncs root bundles as a fallback, so live and repo do not drift when source-mode settings are inconsistent.
 
 ## Monthly metadata refresh
 

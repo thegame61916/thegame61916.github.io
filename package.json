@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "npm run validate:content && npm run scan:media && vite build && node scripts/finalize-dist.js",
+    "sync:root-assets": "node scripts/sync-root-assets.js",
+    "build:release": "npm run build && npm run sync:root-assets",
     "preview": "vite preview --host 0.0.0.0",
     "refresh:scholar": "node scripts/refresh-publications.js",
     "scan:media": "node scripts/scan-media.js",

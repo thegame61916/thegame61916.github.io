@@ -4,7 +4,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -15,12 +15,68 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enforce GitHub Actions as Pages source (best effort)
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              const current = await github.request('GET /repos/{owner}/{repo}/pages', { owner, repo });
+              const buildType = current?.data?.build_type;
+              const source = current?.data?.source || {};
+              core.info(`Pages mode: build_type=${buildType || 'unknown'} source=${source.branch || ''}${source.path || ''}`);
+              if (buildType !== 'workflow') {
+                await github.request('PUT /repos/{owner}/{repo}/pages', {
+                  owner,
+                  repo,
+                  build_type: 'workflow'
+                });
+                core.info('Updated Pages build_type to workflow.');
+              }
+            } catch (error) {
+              core.warning(`Could not update Pages build_type: ${error.message}`);
+            }
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm install
       - run: npm run build
+      - name: Sync root assets for legacy branch-source compatibility
+        id: sync_root
+        run: |
+          npm run sync:root-assets
+          if git diff --quiet -- assets/main.js assets/main.css; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Root assets already in sync."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/main.js assets/main.css
+          git commit -m "Sync root bundles from latest build"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Request Pages build after root-asset sync (legacy mode fallback)
+        if: steps.sync_root.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              const page = await github.request('GET /repos/{owner}/{repo}/pages', { owner, repo });
+              const buildType = page?.data?.build_type;
+              if (buildType === 'legacy') {
+                await github.request('POST /repos/{owner}/{repo}/pages/builds', { owner, repo });
+                core.info('Triggered a legacy Pages rebuild after syncing root assets.');
+              } else {
+                core.info(`Pages build_type=${buildType || 'unknown'}; explicit legacy rebuild skipped.`);
+              }
+            } catch (error) {
+              core.warning(`Could not request Pages rebuild: ${error.message}`);
+            }
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
