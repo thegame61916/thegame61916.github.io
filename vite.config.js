@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     sourcemap: false,
     rollupOptions: {
+      input: 'src/main.jsx',
       output: {
         entryFileNames: 'assets/main.js',
         chunkFileNames: 'assets/chunk-[name].js',

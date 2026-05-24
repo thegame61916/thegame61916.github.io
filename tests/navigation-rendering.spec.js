@@ -42,6 +42,28 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
+  test('homepage media slideshow renders and advances with controls', async ({ page }) => {
+    await navigateHash(page, 'home');
+    const mediaCard = page.locator('.home-media-card');
+    await expect(mediaCard).toBeVisible();
+
+    const title = mediaCard.locator('.home-media-overlay h3');
+    await expect(title).toBeVisible();
+    const initialTitle = (await title.textContent())?.trim() || '';
+
+    const next = mediaCard.locator('.home-media-nav-next');
+    if (await next.count()) {
+      await next.click();
+      await expect(mediaCard.locator('.home-media-track-next')).toBeVisible();
+      await expect
+        .poll(async () => (await title.textContent())?.trim() || '')
+        .not.toEqual(initialTitle);
+    }
+
+    await expectHealthyLayout(page);
+    await page.assertNoErrors();
+  });
+
   test('research themes render teaser images for every card', async ({ page }) => {
     await navigateHash(page, 'research');
     await expect(page.locator('.theme-card img')).toHaveCount(4);

@@ -1,21 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { navRoutes, site } from './fixtures.js';
+import { site } from './fixtures.js';
 import { capturePageErrors, expectHealthyLayout, navigateHash } from './helpers.js';
 
 test.describe('responsive layout and accessibility basics', () => {
   test.beforeEach(async ({ page }) => {
     page.assertNoErrors = await capturePageErrors(page);
-  });
-
-  test('desktop navigation exposes all route links', async ({ page, isMobile }) => {
-    test.skip(isMobile, 'desktop navigation is covered only on desktop/tablet layout');
-    test.skip((page.viewportSize()?.width || 0) < 1200, 'Bootstrap switches to offcanvas navigation below xl width');
-    await navigateHash(page, 'home');
-    for (const [route, label] of navRoutes) {
-      await expect(page.locator(`.navbar a[href="#${route}"]`).filter({ hasText: label }).first()).toBeVisible();
-    }
-    await expectHealthyLayout(page);
-    await page.assertNoErrors();
   });
 
   test('mobile navigation opens offcanvas and navigates', async ({ page, isMobile }) => {

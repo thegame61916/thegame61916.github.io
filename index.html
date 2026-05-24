@@ -15,6 +15,25 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (() => {
+        const onLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+        const entry = onLocalhost ? '/src/main.jsx' : './assets/main.js';
+        if (!onLocalhost) {
+          const cssHref = './assets/main.css';
+          const existing = document.querySelector(`link[rel="stylesheet"][href="${cssHref}"]`);
+          if (!existing) {
+            const css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = cssHref;
+            document.head.appendChild(css);
+          }
+        }
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = entry;
+        document.body.appendChild(script);
+      })();
+    </script>
   </body>
 </html>

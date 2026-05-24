@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "npm run validate:content && npm run scan:media && vite build",
+    "build": "npm run validate:content && npm run scan:media && vite build && node scripts/finalize-dist.js",
     "preview": "vite preview --host 0.0.0.0",
     "refresh:scholar": "node scripts/refresh-publications.js",
     "scan:media": "node scripts/scan-media.js",
@@ -13,7 +13,7 @@
     "validate:content": "node scripts/validate-content.js",
     "prepare:content": "npm run scan:media && npm run extract:keywords && npm run validate:content",
     "setup": "npm install && npm run prepare:content",
-    "build:with-keywords": "npm run scan:media && npm run extract:keywords && npm run validate:content && vite build",
+    "build:with-keywords": "npm run scan:media && npm run extract:keywords && npm run validate:content && vite build && node scripts/finalize-dist.js",
     "test": "npm run validate:content && npm run test:e2e",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
