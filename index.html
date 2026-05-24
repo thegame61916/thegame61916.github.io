@@ -18,21 +18,45 @@
     <script>
       (() => {
         const onLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-        const entry = onLocalhost ? '/src/main.jsx' : './assets/main.js';
+        const devEntry = '/src/main.jsx';
+        const prodEntry = './assets/main.js';
+        const prodCss = './assets/main.css';
+
+        const ensureProdCss = () => {
+          const existing = document.querySelector(`link[rel="stylesheet"][href="${prodCss}"]`);
+          if (existing) return;
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = prodCss;
+          document.head.appendChild(css);
+        };
+
+        const loadEntry = (src) => {
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = src;
+          document.body.appendChild(script);
+        };
+
         if (!onLocalhost) {
-          const cssHref = './assets/main.css';
-          const existing = document.querySelector(`link[rel="stylesheet"][href="${cssHref}"]`);
-          if (!existing) {
-            const css = document.createElement('link');
-            css.rel = 'stylesheet';
-            css.href = cssHref;
-            document.head.appendChild(css);
-          }
+          ensureProdCss();
+          loadEntry(prodEntry);
+          return;
         }
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = entry;
-        document.body.appendChild(script);
+
+        // Local static previews (e.g., python -m http.server dist) do not expose /src.
+        // Probe once and fall back to production assets to avoid blank local pages.
+        fetch(devEntry, { method: 'HEAD' })
+          .then((response) => response.ok)
+          .catch(() => false)
+          .then((hasDevEntry) => {
+            if (hasDevEntry) {
+              loadEntry(devEntry);
+              return;
+            }
+            ensureProdCss();
+            loadEntry(prodEntry);
+          });
       })();
     </script>
   </body>
