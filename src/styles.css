@@ -1017,3 +1017,49 @@
     border-bottom:1px solid var(--line)!important;
   }
 }
+
+/* Research themes list view: align with project list-card layout. */
+.theme-card.theme-card-list{
+  display:grid;
+  grid-template-columns:minmax(220px,28%) minmax(0,1fr);
+  overflow:hidden;
+  min-height:190px;
+}
+.theme-card.theme-card-list .theme-thumb{
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+  border-right:1px solid var(--line);
+  border-bottom:0;
+}
+.theme-card.theme-card-list .card-body{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:.45rem;
+  min-width:0;
+}
+.theme-card.theme-card-list .card-body h3{
+  margin:0 0 .2rem;
+}
+.theme-card.theme-card-list .card-body p{
+  margin:0;
+}
+.theme-card.theme-card-list .summary-pills{
+  margin-top:.2rem;
+}
+.theme-card.theme-card-list .btn-link{
+  align-self:flex-start;
+}
+@media(max-width:767px){
+  .theme-card.theme-card-list{
+    grid-template-columns:1fr;
+    min-height:auto;
+  }
+  .theme-card.theme-card-list .theme-thumb{
+    height:auto;
+    aspect-ratio:16/9;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+}
