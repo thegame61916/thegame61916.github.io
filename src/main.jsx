@@ -256,7 +256,7 @@ function Home({ setRoute }) {
       <div className="hero-copy"><div className="eyebrow">{site.title} · {site.affiliation}</div><h1>{site.name}</h1><p className="tagline">{site.tagline}</p><p className="lead mb-3">{site.bioShort}</p><div className="hero-actions"><LinkButton href="#publications" variant="primary">Publications</LinkButton><LinkButton href={site.cv}>Download CV</LinkButton><LinkButton href={site.links['Google Scholar']}>Google Scholar</LinkButton><LinkButton href={site.links.LinkedIn}>LinkedIn</LinkButton><LinkButton href={`mailto:${site.emails[0]}`}>Contact</LinkButton></div></div>
       <div className="profile-panel"><img src={asset(site.photo)} alt={`${site.name} profile`} /><h3>{site.name}</h3><p>{site.title}</p><small>Linköping University, Sweden</small><div className="stats-row two"><Stat value={publications.length} label="publications" route="publications" setRoute={setRoute}/><Stat value={themeCount} label="research themes" route="research" setRoute={setRoute}/></div></div>
     </section>
-    <Row className="g-4 mt-1 home-lower"><Col xl={8}><Section title="Recent Publications" aside={<Button variant="link" size="sm" onClick={() => goRoute('publications', setRoute)}>View all</Button>}><div className="home-publications pub-list">{featured.map(p => <PublicationCard key={p.id} pub={p} setRoute={setRoute} list />)}</div></Section></Col><Col xl={4} className="home-side-column"><Section title="News"><ScrollableNews setRoute={setRoute}/></Section><HomeMediaHighlight setRoute={setRoute}/></Col></Row>
+    <Row className="g-4 mt-1 home-lower"><Col xl={8}><Section title="Recent Publications" aside={<Button variant="link" size="sm" onClick={() => goRoute('publications', setRoute)}>View all</Button>}><div className="home-publications pub-list">{featured.map(p => <HomePublicationCard key={p.id} pub={p} setRoute={setRoute} />)}</div></Section></Col><Col xl={4} className="home-side-column"><Section title="News"><ScrollableNews setRoute={setRoute}/></Section><HomeMediaHighlight setRoute={setRoute}/></Col></Row>
   </>;
 }
 function ScrollableNews({ setRoute }) {
@@ -484,8 +484,13 @@ function Publications({ setRoute }) {
 }
 function PublicationCard({ pub, setRoute, list = false }) {
   const kws = pubKeywords(pub, { forFilter: true });
-  const links = <div className="card-actions pub-topline-links"><Button size="sm" className="rounded-pill" onClick={(e) => { e.stopPropagation(); goRoute(`publication:${pub.id}`, setRoute); }}>Details</Button><LinkButton href={primaryPubLink(pub)} onClick={(e) => e?.stopPropagation?.()}>PDF</LinkButton><LinkButton href={pub.doi} onClick={(e) => e?.stopPropagation?.()}>DOI</LinkButton></div>;
-  return <div role="button" tabIndex={0} className={`pub-card card h-100 ${list ? 'pub-card-list' : ''}`} onClick={() => goRoute(`publication:${pub.id}`, setRoute)} onKeyDown={(e) => { if (e.key === 'Enter') goRoute(`publication:${pub.id}`, setRoute); }}>
+  const openDetails = () => goRoute(`publication:${pub.id}`, setRoute);
+  const openDetailsFromLink = (e) => {
+    e?.stopPropagation?.();
+    openDetails();
+  };
+  const links = <div className="card-actions pub-topline-links"><Button size="sm" className="rounded-pill" onClick={(e) => { e.stopPropagation(); openDetails(); }}>Details</Button><LinkButton href={primaryPubLink(pub)} onClick={openDetailsFromLink}>PDF</LinkButton><LinkButton href={pub.doi} onClick={openDetailsFromLink}>DOI</LinkButton></div>;
+  return <div role="button" tabIndex={0} className={`pub-card card h-100 ${list ? 'pub-card-list' : ''}`} onClick={openDetails} onKeyDown={(e) => { if (e.key === 'Enter') openDetails(); }}>
     <div className="pub-thumb" style={{ '--pub-teaser-image': `url("${asset(pub.thumbnail)}")`, '--pub-teaser-focus': pub.thumbnailFocus || pub.teaserFocus || '50% 50%' }}><img src={asset(pub.thumbnail)} alt={`${pub.title} thumbnail`} loading="lazy"/></div>
     <BsCard.Body>
       <div className="pub-topline"><span className="pub-meta">{pub.type} · {pub.year}</span><div className="pub-topline-right"><AwardBadges pub={pub}/>{links}</div></div>
@@ -640,8 +645,32 @@ function Students() {
   const StudentCard = ({ s }) => {
     const href = s.website || '#';
     const linked = Boolean(s.website);
+    const openProfile = () => {
+      if (!linked) return;
+      window.open(href, '_blank', 'noopener,noreferrer');
+    };
+    const handleContainerClick = (e) => {
+      if (!linked) return;
+      if (e.target.closest('a, button, input, select, textarea, [role="button"]')) return;
+      openProfile();
+    };
+    const handleContainerKeyDown = (e) => {
+      if (!linked) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openProfile();
+      }
+    };
     const card = <BsCard className="student-card h-100"><BsCard.Body><div className="student-head"><PersonPhoto person={s}/><div><h3>{s.name}</h3><p>{s.program} · {s.affiliation}</p></div></div><p>{s.projectUrl ? <a href={s.projectUrl} {...externalAttrs} onClick={(e) => e.stopPropagation()}>{s.project}</a> : s.project}</p><small>{s.duration}{s.currentPosition ? ` · Current: ${s.currentPosition}` : ''}</small>{s.links?.length > 0 && <div className="card-actions mt-3">{s.links.map((l,i)=><LinkButton key={i} href={l.url || l.path}>{l.label || `Work ${i+1}`}</LinkButton>)}</div>}</BsCard.Body></BsCard>;
-    return linked ? <a className="student-link" href={href} {...externalAttrs}>{card}</a> : <div className="student-link">{card}</div>;
+    return <div
+      className={`student-link ${linked ? 'student-link-clickable' : ''}`}
+      role={linked ? 'link' : undefined}
+      tabIndex={linked ? 0 : undefined}
+      onClick={handleContainerClick}
+      onKeyDown={handleContainerKeyDown}
+    >
+      {card}
+    </div>;
   };
   const renderGroup = (items, label, order) => <>{order.map(g => {
     const group = items.filter(s => normalizeKeyword(s.category) === normalizeKeyword(g));
