@@ -19,8 +19,10 @@
       (() => {
         const onLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
         const devEntry = '/src/main.jsx';
-        const prodEntry = './assets/main.js';
-        const prodCss = './assets/main.css';
+        const assetVersion = '__ASSET_VERSION__';
+        const versionSuffix = assetVersion && !assetVersion.startsWith('__') ? `?v=${assetVersion}` : '';
+        const prodEntry = `./assets/main.js${versionSuffix}`;
+        const prodCss = `./assets/main.css${versionSuffix}`;
 
         const ensureProdCss = () => {
           const existing = document.querySelector(`link[rel="stylesheet"][href="${prodCss}"]`);
