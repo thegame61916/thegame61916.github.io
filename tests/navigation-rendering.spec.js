@@ -92,16 +92,20 @@ test.describe('navigation and rendering', () => {
     await page.assertNoErrors();
   });
 
-  test('publication preview defaults to the main publication file with clear labels', async ({ page }) => {
+  test('publication details open on materials and preview labels remain clear', async ({ page }) => {
     const posterPublication = publications.find(pub => pub.type?.toLowerCase().includes('poster'));
 
     await navigateHash(page, `publication:${firstPublication.id}`);
+    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveAttribute('aria-selected', 'true');
+    await page.getByRole('tab', { name: 'Preview' }).click();
     const paperPreviewSelect = page.locator('.preview-toolbar select');
     await expect(paperPreviewSelect).toHaveValue('paper');
     await expect(paperPreviewSelect.locator('option').first()).toHaveText('Paper');
     await expect(paperPreviewSelect).not.toContainText('Paper PDF');
 
     await navigateHash(page, `publication:${posterPublication.id}`);
+    await expect(page.getByRole('tab', { name: 'Materials' })).toHaveAttribute('aria-selected', 'true');
+    await page.getByRole('tab', { name: 'Preview' }).click();
     const posterPreviewSelect = page.locator('.preview-toolbar select');
     await expect(posterPreviewSelect).toHaveValue('paper');
     await expect(posterPreviewSelect.locator('option').first()).toHaveText('Extended Abstract');

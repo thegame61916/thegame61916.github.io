@@ -174,8 +174,6 @@ function goRoute(route, setRoute) { location.hash = route; setRoute(route); }
 function comparePublicationsByChronology(a, b) {
   const yearDelta = (Number(b?.year) || 0) - (Number(a?.year) || 0);
   if (yearDelta !== 0) return yearDelta;
-  const typeDelta = String(a?.type || a?.category || '').localeCompare(String(b?.type || b?.category || ''));
-  if (typeDelta !== 0) return typeDelta;
   return String(a?.title || '').localeCompare(String(b?.title || ''));
 }
 function goPublicationDetail(pubId, setRoute) {
@@ -569,8 +567,12 @@ function PublicationPage({ id, setRoute }) {
   const certs = publicationAwardItems(p);
   const previewItems = buildPreviewItems(p, preview, supplements, videos, certs);
   const defaultPreviewId = defaultPublicationPreviewId(previewItems, p);
+  const [activeTab, setActiveTab] = useState('materials');
   const [selectedPreviewId, setSelectedPreviewId] = useState(defaultPreviewId);
-  React.useEffect(() => setSelectedPreviewId(defaultPreviewId), [defaultPreviewId]);
+  React.useEffect(() => {
+    setSelectedPreviewId(defaultPreviewId);
+    setActiveTab('materials');
+  }, [id, defaultPreviewId]);
   const selectedPreview = previewItems.find(item => item.id === selectedPreviewId) || previewItems[0];
 
   return <Section title={p.title} eyebrow={`${p.venue} · ${p.year}`}>
@@ -588,7 +590,7 @@ function PublicationPage({ id, setRoute }) {
         <PeopleStrip ids={p.authors}/>
       </Col>
     </Row>
-    <Tabs defaultActiveKey="preview" className="mt-4">
+    <Tabs activeKey={activeTab} onSelect={(eventKey) => setActiveTab(eventKey || 'materials')} mountOnEnter unmountOnExit className="mt-4">
       <Tab eventKey="preview" title="Preview">
         <div className="preview-browser">
           {previewItems.length > 1 && <div className="preview-toolbar"><Form.Label className="mb-0"><Eye size={16}/> Preview material</Form.Label><Form.Select value={selectedPreview?.id || ''} onChange={e => setSelectedPreviewId(e.target.value)}>{previewItems.map(item => <option value={item.id} key={item.id}>{item.label}</option>)}</Form.Select></div>}
