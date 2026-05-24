@@ -312,54 +312,24 @@ The homepage right column contains a scrollable News panel and a `Media Highligh
 src/data/home-media.json
 ```
 
-You can show one or multiple media items. If multiple items are present, a dropdown appears automatically.
+The panel uses the generated gallery images automatically (research/conference/academic images). Poetry and theatre media are excluded from this homepage slideshow.
 
-### Image example
+If multiple images are available, the panel auto-rotates and also shows left/right arrow controls. Transitions are smooth horizontal slides.
 
-```json
-{
-  "id": "vis-talk-photo",
-  "type": "image",
-  "title": "Talk at VIS",
-  "caption": "A recent talk or conference photo.",
-  "image": "/assets/gallery/talks/vis-talk.jpg",
-  "alt": "Mohit Sharma presenting at a conference",
-  "link": "#talks",
-  "linkText": "View talks"
-}
-```
+`home-media.json` currently controls visibility and startup selection:
 
-### Local muted video example
+- `enabled`: show/hide the homepage media panel.
+- `defaultItemId`: media id to show first (must match an id in generated gallery media).
+- `title`: optional panel label used as an accessibility label.
 
-Put the video in `public/assets/gallery/videos/` and reference it:
+Example:
 
 ```json
 {
-  "id": "demo-video",
-  "type": "video",
-  "title": "Interactive Reeb Space Demo",
-  "caption": "Short muted demo clip. It starts playing when visible on screen.",
-  "video": "/assets/gallery/videos/reeb-demo.mp4",
-  "poster": "/assets/gallery/videos/reeb-demo-poster.jpg",
-  "autoplayMuted": true,
-  "loop": true,
-  "controls": false
+  "enabled": true,
+  "title": "Research Gallery",
+  "defaultItemId": "acm-india-arcs-2024-lightning-talk"
 }
 ```
 
-### YouTube example
-
-```json
-{
-  "id": "youtube-talk",
-  "type": "youtube",
-  "title": "Recorded Talk",
-  "caption": "Embedded YouTube preview. Autoplay requires mute and begins only when visible.",
-  "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
-  "autoplayMuted": true,
-  "link": "#talks",
-  "linkText": "Related talks"
-}
-```
-
-Use `defaultItemId` in the same file to choose which item appears first.
+To change slideshow content, update gallery assets/captions and run `npm run scan:media`.

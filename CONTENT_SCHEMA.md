@@ -323,28 +323,23 @@ Edit: `src/data/talks.json`
 
 Edit: `src/data/home-media.json`
 
-Use a 16:9 image or video for best results.
+The homepage slideshow source is auto-generated from gallery images (excluding poetry/theatre categories). This JSON config controls panel behavior only.
 
 ```json
 {
   "enabled": true,
-  "defaultItemId": "recent-talk",
-  "items": [
-    {
-      "id": "recent-talk",
-      "type": "youtube",
-      "title": "Recent talk",
-      "url": "https://www.youtube.com/watch?v=...",
-      "caption": "Short caption shown below the media.",
-      "autoplayMuted": true,
-      "link": "#talks",
-      "linkText": "View talks"
-    }
-  ]
+  "title": "Research Gallery",
+  "defaultItemId": "acm-india-arcs-2024-lightning-talk"
 }
 ```
 
-Supported `type`: `image`, `video`, `youtube`.
+Fields used:
+
+- `enabled` (boolean): show/hide the panel.
+- `title` (string): accessibility label for the panel.
+- `defaultItemId` (string): first slide id from generated gallery media.
+
+To change slides, update gallery media/captions and run `npm run scan:media`.
 
 ---
 

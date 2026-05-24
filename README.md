@@ -220,4 +220,8 @@ Most routine changes should be made in:
 - `src/data/home-media.json`
 - `src/data/keyword-config.json`
 
+Homepage slideshow note:
+- The homepage slideshow content comes from generated gallery images (`src/data/generated-media.json`), not from `home-media.json` item arrays.
+- `src/data/home-media.json` controls enable/disable, accessibility label, and default slide id.
+
 Use `npm run prepare:content` after adding local media/PDFs.
