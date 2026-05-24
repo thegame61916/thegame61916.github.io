@@ -20,7 +20,10 @@
         const onLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
         const devEntry = '/src/main.jsx';
         const assetVersion = '__ASSET_VERSION__';
-        const versionSuffix = assetVersion && !assetVersion.startsWith('__') ? `?v=${assetVersion}` : '';
+        const resolvedAssetVersion = assetVersion && !assetVersion.startsWith('__')
+          ? assetVersion
+          : String(Date.now());
+        const versionSuffix = `?v=${resolvedAssetVersion}`;
         const prodEntry = `./assets/main.js${versionSuffix}`;
         const prodCss = `./assets/main.css${versionSuffix}`;
 
