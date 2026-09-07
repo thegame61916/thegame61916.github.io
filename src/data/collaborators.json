@@ -11,5 +11,6 @@
   {"id":"lee-jollans","name":"Lee Jollans","designation":"Postdoc","affiliation":"Linköping University","area":"Medical imaging","website":"https://liu.se/en/employee/emijo30","photo":""},
   {"id":"anders-persson","name":"Anders Persson","designation":"Director, Professor, Head of Division","affiliation":"Linköping University","area":"Medical imaging","website":"https://liu.se/medarbetare/andpe75","photo":"/assets/collaborators/anders-persson.jpg"},
   {"id":"tino-ebbers","name":"Tino Ebbers","designation":"Professor","affiliation":"Linköping University","area":"Medical imaging and flow visualization","website":"https://liu.se/en/employee/tineb49","photo":"/assets/collaborators/tino-ebbers.jpg"},
-  {"id":"dhruv-meduri","name":"Dhruv Meduri","designation":"PhD student","affiliation":"University of Utah","area":"Computational topology","website":"https://dhruvmeduri.github.io/","photo":"/assets/collaborators/dhruv-meduri.jpg"}
+  {"id":"dhruv-meduri","name":"Dhruv Meduri","designation":"PhD student","affiliation":"University of Utah","area":"Computational topology","website":"https://dhruvmeduri.github.io/","photo":"/assets/collaborators/dhruv-meduri.jpg"},
+  {"id":"petar-hristov","name":"Petar Hristov","designation":"Postdoc","affiliation":"Linköping University","area":"Scientific visualization and topological data analysis","website":"https://liu.se/en/employee/pethr58","photo":""}
 ]

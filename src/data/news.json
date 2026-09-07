@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-07-30",
+    "title": "Paper accepted at TopoInVis 2026",
+    "description": "Temporal Tracking of Reeb Space Sheets has been accepted for the TopoInVis 2026 workshop.",
+    "links": [
+      {
+        "label": "arXiv",
+        "url": "https://arxiv.org/abs/2608.05837"
+      }
+    ],
+    "route": "publication:temporal-reeb-space-sheets-2026"
+  },
+  {
     "date": "2025-09-01",
     "title": "Best Poster Award at VCBM 2025",
     "description": "Topology-Guided Volume Fusion for Multi-Energy Spectral Computed Tomography received the Best Poster Award.",
