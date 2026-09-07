@@ -52,7 +52,9 @@
       }
     ],
     "previewLayout": "single",
-    "themes": [],
+    "themes": [
+      "multivariate-topology"
+    ],
     "defaultPreview": "paper",
     "filterKeywords": [
       "Reeb spaces",

@@ -83,7 +83,8 @@
     "description": "This research studies Jacobi sets and related structures for extracting, simplifying, and tracking topological features over time in scientific datasets.",
     "publications": [
       "jacobi-simplification-2024",
-      "contour-tree-augmentation-2018"
+      "contour-tree-augmentation-2018",
+      "temporal-reeb-space-sheets-2026"
     ],
     "collaborators": [
       "mohit-sharma",
